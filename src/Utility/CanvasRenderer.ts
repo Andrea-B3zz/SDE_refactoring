@@ -10,7 +10,7 @@ export default class CanvasRenderer {
    * @param canvas the canvas on which will be drawn
    * @returns the 2D rendering context of the canvas
    */
-  private static getCanvasContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
+  public static getCanvasContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
     const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
     if (ctx === null) {
       throw new Error('Canvas Rendering Context is null');
