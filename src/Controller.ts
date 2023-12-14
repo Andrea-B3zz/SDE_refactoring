@@ -5,7 +5,7 @@ import MouseListener from './Utility/MouseListener.js';
 import Level from './Level.js';
 import Backstory from './Backstory.js';
 
-export default class Controller extends Game{
+export default class Controller extends Game {
   private canvas: HTMLCanvasElement;
 
   private keyListener: KeyListener;
@@ -14,20 +14,19 @@ export default class Controller extends Game{
 
   private currentLevel: Level;
 
-/**
-   * Create a new instance of the game.
-   *
-   * @param canvas HTML canvas where the game should be rendered
-   */
-public constructor(canvas: HTMLCanvasElement) {
-  super();
-  this.canvas = canvas;
-  this.canvas.height = window.innerHeight;
-  this.canvas.width = window.innerWidth;
-  this.keyListener = new KeyListener();
-  this.currentLevel = new Backstory();
-  this.currentLevel.startLevel();
-}
+  /**
+     * Create a new instance of the game.
+     *
+     * @param canvas HTML canvas where the game should be rendered
+     */
+  public constructor(canvas: HTMLCanvasElement) {
+    super();
+    this.canvas = canvas;
+    this.canvas.height = window.innerHeight;
+    this.canvas.width = window.innerWidth;
+    this.keyListener = new KeyListener();
+    this.currentLevel = new Backstory();
+  }
 
   public processInput(): void {
     this.currentLevel.processInput(this.keyListener);
@@ -37,9 +36,9 @@ public constructor(canvas: HTMLCanvasElement) {
     this.currentLevel.update(elapsed);
 
     const newLevel: Level = this.currentLevel.nextLevel(this.canvas);
-    if(newLevel != null){
+    if (newLevel != null) {
       this.currentLevel = newLevel;
-      this.currentLevel.startLevel();
+      // this.currentLevel.startLevel();
     }
 
     return true;

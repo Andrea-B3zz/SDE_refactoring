@@ -11,8 +11,6 @@ export default abstract class Level {
 
   public abstract nextLevel(canvas: HTMLCanvasElement): Level | null;
 
-  public abstract startLevel(): void;
-
   public abstract processInput(keyListener: KeyListener): void;
 
   public abstract render(canvas: HTMLCanvasElement): void;

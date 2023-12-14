@@ -34,10 +34,6 @@ export default class Backstory extends Level {
     return null;
   }
 
-  public override startLevel(): void {
-
-  }
-
   public override processInput(keyListener: KeyListener): void {
     if (keyListener.keyPressed(KeyListener.KEY_SPACE)){
       this.currentImage++;
