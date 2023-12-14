@@ -25,6 +25,10 @@ export default abstract class MovingCharacter {
     return this.image.height;
   }
 
+  public setSpeed(value: number): void {
+    this.speed = value;
+  }
+
   /**
    * to update the item position
    * @param elapsed the time elapsed

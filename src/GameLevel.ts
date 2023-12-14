@@ -17,20 +17,18 @@ export default class GameLevel extends Level {
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.walls = [];
-    this.player = new Player();
+    this.player = new Player(this.walls);
+    this.keyListener = new KeyListener();
 
     this.canvas = canvas;
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
     this.canvas.width = this.image.width;
     this.canvas.height = this.image.height;
-
     this.canvas.style.width = '89%';
     this.canvas.style.height = '89%';
     this.canvas.style.marginLeft = '6%';
 
     this.populateWalls();
-
-    console.log(this.image);
   }
 
   private populateWalls(): void {
@@ -65,16 +63,25 @@ export default class GameLevel extends Level {
 
   /**
    * updates the images
-   * @param elapsed i don't know what that does
+   * @param elapsed still no function
    */
   public override update(elapsed: number): void {
+    // this.player.update(elapsed);
 
+    const newPosX: number = this.player.getPosX();
+    const newPosY: number = this.player.getPosY();
+
+    if (this.player.isColliding(newPosX, newPosY)) {
+      this.player.doNotMove();
+    } else {
+      this.player.move(this.keyListener);
+    }
   }
 
   /**
    * method to go from the backstory to level 1
    * @param canvas changing the canvas from the pictures in the backstory to the map
-   * @returns null for now so it doesn't scream at me
+   * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
     return null;
@@ -93,6 +100,7 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
+    CanvasRenderer.clearCanvas(canvas);
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
     this.player.render(canvas);
   }
