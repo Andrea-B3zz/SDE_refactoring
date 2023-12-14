@@ -50,8 +50,8 @@ export default class GameLevel extends Level {
     this.player = new Player();
     this.canvas = canvas;
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
-    this.image.width=window.innerWidth;
-    this.image.height=window.innerHeight;
+    this.canvas.width = this.image.width;
+    this.canvas.height = this.image.height;
 
     this.keyListener = new KeyListener();
     this.populateWalls();
