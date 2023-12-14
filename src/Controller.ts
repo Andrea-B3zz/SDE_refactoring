@@ -2,6 +2,8 @@ import Game from './Utility/Game.js';
 import CanvasRenderer from './Utility/CanvasRenderer.js';
 import KeyListener from './Utility/KeyListener.js';
 import MouseListener from './Utility/MouseListener.js';
+import Level from './Level.js';
+import Backstory from './Backstory.js';
 
 export default class Controller extends Game {
   private canvas: HTMLCanvasElement;
@@ -23,28 +25,24 @@ export default class Controller extends Game {
     this.canvas.height = window.innerHeight;
     this.canvas.width = window.innerWidth;
     this.keyListener = new KeyListener();
-    this.currentLevel = new Background();
+    this.currentLevel = new Backstory();
   }
 
-  /**
-   * processing the input
-   */
   public processInput(): void {
-    this.currentLevel.processInput(this.keyListener, this.mouseListener);
+    this.currentLevel.processInput(this.keyListener);
   }
 
   /**
-   * starting new Level, when we finish the previous one
-   * @param elapsed time elapsed
-   * @returns returning true
+   * updates the level that the player is on
+   * @param elapsed something
+   * @returns something else
    */
-  public update(elapsed: number): boolean {
+  public override update(elapsed: number): boolean {
     this.currentLevel.update(elapsed);
 
-    const newLevel: Level = this.currentLevel.nextLevel();
+    const newLevel: Level = this.currentLevel.nextLevel(this.canvas);
     if (newLevel != null) {
       this.currentLevel = newLevel;
-      this.currentLevel.startLevel();
     }
 
     return true;
