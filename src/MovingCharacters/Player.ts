@@ -7,6 +7,8 @@ export default class Player extends MovingCharacter {
   public constructor() {
     super();
     this.image = CanvasRenderer.loadNewImage('assets/boy.png');
+    this.posX = 100;
+    this.posY = 100;
   }
 
   /**

@@ -1,8 +1,9 @@
 import Level from './Level.js';
-import Player from './Player.js';
-import Monster from './Monster.js';
-import Wall from './Wall.js';
+import Player from './MovingCharacters/Player.js';
+import Monster from './MovingCharacters/Monster.js';
+import Wall from './MovingCharacters/Wall.js';
 import KeyListener from './Utility/KeyListener.js';
+import CanvasRenderer from './Utility/CanvasRenderer.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -13,7 +14,7 @@ export default class GameLevel extends Level {
 
   private walls: Wall[];
 
-  private populateWalls(): void{
+  private populateWalls(): void {
     this.walls.push(new Wall(192, 203, 16, 182));
     this.walls.push(new Wall(410, 422, 69, 185));
     this.walls.push(new Wall(614, 626, 17, 490,));
@@ -43,8 +44,16 @@ export default class GameLevel extends Level {
     this.walls.push(new Wall(1267, 1406, 477, 489));
   }
 
-  public constructor() {
+  public constructor(canvas: HTMLCanvasElement) {
     super();
+    this.walls = [];
+    this.player = new Player();
+    this.canvas = canvas;
+    this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
+    this.image.width=window.innerWidth;
+    this.image.height=window.innerHeight;
+
+    this.keyListener = new KeyListener();
     this.populateWalls();
   }
 
@@ -78,6 +87,7 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-
+    this.player.render(canvas);
+    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
   }
 }
