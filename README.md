@@ -20,6 +20,15 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm install
    ```
+3. Run NPM packages <br><br>
+   Make manual update every time you make a change.
+   ```sh
+   npm run build
+   ```
+   Updates the application automatically every time you make a change.
+   ```sh
+   npm run watch
+   ```
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
