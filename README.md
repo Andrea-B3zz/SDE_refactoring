@@ -3,6 +3,7 @@
 
 An educational game that develops children technical skills (specifically in MS Apps - MS Word, MS PowerPoint, MS Excel)
 
+![SPAS class diagram](./classDiagrams/classDiagram-sprint1.PNG)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -18,6 +19,15 @@ To get a local copy up and running follow these simple example steps.
 2. Install NPM packages
    ```sh
    npm install
+   ```
+3. Run NPM packages <br><br>
+   Make manual update every time you make a change.
+   ```sh
+   npm run build
+   ```
+   Updates the application automatically every time you make a change.
+   ```sh
+   npm run watch
    ```
 
 <!-- ACKNOWLEDGMENTS -->
