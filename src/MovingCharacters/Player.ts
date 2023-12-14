@@ -4,25 +4,32 @@ import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 
 export default class Player extends MovingCharacter {
-  private walls: Wall[];
-
   public constructor() {
     super();
     this.image = CanvasRenderer.loadNewImage('assets/boy.png');
   }
 
+  /**
+   * updating the player object
+   * @param elapsed the time elapsed
+   */
   public override update(elapsed: number): void {
 
   }
 
-  public isColliding(): boolean {
+  /**
+   *
+   * @param walls array of objects of type Wall
+   * @returns return true if we are colliding with a wall
+   */
+  public isColliding(walls: Wall[]): boolean {
     let item: Wall;
-    for (let i: number = 0; i < this.walls.length; i++) {
-      item = this.walls[i];
-      if (this.getPosX() < item.getTopRight()
-        && this.getPosX() + this.getWidth() > item.getTopLeft()
-        && this.getPosY() + this.getHeight() > item.getBottomLeft()
-        && this.getPosY() < item.getBottomRight()) {
+    for (let i: number = 0; i < walls.length; i++) {
+      item = walls[i];
+      if (this.getPosX() < item.getRightX()
+        && this.getPosX() + this.getWidth() > item.getLeftX()
+        && this.getPosY() + this.getHeight() > item.getTopY()
+        && this.getPosY() < item.getBottomY()) {
         return true;
       }
     }
@@ -30,7 +37,19 @@ export default class Player extends MovingCharacter {
     return false;
   }
 
-  public override move(elapsed: number, keyListener: KeyListener): void {
+  /**
+   *
+   * @param keyListener user input
+   */
+  public processInput( keyListener: KeyListener): void {
+    this.move(keyListener);
+  }
+
+  /**
+   * moving our character around the map
+   * @param keyListener user input
+   */
+  public move(keyListener: KeyListener): void {
     if(keyListener.isKeyDown(KeyListener.KEY_W || KeyListener.KEY_UP)){
       this.posY-=10;
     } else if(keyListener.isKeyDown(KeyListener.KEY_A || KeyListener.KEY_LEFT)){
@@ -42,6 +61,10 @@ export default class Player extends MovingCharacter {
     }
   }
 
+  /**
+   * displaying our character
+   * @param canvas our canvas where everything will be displayed
+   */
   public override render(canvas: HTMLCanvasElement): void {
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
   }

@@ -1,32 +1,32 @@
 export default class Wall {
-  protected topLeft: number;
+  protected leftX: number;
 
-  protected topRight: number;
+  protected rightX: number;
 
-  protected bottomLeft: number;
+  protected topY: number;
 
-  protected bottomRight: number;
+  protected bottomY: number;
 
-  public constructor(tl: number, tr: number, bl: number, br: number) {
-    this.topLeft = tl;
-    this.topRight = tr;
-    this.bottomLeft = bl;
-    this.bottomRight = br;
+  public constructor(leftX: number, rightX: number, topY: number, bottomY: number) {
+    this.leftX = leftX;
+    this.rightX = rightX;
+    this.topY = topY;
+    this.bottomY = bottomY;
   }
 
-  public getBottomLeft(): number {
-    return this.bottomLeft;
+  public getLeftX(): number {
+    return this.leftX;
   }
 
-  public getBottomRight(): number {
-    return this.bottomRight;
+  public getRightX(): number {
+    return this.rightX;
   }
 
-  public getTopLeft(): number {
-    return this.topLeft;
+  public getTopY(): number {
+    return this.topY;
   }
 
-  public getTopRight(): number {
-    return this.topRight;
+  public getBottomY(): number {
+    return this.bottomY;
   }
 }

@@ -1,3 +1,5 @@
+import KeyListener from '../Utility/KeyListener.js';
+
 export default abstract class MovingCharacter {
   protected posX: number;
 
@@ -34,6 +36,4 @@ export default abstract class MovingCharacter {
    * @param canvas to draw on
    */
   public abstract render(canvas: HTMLCanvasElement): void;
-
-  public abstract move(elapsed: number): void;
 }

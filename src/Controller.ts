@@ -13,10 +13,10 @@ export default class Controller extends Game {
   private currentLevel: Level;
 
   /**
-     * Create a new instance of the game.
-     *
-     * @param canvas HTML canvas where the game should be rendered
-     */
+   * Create a new instance of the game.
+   *
+   * @param canvas HTML canvas where the game should be rendered
+   */
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.canvas = canvas;
@@ -26,10 +26,18 @@ export default class Controller extends Game {
     this.currentLevel = new Background();
   }
 
+  /**
+   * processing the input
+   */
   public processInput(): void {
     this.currentLevel.processInput(this.keyListener, this.mouseListener);
   }
 
+  /**
+   * starting new Level, when we finish the previous one
+   * @param elapsed time elapsed
+   * @returns returning true
+   */
   public update(elapsed: number): boolean {
     this.currentLevel.update(elapsed);
 
@@ -42,6 +50,9 @@ export default class Controller extends Game {
     return true;
   }
 
+  /**
+   * clearing the canvas and rendering the current level
+   */
   public override render(): void {
     CanvasRenderer.clearCanvas(this.canvas);
     this.currentLevel.render(this.canvas);
