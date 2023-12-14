@@ -15,10 +15,10 @@ export default class Controller extends Game {
   private currentLevel: Level;
 
   /**
-     * Create a new instance of the game.
-     *
-     * @param canvas HTML canvas where the game should be rendered
-     */
+   * Create a new instance of the game.
+   *
+   * @param canvas HTML canvas where the game should be rendered
+   */
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.canvas = canvas;
@@ -43,14 +43,13 @@ export default class Controller extends Game {
     const newLevel: Level = this.currentLevel.nextLevel(this.canvas);
     if (newLevel != null) {
       this.currentLevel = newLevel;
-      // this.currentLevel.startLevel();
     }
 
     return true;
   }
 
   /**
-   * renders everything on the canvas
+   * clearing the canvas and rendering the current level
    */
   public override render(): void {
     CanvasRenderer.clearCanvas(this.canvas);
