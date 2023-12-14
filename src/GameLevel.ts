@@ -102,6 +102,20 @@ export default class GameLevel extends Level {
   public render(canvas: HTMLCanvasElement): void {
     CanvasRenderer.clearCanvas(canvas);
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+
+    for (let i: number = 0; i < this.walls.length; i++) {
+      const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
+      const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
+      CanvasRenderer.drawRectangle(
+        canvas,
+        this.walls[i].getLeftX(),
+        this.walls[i].getTopY(),
+        width,
+        height,
+        this.walls[i].getColor(),
+      );
+    }
+
     this.player.render(canvas);
   }
 }
