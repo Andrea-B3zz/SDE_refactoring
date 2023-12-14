@@ -7,8 +7,6 @@ export default abstract class Level {
 
   protected canvas: HTMLCanvasElement;
 
-  protected gameLevel: GameLevel;
-
   public abstract update(elapsed: number): void;
 
   public abstract nextLevel(canvas: HTMLCanvasElement): Level | null;

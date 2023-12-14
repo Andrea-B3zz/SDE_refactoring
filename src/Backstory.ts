@@ -37,8 +37,7 @@ export default class Backstory extends Level {
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
     if (this.currentImage >= this.arrayOfImages.length) {
-      this.gameLevel = new GameLevel();
-      return this.gameLevel;
+      return new GameLevel;
     } else {
       return null;
     }

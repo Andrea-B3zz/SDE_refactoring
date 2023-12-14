@@ -6,8 +6,14 @@ import Wall from './Wall.js';
 export default class Player extends MovingCharacter {
   public constructor() {
     super();
-    this.image = CanvasRenderer.loadNewImage('assets/boy.png');
+    const randomX = Math.floor(Math.random() * window.innerWidth);
+    const randomY = Math.floor(Math.random() * window.innerHeight);
+    this.image = CanvasRenderer.loadNewImage('./assets/boy5.png');
+    this.posX = randomX;
+    this.posY = randomY;
+    this.speed = 0.2;
   }
+
 
   /**
    * updating the player object
@@ -41,7 +47,7 @@ export default class Player extends MovingCharacter {
    *
    * @param keyListener user input
    */
-  public processInput( keyListener: KeyListener): void {
+  public processInput(keyListener: KeyListener): void {
     this.move(keyListener);
   }
 
@@ -51,13 +57,17 @@ export default class Player extends MovingCharacter {
    */
   public move(keyListener: KeyListener): void {
     if(keyListener.isKeyDown(KeyListener.KEY_W || KeyListener.KEY_UP)){
-      this.posY-=10;
+      this.posY-=6.5;
+      console.log('true');
     } else if(keyListener.isKeyDown(KeyListener.KEY_A || KeyListener.KEY_LEFT)){
-      this.posX-=10;
+      this.posX-=6.5;
+      console.log('true');
     }else if(keyListener.isKeyDown(KeyListener.KEY_D || KeyListener.KEY_RIGHT)){
-      this.posX+=10;
+      this.posX+=6.5;
+      console.log('true');
     }else if(keyListener.isKeyDown(KeyListener.KEY_S || KeyListener.KEY_DOWN)){
-      this.posY+=10;
+      this.posY+=6.5;
+      console.log('true');
     }
   }
 
@@ -66,6 +76,6 @@ export default class Player extends MovingCharacter {
    * @param canvas our canvas where everything will be displayed
    */
   public override render(canvas: HTMLCanvasElement): void {
-    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+    CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);
   }
 }
