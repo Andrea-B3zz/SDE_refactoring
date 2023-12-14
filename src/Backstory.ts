@@ -23,7 +23,7 @@ export default class Backstory extends Level {
   }
 
   public override update(elapsed: number): void {
-
+    this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
   }
 
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
@@ -35,7 +35,7 @@ export default class Backstory extends Level {
   }
 
   public override processInput(keyListener: KeyListener): void {
-    if (keyListener.keyPressed(KeyListener.KEY_SPACE)){
+    if (keyListener.keyPressed(KeyListener.KEY_SPACE)) {
       this.currentImage++;
     }
   }
