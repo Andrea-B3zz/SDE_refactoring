@@ -1,8 +1,9 @@
 import Level from './Level.js';
-import Player from './Player.js';
-import Monster from './Monster.js';
-import Wall from './Wall.js';
+import Player from './MovingCharacters/Player.js';
+import Monster from './MovingCharacters/Monster.js';
+import Wall from './MovingCharacters/Wall.js';
 import KeyListener from './Utility/KeyListener.js';
+import CanvasRenderer from './Utility/CanvasRenderer.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -13,7 +14,26 @@ export default class GameLevel extends Level {
 
   private walls: Wall[];
 
-  private populateWalls(): void{
+  public constructor(canvas: HTMLCanvasElement) {
+    super();
+    this.walls = [];
+    this.player = new Player();
+
+    this.canvas = canvas;
+    this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
+    this.canvas.width = this.image.width;
+    this.canvas.height = this.image.height;
+
+    this.canvas.style.width = '89%';
+    this.canvas.style.height = '89%';
+    this.canvas.style.marginLeft = '6%';
+
+    this.populateWalls();
+
+    console.log(this.image);
+  }
+
+  private populateWalls(): void {
     this.walls.push(new Wall(192, 203, 16, 182));
     this.walls.push(new Wall(410, 422, 69, 185));
     this.walls.push(new Wall(614, 626, 17, 490,));
@@ -43,11 +63,6 @@ export default class GameLevel extends Level {
     this.walls.push(new Wall(1267, 1406, 477, 489));
   }
 
-  public constructor() {
-    super();
-    this.populateWalls();
-  }
-
   /**
    * updates the images
    * @param elapsed i don't know what that does
@@ -70,7 +85,7 @@ export default class GameLevel extends Level {
    * @param keyListener adding the key listener so we can use the space bar
    */
   public override processInput(keyListener: KeyListener): void {
-
+    this.player.processInput(keyListener);
   }
 
   /**
@@ -78,6 +93,7 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-
+    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+    this.player.render(canvas);
   }
 }

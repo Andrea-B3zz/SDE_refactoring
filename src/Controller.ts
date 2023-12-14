@@ -25,7 +25,7 @@ export default class Controller extends Game {
     this.canvas.height = window.innerHeight;
     this.canvas.width = window.innerWidth;
     this.keyListener = new KeyListener();
-    this.currentLevel = new Backstory();
+    this.currentLevel = new Backstory(canvas);
   }
 
   public processInput(): void {
@@ -42,6 +42,7 @@ export default class Controller extends Game {
 
     const newLevel: Level = this.currentLevel.nextLevel(this.canvas);
     if (newLevel != null) {
+      console.log(newLevel);
       this.currentLevel = newLevel;
     }
 
