@@ -10,7 +10,7 @@ export default abstract class Level {
   public abstract update(elapsed: number): void;
 
   public abstract nextLevel(canvas: HTMLCanvasElement): Level | null;
-;
+
   public abstract startLevel(): void;
 
   public abstract processInput(keyListener: KeyListener): void;

@@ -23,7 +23,11 @@ export default class Backstory extends Level {
   }
 
   public override update(elapsed: number): void {
+    this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
 
+    if (this.currentImage > this.arrayOfImages.length) {
+      // TODO: call the class that renders the map and the player
+    }
   }
 
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
