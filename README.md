@@ -3,6 +3,7 @@
 
 An educational game that develops children technical skills (specifically in MS Apps - MS Word, MS PowerPoint, MS Excel)
 
+![SPAS class diagram](./classDiagrams/classDiagram-sprint1.PNG)
 
 <!-- GETTING STARTED -->
 ## Getting Started
