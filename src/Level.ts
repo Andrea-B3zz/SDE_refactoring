@@ -1,6 +1,4 @@
 import KeyListener from './Utility/KeyListener.js';
-import MouseListener from './Utility/MouseListener.js';
-import GameLevel from './GameLevel.js';
 
 export default abstract class Level {
   protected image: HTMLImageElement;
