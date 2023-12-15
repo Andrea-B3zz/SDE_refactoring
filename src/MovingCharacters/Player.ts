@@ -45,16 +45,16 @@ export default class Player extends MovingCharacter {
 
     if (keyListener.isKeyDown(KeyListener.KEY_W)
       || keyListener.isKeyDown(KeyListener.KEY_UP)) {
-      newPosY -= 4;
+      newPosY -= 4 * this.speed;
     } else if (keyListener.isKeyDown(KeyListener.KEY_A)
       || keyListener.isKeyDown(KeyListener.KEY_LEFT)) {
-      newPosX -= 4;
+      newPosX -= 4 * this.speed;
     } else if (keyListener.isKeyDown(KeyListener.KEY_D)
       || keyListener.isKeyDown(KeyListener.KEY_RIGHT)) {
-      newPosX += 4;
+      newPosX += 4 * this.speed;
     } else if (keyListener.isKeyDown(KeyListener.KEY_S)
       || keyListener.isKeyDown(KeyListener.KEY_DOWN)) {
-      newPosY += 4;
+      newPosY += 4 * this.speed;
     }
 
     if (!this.isColliding(newPosX, newPosY)) {
