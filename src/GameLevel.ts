@@ -115,7 +115,6 @@ export default class GameLevel extends Level {
         this.walls[i].getColor(),
       );
     }
-
     this.player.render(canvas);
   }
 }
