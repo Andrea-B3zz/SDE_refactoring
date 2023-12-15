@@ -4,13 +4,20 @@ import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 
 export default class Player extends MovingCharacter {
-  public constructor() {
+  private walls: Wall[];
+
+  public constructor(walls: Wall[]) {
     super();
+    this.walls = walls;
+
     const randomX: number = Math.floor(Math.random() * window.innerWidth);
     const randomY: number = Math.floor(Math.random() * window.innerHeight);
+
     this.image = CanvasRenderer.loadNewImage('./assets/boy.png');
+
     this.posX = randomX;
     this.posY = randomY;
+
     this.speed = 0.2;
   }
 
@@ -19,34 +26,12 @@ export default class Player extends MovingCharacter {
    * @param elapsed the time elapsed
    */
   public override update(elapsed: number): void {
-
   }
 
   /**
-   *
-   * @param walls array of objects of type Wall
-   * @returns return true if we are colliding with a wall
-   */
-  public isColliding(walls: Wall[]): boolean {
-    let item: Wall;
-    for (let i: number = 0; i < walls.length; i++) {
-      item = walls[i];
-      if (this.getPosX() < item.getRightX()
-        && this.getPosX() + this.getWidth() > item.getLeftX()
-        && this.getPosY() + this.getHeight() > item.getTopY()
-        && this.getPosY() < item.getBottomY()) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   *
    * @param keyListener user input
    */
-  public processInput( keyListener: KeyListener): void {
+  public processInput(keyListener: KeyListener): void {
     this.move(keyListener);
   }
 
@@ -55,15 +40,56 @@ export default class Player extends MovingCharacter {
    * @param keyListener user input
    */
   public move(keyListener: KeyListener): void {
-    if(keyListener.isKeyDown(KeyListener.KEY_W || KeyListener.KEY_UP)){
-      this.posY -= 6.5;
-    } else if(keyListener.isKeyDown(KeyListener.KEY_A || KeyListener.KEY_LEFT)){
-      this.posX -= 6.5;
-    }else if(keyListener.isKeyDown(KeyListener.KEY_D || KeyListener.KEY_RIGHT)){
-      this.posX += 6.5;
-    }else if(keyListener.isKeyDown(KeyListener.KEY_S || KeyListener.KEY_DOWN)){
-      this.posY += 6.5;
+    let newPosX: number = this.posX;
+    let newPosY: number = this.posY;
+
+    if (keyListener.isKeyDown(KeyListener.KEY_W)
+      || keyListener.isKeyDown(KeyListener.KEY_UP)) {
+      newPosY -= 4 * this.speed;
+    } else if (keyListener.isKeyDown(KeyListener.KEY_A)
+      || keyListener.isKeyDown(KeyListener.KEY_LEFT)) {
+      newPosX -= 4 * this.speed;
+    } else if (keyListener.isKeyDown(KeyListener.KEY_D)
+      || keyListener.isKeyDown(KeyListener.KEY_RIGHT)) {
+      newPosX += 4 * this.speed;
+    } else if (keyListener.isKeyDown(KeyListener.KEY_S)
+      || keyListener.isKeyDown(KeyListener.KEY_DOWN)) {
+      newPosY += 4 * this.speed;
     }
+
+    if (!this.isColliding(newPosX, newPosY)) {
+      this.posX = newPosX;
+      this.posY = newPosY;
+    }
+  }
+
+  /**
+   *
+   * @param newPosX receives the possible next posX
+   * @param newPosY receives the possible next posY
+   * @returns true if there is collision, and false - if not
+   */
+  public isColliding(newPosX: number, newPosY: number): boolean {
+    for (let i: number = 0; i < this.walls.length; i++) {
+      const item: Wall = this.walls[i];
+      if (
+        newPosX < item.getRightX()
+        && newPosX + this.getWidth() > item.getLeftX()
+        && newPosY + this.getHeight() > item.getTopY()
+        && newPosY < item.getBottomY()
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * if this method is called, the player doesn't change its position
+   */
+  public doNotMove(): void {
+    this.posX = this.posX;
+    this.posY = this.posY;
   }
 
   /**
