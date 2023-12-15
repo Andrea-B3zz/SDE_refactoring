@@ -83,8 +83,6 @@ export default class GameLevel extends Level {
    */
   public render(canvas: HTMLCanvasElement): void {
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
-    // CanvasRenderer.drawCircle(canvas, this.player.getPosX() + this.player.getWidth() / 2, this.player.getPosY() + this.player.getHeight() / 2, 150, 'black');
-    // CanvasRenderer.fillCircle(canvas, this.player.getPosX() + this.player.getWidth() / 2, this.player.getPosY() + this.player.getHeight() / 2, 150, 'transparent');
     this.player.render(canvas);
   }
 }

@@ -8,9 +8,9 @@ export default class Player extends MovingCharacter {
     super();
     const randomX: number = Math.floor(Math.random() * window.innerWidth);
     const randomY: number = Math.floor(Math.random() * window.innerHeight);
-    this.image = CanvasRenderer.loadNewImage('./assets/boy5.png');
-    this.posX = randomX;
-    this.posY = randomY;
+    this.image = CanvasRenderer.loadNewImage('./assets/field-of-view.png');
+    this.posX = -1200;
+    this.posY = -1200;
     this.speed = 0.2;
   }
 
