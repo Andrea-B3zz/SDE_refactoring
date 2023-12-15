@@ -6,8 +6,8 @@ import Wall from './Wall.js';
 export default class Player extends MovingCharacter {
   public constructor() {
     super();
-    const randomX = Math.floor(Math.random() * window.innerWidth);
-    const randomY = Math.floor(Math.random() * window.innerHeight);
+    const randomX: number = Math.floor(Math.random() * window.innerWidth);
+    const randomY: number = Math.floor(Math.random() * window.innerHeight);
     this.image = CanvasRenderer.loadNewImage('./assets/boy5.png');
     this.posX = randomX;
     this.posY = randomY;
@@ -57,16 +57,16 @@ export default class Player extends MovingCharacter {
    */
   public move(keyListener: KeyListener): void {
     if(keyListener.isKeyDown(KeyListener.KEY_W || KeyListener.KEY_UP)){
-      this.posY-=6.5;
+      this.posY-=4;
       console.log('true');
     } else if(keyListener.isKeyDown(KeyListener.KEY_A || KeyListener.KEY_LEFT)){
-      this.posX-=6.5;
+      this.posX-=4;
       console.log('true');
     }else if(keyListener.isKeyDown(KeyListener.KEY_D || KeyListener.KEY_RIGHT)){
-      this.posX+=6.5;
+      this.posX+=4;
       console.log('true');
     }else if(keyListener.isKeyDown(KeyListener.KEY_S || KeyListener.KEY_DOWN)){
-      this.posY+=6.5;
+      this.posY+=4;
       console.log('true');
     }
   }

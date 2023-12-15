@@ -22,7 +22,7 @@ export default class GameLevel extends Level {
     this.populateWalls();
   }
 
-  private populateWalls(): void{
+  private populateWalls(): void {
     this.walls.push(new Wall(192, 203, 16, 182));
     this.walls.push(new Wall(410, 422, 69, 185));
     this.walls.push(new Wall(614, 626, 17, 490,));
@@ -83,8 +83,8 @@ export default class GameLevel extends Level {
    */
   public render(canvas: HTMLCanvasElement): void {
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+    // CanvasRenderer.drawCircle(canvas, this.player.getPosX() + this.player.getWidth() / 2, this.player.getPosY() + this.player.getHeight() / 2, 150, 'black');
+    // CanvasRenderer.fillCircle(canvas, this.player.getPosX() + this.player.getWidth() / 2, this.player.getPosY() + this.player.getHeight() / 2, 150, 'transparent');
     this.player.render(canvas);
-    CanvasRenderer.drawCircle(canvas, 500, 500, 70, 'black');
-    CanvasRenderer.fillCircle(canvas, 500, 500, 70, 'black');
   }
 }
