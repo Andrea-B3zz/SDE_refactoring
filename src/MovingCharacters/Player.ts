@@ -9,14 +9,14 @@ export default class Player extends MovingCharacter {
   public constructor(walls: Wall[]) {
     super();
     this.walls = walls;
-    
+
     // random positions for the Player object
     // const randomX: number = Math.floor(Math.random() * window.innerWidth);
     // const randomY: number = Math.floor(Math.random() * window.innerHeight);
 
-    this.image = CanvasRenderer.loadNewImage('./assets/field-of-view.png');
-    this.posX = -1200;
-    this.posY = -1200;
+    this.image = CanvasRenderer.loadNewImage('./assets/boy5.png');
+    this.posX = 100;
+    this.posY = 100;
 
     this.speed = 0.2;
   }
@@ -27,6 +27,8 @@ export default class Player extends MovingCharacter {
    * @param elapsed the time elapsed
    */
   public override update(elapsed: number): void {
+
+
   }
 
   /**

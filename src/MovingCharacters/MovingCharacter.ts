@@ -13,6 +13,10 @@ export default abstract class MovingCharacter {
     return this.posX;
   }
 
+  public getSpeed(): number {
+    return this.speed;
+  }
+
   public getPosY(): number {
     return this.posY;
   }
