@@ -17,8 +17,6 @@ export default class GameLevel extends Level {
 
   private mouseListener: MouseListener;
 
-  private map: HTMLCanvasElement;
-
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.walls = [];
@@ -27,9 +25,9 @@ export default class GameLevel extends Level {
 
     this.canvas = canvas;
     this.populateWalls();
-    canvas.style.marginLeft = "";
-    canvas.style.width = "";
-    canvas.style.height = "";
+    canvas.style.marginLeft = '';
+    canvas.style.width = '';
+    canvas.style.height = '';
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
 
     this.mouseListener = new MouseListener(this.canvas);
@@ -103,18 +101,23 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
+    canvas.style.width='1408px';
+    canvas.style.height='792px';
+
     const windowWidth: number = canvas.width;
     const windowHeight: number = canvas.height;
 
     const tempW: number = Number(this.canvas.style.width.substring(0, 4));
     const marginWidth: number = (windowWidth - tempW) / 2;
     const marginPercentW: number = marginWidth * 100 / windowWidth;
-    this.canvas.style.marginLeft = marginPercentW + '%';
+    canvas.style.marginLeft = marginPercentW + '%';
 
     const tempH: number = Number(this.canvas.style.height.substring(0, 3));
     const marginHeight: number = (windowHeight - tempH) / 2;
     const marginPercentH: number = marginHeight * 100 / windowHeight;
-    this.canvas.style.marginTop = marginPercentH + '%';
+    canvas.style.marginTop = marginPercentH + '%';
+
+
 
     /*console.log(tempW);
     console.log(windowWidth);

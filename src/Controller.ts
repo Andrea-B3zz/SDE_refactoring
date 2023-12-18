@@ -57,11 +57,8 @@ export default class Controller extends Game {
    */
   public override render(): void {
     CanvasRenderer.clearCanvas(this.canvas);
-    if (this.levelCount == 1) {
-      const map: HTMLCanvasElement = document.getElementById('map') as HTMLCanvasElement;
-      this.currentLevel.render(map);
-    } else {
+
       this.currentLevel.render(this.canvas);
-    }
+
   }
 }
