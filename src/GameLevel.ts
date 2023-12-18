@@ -4,6 +4,7 @@ import Monster from './MovingCharacters/Monster.js';
 import Wall from './MovingCharacters/Wall.js';
 import KeyListener from './Utility/KeyListener.js';
 import CanvasRenderer from './Utility/CanvasRenderer.js';
+import MouseListener from './Utility/MouseListener.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -14,6 +15,8 @@ export default class GameLevel extends Level {
 
   private walls: Wall[];
 
+  private mouseListener: MouseListener;
+
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.walls = [];
@@ -21,14 +24,14 @@ export default class GameLevel extends Level {
     this.keyListener = new KeyListener();
 
     this.canvas = canvas;
-    this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
-    this.canvas.width = this.image.width;
-    this.canvas.height = this.image.height;
-    this.canvas.style.width = '89%';
-    this.canvas.style.height = '89%';
-    this.canvas.style.marginLeft = '6%';
-
     this.populateWalls();
+
+    this.canvas.style.marginLeft = '0%';
+    this.canvas.style.height = '720px';
+    this.canvas.style.width = '1280px';
+    this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
+
+    this.mouseListener = new MouseListener(this.canvas);
   }
 
   private populateWalls(): void {
@@ -76,6 +79,12 @@ export default class GameLevel extends Level {
     } else {
       this.player.move(this.keyListener);
     }
+
+
+    if(this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)){
+      console.log(this.mouseListener.getMousePosition().x);
+      console.log(this.mouseListener.getMousePosition().y);
+    }
   }
 
   /**
@@ -100,8 +109,27 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    CanvasRenderer.clearCanvas(canvas);
-    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+    const windowWidth: number = canvas.width;
+    const windowHeight: number = canvas.height;
+
+
+    const tempW: number = Number(this.canvas.style.width.substring(0, 4));
+    const marginWidth: number = (windowWidth - tempW) / 2;
+    const marginPercentW: number = marginWidth*100/windowWidth;
+    this.canvas.style.marginLeft = marginPercentW + '%';
+
+    const tempH: number = Number(this.canvas.style.height.substring(0, 3));
+    const marginHeight: number = (windowHeight - tempH) / 2;
+    const marginPercentH: number = marginHeight*100/windowHeight;
+    this.canvas.style.marginTop = marginPercentH + '%';
+
+    /*console.log(tempW);
+    console.log(windowWidth);
+    console.log(marginWidth);
+    console.log(marginPercentW);
+    console.log(canvas.style.marginLeft);*/
+
+    CanvasRenderer.drawImage(this.canvas, this.image, 0, 0);
 
     for (let i: number = 0; i < this.walls.length; i++) {
       const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
