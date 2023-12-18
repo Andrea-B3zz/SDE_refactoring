@@ -14,6 +14,8 @@ export default class Controller extends Game {
 
   private currentLevel: Level;
 
+  private levelCount: number;
+
   /**
    * Create a new instance of the game.
    *
@@ -26,6 +28,7 @@ export default class Controller extends Game {
     this.canvas.width = window.innerWidth;
     this.keyListener = new KeyListener();
     this.currentLevel = new Backstory(canvas);
+    this.levelCount = 0;
   }
 
   public processInput(): void {
@@ -42,7 +45,7 @@ export default class Controller extends Game {
 
     const newLevel: Level = this.currentLevel.nextLevel(this.canvas);
     if (newLevel != null) {
-      console.log(newLevel);
+      this.levelCount+=1;
       this.currentLevel = newLevel;
     }
 
@@ -54,6 +57,11 @@ export default class Controller extends Game {
    */
   public override render(): void {
     CanvasRenderer.clearCanvas(this.canvas);
-    this.currentLevel.render(this.canvas);
+    if (this.levelCount == 1) {
+      const map: HTMLCanvasElement = document.getElementById('map') as HTMLCanvasElement;
+      this.currentLevel.render(map);
+    } else {
+      this.currentLevel.render(this.canvas);
+    }
   }
 }
