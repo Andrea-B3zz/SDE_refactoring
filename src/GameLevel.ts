@@ -104,28 +104,23 @@ export default class GameLevel extends Level {
     canvas.style.width='1408px';
     canvas.style.height='792px';
 
-    const windowWidth: number = canvas.width;
-    const windowHeight: number = canvas.height;
+    canvas.style.marginLeft = '17.5%';
+    canvas.style.marginTop = '4%';
 
-    const tempW: number = Number(this.canvas.style.width.substring(0, 4));
-    const marginWidth: number = (windowWidth - tempW) / 2;
-    const marginPercentW: number = marginWidth * 100 / windowWidth;
-    canvas.style.marginLeft = marginPercentW + '%';
+    // const windowWidth: number = canvas.width;
+    // const windowHeight: number = canvas.height;
 
-    const tempH: number = Number(this.canvas.style.height.substring(0, 3));
-    const marginHeight: number = (windowHeight - tempH) / 2;
-    const marginPercentH: number = marginHeight * 100 / windowHeight;
-    canvas.style.marginTop = marginPercentH + '%';
+    // const tempW: number = Number(this.canvas.style.width.substring(0, 4));
+    // const marginWidth: number = (windowWidth - tempW) / 2;
+    // const marginPercentW: number = marginWidth * 100 / windowWidth;
+    // canvas.style.marginLeft = marginPercentW + '%';
 
+    // const tempH: number = Number(this.canvas.style.height.substring(0, 3));
+    // const marginHeight: number = (windowHeight - tempH) / 2;
+    // const marginPercentH: number = marginHeight * 100 / windowHeight;
+    // canvas.style.marginTop = marginPercentH + '%';
 
-
-    /*console.log(tempW);
-    console.log(windowWidth);
-    console.log(marginWidth);
-    console.log(marginPercentW);
-    console.log(canvas.style.marginLeft);*/
-
-    CanvasRenderer.drawImage(this.canvas, this.image, 0, 0);
+    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
     for (let i: number = 0; i < this.walls.length; i++) {
       const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
