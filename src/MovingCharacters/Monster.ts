@@ -6,21 +6,11 @@ import Wall from './Wall.js';
 export default abstract class Monster extends MovingCharacter {
   private level: number = 1;
 
-  public constructor(walls: Wall[]) {
-    const randomX: number = Math.floor(Math.random() * window.innerWidth);
-    const randomY: number = Math.floor(Math.random() * window.innerHeight);
+  public constructor(randomX: number, randomY: number) {
     super();
     this.posX = randomX;
     this.posY = randomY;
     this.speed = 0.05;
-
-    /*if (this.isColliding(walls, this.posX, this.posY)) {
-      const newRandomX: number = Math.floor(Math.random() * window.innerWidth - 100);
-      const newRandomY: number = Math.floor(Math.random() * window.innerHeight - 300);
-      console.log('true');
-      this.posX = newRandomX;
-      this.posY = newRandomY;
-    }*/
   }
 
   /**

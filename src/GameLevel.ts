@@ -7,6 +7,7 @@ import CanvasRenderer from './Utility/CanvasRenderer.js';
 import Ghost from './MovingCharacters/Ghost.js';
 import MouseListener from './Utility/MouseListener.js';
 import Task from './Tasks/Task.js';
+import PowerPoint from './Tasks/PowerPoint.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -26,7 +27,6 @@ export default class GameLevel extends Level {
   private mouseListener: MouseListener;
 
   private tasks: Task[];
-
 
   public constructor(canvas: HTMLCanvasElement) {
     super();
@@ -50,7 +50,9 @@ export default class GameLevel extends Level {
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
     this.createMonsters();
+
     this.tasks = [];
+    this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
   }
 
   private populateWalls(): void {
@@ -113,10 +115,10 @@ export default class GameLevel extends Level {
       }
     }
 
-    // if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-    //   console.log(this.mouseListener.getMousePosition().x);
-    //   console.log(this.mouseListener.getMousePosition().y);
-    // }
+    if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
+      console.log(this.mouseListener.getMousePosition().x);
+      console.log(this.mouseListener.getMousePosition().y);
+    }
   }
 
   /**
@@ -147,19 +149,6 @@ export default class GameLevel extends Level {
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
 
-    // const windowWidth: number = canvas.width;
-    // const windowHeight: number = canvas.height;
-
-    // const tempW: number = Number(this.canvas.style.width.substring(0, 4));
-    // const marginWidth: number = (windowWidth - tempW) / 2;
-    // const marginPercentW: number = marginWidth * 100 / windowWidth;
-    // canvas.style.marginLeft = marginPercentW + '%';
-
-    // const tempH: number = Number(this.canvas.style.height.substring(0, 3));
-    // const marginHeight: number = (windowHeight - tempH) / 2;
-    // const marginPercentH: number = marginHeight * 100 / windowHeight;
-    // canvas.style.marginTop = marginPercentH + '%';
-
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
     for (let i: number = 0; i < this.monsters.length; i++) {
@@ -179,5 +168,6 @@ export default class GameLevel extends Level {
       );
     }
     this.player.render(this.canvas);
+    this.tasks[1].render(this.canvas);
   }
 }
