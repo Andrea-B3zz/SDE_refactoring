@@ -6,6 +6,7 @@ import KeyListener from './Utility/KeyListener.js';
 import CanvasRenderer from './Utility/CanvasRenderer.js';
 import Ghost from './MovingCharacters/Ghost.js';
 import MouseListener from './Utility/MouseListener.js';
+import Task from './Tasks/Task.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -24,6 +25,8 @@ export default class GameLevel extends Level {
 
   private mouseListener: MouseListener;
 
+  private tasks: Task[];
+
 
   public constructor(canvas: HTMLCanvasElement) {
     super();
@@ -41,12 +44,13 @@ export default class GameLevel extends Level {
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
     this.mouseListener = new MouseListener(this.canvas);
-    
+
     this.monsters = [];
     this.level = 1;
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
     this.createMonsters();
+    this.tasks = [];
   }
 
   private populateWalls(): void {
