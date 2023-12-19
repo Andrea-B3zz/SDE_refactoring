@@ -22,7 +22,7 @@ export default class Player extends MovingCharacter {
     this.posX = 200;
     this.posY = 200;
 
-    this.speed = 0.2;
+    this.speed = 0.4;
   }
 
 
