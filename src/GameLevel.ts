@@ -24,7 +24,6 @@ export default class GameLevel extends Level {
 
   private mouseListener: MouseListener;
 
-
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.walls = [];
@@ -38,10 +37,12 @@ export default class GameLevel extends Level {
     canvas.style.width = '';
     canvas.style.height = '';
     canvas.style.overflow = 'hidden';
+
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
     this.mouseListener = new MouseListener(this.canvas);
-    
+    this.keyListener = new KeyListener();
+
     this.monsters = [];
     this.level = 1;
     this.timeElapsedRight = 2;
@@ -77,7 +78,7 @@ export default class GameLevel extends Level {
    */
   public createMonsters(): void {
     for (let i: number = 0; i <= 2; i++) {
-      if (this.level = 1) {
+      if (this.level === 1) {
         this.monsters.push(new Ghost(this.walls));
       }
     }
@@ -113,6 +114,12 @@ export default class GameLevel extends Level {
     //   console.log(this.mouseListener.getMousePosition().x);
     //   console.log(this.mouseListener.getMousePosition().y);
     // }
+
+    if (this.keyListener.isKeyDown(KeyListener.KEY_SPACE)
+    && this.player.isCollidingWithMonster(this.monsters)) {
+      console.log('Collision with Monster!');
+      // open a new task
+    }
   }
 
   /**
@@ -137,24 +144,11 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    canvas.style.width='1408px';
-    canvas.style.height='792px';
+    canvas.style.width = '1408px';
+    canvas.style.height = '792px';
 
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
-
-    // const windowWidth: number = canvas.width;
-    // const windowHeight: number = canvas.height;
-
-    // const tempW: number = Number(this.canvas.style.width.substring(0, 4));
-    // const marginWidth: number = (windowWidth - tempW) / 2;
-    // const marginPercentW: number = marginWidth * 100 / windowWidth;
-    // canvas.style.marginLeft = marginPercentW + '%';
-
-    // const tempH: number = Number(this.canvas.style.height.substring(0, 3));
-    // const marginHeight: number = (windowHeight - tempH) / 2;
-    // const marginPercentH: number = marginHeight * 100 / windowHeight;
-    // canvas.style.marginTop = marginPercentH + '%';
 
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
