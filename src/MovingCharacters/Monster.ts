@@ -14,13 +14,13 @@ export default abstract class Monster extends MovingCharacter {
     this.posY = randomY;
     this.speed = 0.05;
 
-    if (this.isColliding(walls, this.posX, this.posY)) {
+    /*if (this.isColliding(walls, this.posX, this.posY)) {
       const newRandomX: number = Math.floor(Math.random() * window.innerWidth - 100);
       const newRandomY: number = Math.floor(Math.random() * window.innerHeight - 300);
       console.log('true');
       this.posX = newRandomX;
       this.posY = newRandomY;
-    }
+    }*/
   }
 
   /**
