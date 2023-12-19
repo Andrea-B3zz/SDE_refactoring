@@ -6,19 +6,23 @@ import Wall from './Wall.js';
 export default class Player extends MovingCharacter {
   private walls: Wall[];
 
+  private fovImage: HTMLImageElement;
+
   public constructor(walls: Wall[]) {
     super();
     this.walls = walls;
+
+    this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
     // random positions for the Player object
     // const randomX: number = Math.floor(Math.random() * window.innerWidth);
     // const randomY: number = Math.floor(Math.random() * window.innerHeight);
 
-    this.image = CanvasRenderer.loadNewImage('./assets/boy5.png');
-    this.posX = 100;
-    this.posY = 100;
+    this.image = CanvasRenderer.loadNewImage('./assets/boy4.png');
+    this.posX = 200;
+    this.posY = 200;
 
-    this.speed = 0.2;
+    this.speed = 0.4;
   }
 
 
@@ -27,8 +31,10 @@ export default class Player extends MovingCharacter {
    * @param elapsed the time elapsed
    */
   public override update(elapsed: number): void {
-
-
+    const fovX: number = this.posX - this.fovImage.width / 2;
+    const fovY: number = this.posY - this.fovImage.height / 2;
+    this.fovImage.style.left = fovX + 'px';
+    this.fovImage.style.top = fovY + 'px';
   }
 
   /**
@@ -100,6 +106,10 @@ export default class Player extends MovingCharacter {
    * @param canvas our canvas where everything will be displayed
    */
   public override render(canvas: HTMLCanvasElement): void {
+    CanvasRenderer.drawImage
+    (canvas, this.fovImage, this.posX - this.fovImage.width / 2 + this.getWidth() / 2,
+      this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
+
     CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);
   }
 }
