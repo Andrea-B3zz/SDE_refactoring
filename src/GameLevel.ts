@@ -28,7 +28,8 @@ export default class GameLevel extends Level {
     canvas.style.marginLeft = '';
     canvas.style.width = '';
     canvas.style.height = '';
-    this.image = CanvasRenderer.loadNewImage('./assets/FinalMap.png');
+    canvas.style.overflow = 'hidden';
+    this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
     this.mouseListener = new MouseListener(this.canvas);
   }
@@ -73,10 +74,10 @@ export default class GameLevel extends Level {
     }
 
 
-    if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-      console.log(this.mouseListener.getMousePosition().x);
-      console.log(this.mouseListener.getMousePosition().y);
-    }
+    // if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
+    //   console.log(this.mouseListener.getMousePosition().x);
+    //   console.log(this.mouseListener.getMousePosition().y);
+    // }
   }
 
   /**
