@@ -4,10 +4,6 @@ import Task from './Task.js';
 import Button from './Button.js';
 
 export default class Word extends Task {
-  public override getIsCompleted(): boolean {
-    return false;
-  }
-
   private currentTask: number;
 
   private baseImage: HTMLImageElement;
