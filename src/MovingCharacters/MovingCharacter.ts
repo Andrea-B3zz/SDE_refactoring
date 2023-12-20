@@ -1,4 +1,5 @@
 import KeyListener from '../Utility/KeyListener.js';
+import Wall from './Wall.js';
 
 export default abstract class MovingCharacter {
   protected posX: number;
@@ -37,11 +38,20 @@ export default abstract class MovingCharacter {
    * to update the item position
    * @param elapsed the time elapsed
    */
-  public abstract update(elapsed: number): void;
+  public abstract update(elapsed: number, walls: Wall[]): void;
 
   /**
    * to render
    * @param canvas to draw on
    */
   public abstract render(canvas: HTMLCanvasElement): void;
+
+  public setPosX(posX: number): void {
+    this.posX = posX;
+  }
+
+  public setPosY(posY: number): void {
+    this.posY = posY;
+
+  }
 }

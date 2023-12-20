@@ -28,7 +28,6 @@ export default class GameLevel extends Level {
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.walls = [];
-    this.player = new Player(this.walls);
     this.keyListener = new KeyListener();
 
     this.canvas = canvas;
@@ -41,12 +40,13 @@ export default class GameLevel extends Level {
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
     this.mouseListener = new MouseListener(this.canvas);
-    
+
     this.monsters = [];
     this.level = 1;
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
-    this.createMonsters();
+    this.createMonsters(this.getMapWidth(), this.getMapHeight());
+    this.player = new Player(this.walls, this.monsters);
   }
 
   private populateWalls(): void {
@@ -75,13 +75,14 @@ export default class GameLevel extends Level {
   /**
    * creating 3 monster per level
    */
-  public createMonsters(): void {
+  public createMonsters(MapWidth: number, MapHeight: number): void {
     for (let i: number = 0; i <= 2; i++) {
       if (this.level = 1) {
-        this.monsters.push(new Ghost(this.walls));
+        this.monsters.push(new Ghost(this.walls, MapWidth, MapHeight));
       }
     }
   }
+
 
   /**
    * updates the images
@@ -94,7 +95,7 @@ export default class GameLevel extends Level {
     const newPosX: number = this.player.getPosX();
     const newPosY: number = this.player.getPosY();
 
-    if (this.player.isColliding(newPosX, newPosY)) {
+    if (this.player.isCollidingWithWalls(newPosX, newPosY)) {
       this.player.doNotMove();
     } else {
       this.player.move(this.keyListener);
@@ -102,6 +103,7 @@ export default class GameLevel extends Level {
 
     for (let i: number = 0; i < this.monsters.length; i++) {
       this.monsters[i].move(elapsed);
+      this.monsters[i].update(elapsed, this.walls);
       if (this.monsters[i].isColliding(this.walls,
         this.monsters[i].getPosX(),
         this.monsters[i].getPosY())) {
@@ -109,10 +111,12 @@ export default class GameLevel extends Level {
       }
     }
 
-    // if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-    //   console.log(this.mouseListener.getMousePosition().x);
-    //   console.log(this.mouseListener.getMousePosition().y);
-    // }
+    // triggers a task when u are colliding with a monster and also clikc on it
+    if(this.player.isCollidingWithMonster(this.player.getPosX(), this.player.getPosY())){
+      if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
+
+      }
+    }
   }
 
   /**
@@ -137,8 +141,8 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    canvas.style.width='1408px';
-    canvas.style.height='792px';
+    canvas.style.width = '1408px';
+    canvas.style.height = '792px';
 
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
