@@ -30,12 +30,17 @@ export default class GameLevel extends Level {
 
   private inATask: boolean;
 
+  private monsterColliding: number;
+
+  private questionNumber: number;
+
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.walls = [];
     this.player = new Player(this.walls);
     this.keyListener = new KeyListener();
     this.inATask = false;
+    this.questionNumber = 0;
 
     this.canvas = canvas;
 
@@ -57,7 +62,7 @@ export default class GameLevel extends Level {
     this.createMonsters();
 
     this.tasks = [];
-    this.tasks.push(new PowerPoint(1));
+    this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
   }
 
   private populateWalls(): void {
@@ -120,13 +125,24 @@ export default class GameLevel extends Level {
       }
     }
 
-    if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-      //console.log(this.mouseListener.getMousePosition().x);
-      //console.log(this.mouseListener.getMousePosition().y);
+    //if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
+    //console.log(this.mouseListener.getMousePosition().x);
+    //console.log(this.mouseListener.getMousePosition().y);
+    //}
+
+    if (this.player.isCollidingWithMonster(this.monsters) > 0) {
+      if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+        this.monsterColliding = this.player.isCollidingWithMonster(this.monsters) - 1;
+        this.inATask = true;
+      }
     }
 
-    if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
-      this.inATask = true;
+    if (this.tasks[this.questionNumber].getIsCompleted()) {
+      this.monsters.splice(this.monsterColliding, 1);
+      this.inATask = false;
+      if (this.questionNumber < this.tasks.length - 1)
+        this.questionNumber += 1;
+      console.log(this.questionNumber);
     }
   }
 
@@ -145,9 +161,7 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener): void {
     this.player.processInput(keyListener);
-    this.tasks[0].processInput(this.mouseListener);
-    // console.log(this.mouseListener.getMousePosition().x);
-    // console.log(this.mouseListener.getMousePosition().y);
+    this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
   /**
@@ -156,7 +170,7 @@ export default class GameLevel extends Level {
    */
   public render(canvas: HTMLCanvasElement): void {
     if (this.inATask) {
-      this.tasks[0].render(this.canvas);
+      this.tasks[this.questionNumber].render(this.canvas);
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
@@ -179,4 +193,6 @@ export default class GameLevel extends Level {
       this.player.render(this.canvas);
     }
   }
+
+
 }
