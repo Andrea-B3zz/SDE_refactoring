@@ -32,6 +32,10 @@ export default class GameLevel extends Level {
   private currentLevel: number;
 
   private inATask: boolean;
+  
+  private monsterColliding: number;
+
+  private questionNumber: number;
 
   public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
     super();
@@ -39,7 +43,10 @@ export default class GameLevel extends Level {
     this.player = new Player(this.walls);
     this.keyListener = new KeyListener();
     this.inATask = false;
+
     this.currentLevel = currentLevel;
+
+    this.questionNumber = 0;
 
     this.canvas = canvas;
 
@@ -74,6 +81,7 @@ export default class GameLevel extends Level {
       //    break;
       // }
     }
+
   }
 
   private populateWalls(): void {
@@ -136,9 +144,24 @@ export default class GameLevel extends Level {
       }
     }
 
-    if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)
-    && this.player.isColliding(this.player.getPosX(), this.player.getPosY())) {
+    //if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
+    //console.log(this.mouseListener.getMousePosition().x);
+    //console.log(this.mouseListener.getMousePosition().y);
+    //}
 
+    if (this.player.isCollidingWithMonster(this.monsters) > 0) {
+      if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+        this.monsterColliding = this.player.isCollidingWithMonster(this.monsters) - 1;
+        this.inATask = true;
+      }
+    }
+
+    if (this.tasks[this.questionNumber].getIsCompleted()) {
+      this.monsters.splice(this.monsterColliding, 1);
+      this.inATask = false;
+      if (this.questionNumber < this.tasks.length - 1)
+        this.questionNumber += 1;
+      console.log(this.questionNumber);
     }
   }
 
@@ -158,7 +181,7 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
-    this.tasks[0].processInput(mouseListener);
+    this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
   /**
@@ -166,8 +189,11 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    canvas.style.width='1408px';
-    canvas.style.height='792px';
+    if (this.inATask) {
+      this.tasks[this.questionNumber].render(this.canvas);
+    } else {
+      CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+
 
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
@@ -193,4 +219,6 @@ export default class GameLevel extends Level {
     this.player.render(this.canvas);
     this.tasks[1].render(this.canvas);
   }
+
+
 }
