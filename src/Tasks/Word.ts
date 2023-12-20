@@ -4,9 +4,13 @@ import Task from './Task.js';
 import Button from './Button.js';
 
 export default class Word extends Task {
-  private baseImage: HTMLImageElement;
+  public override getIsCompleted(): boolean {
+    return false;
+  }
 
   private currentTask: number;
+
+  private baseImage: HTMLImageElement;
 
   public constructor(rightAnswer: number) {
     super();

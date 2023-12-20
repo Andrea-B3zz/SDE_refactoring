@@ -32,7 +32,7 @@ export default class GameLevel extends Level {
   private currentLevel: number;
 
   private inATask: boolean;
-  
+
   private monsterColliding: number;
 
   private questionNumber: number;
@@ -51,9 +51,11 @@ export default class GameLevel extends Level {
     this.canvas = canvas;
 
     this.populateWalls();
-    canvas.style.marginLeft = '';
-    canvas.style.width = '';
-    canvas.style.height = '';
+    canvas.style.marginLeft = '17.5%';
+    canvas.style.marginTop = '4%';
+
+    canvas.style.width = '1408px';
+    canvas.style.height = '792px';
     canvas.style.overflow = 'hidden';
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
@@ -67,14 +69,16 @@ export default class GameLevel extends Level {
 
     this.tasks = [];
     //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-    switch(this.currentLevel) {
+    switch (this.currentLevel) {
       case 1: {
-        this.tasks.push(new Word(1), new Word(2), new Word(3));
-         break;
+        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+
+        break;
       }
       case 2: {
-        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-         break;
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
+
+        break;
       }
       // case 3: {
       //   this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
@@ -171,8 +175,10 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
+    /*
     this.currentLevel++;
-    return new GameLevel(canvas, this.currentLevel);
+    return new GameLevel(canvas, this.currentLevel);*/
+    return null;
   }
 
   /**
@@ -181,7 +187,9 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
+    console.log(this.tasks[this.questionNumber]);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
+
   }
 
   /**
@@ -194,31 +202,26 @@ export default class GameLevel extends Level {
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
+      CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
-    canvas.style.marginLeft = '17.5%';
-    canvas.style.marginTop = '4%';
+      for (let i: number = 0; i < this.monsters.length; i++) {
+        this.monsters[i].render(canvas);
+      }
 
-    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
-
-    for (let i: number = 0; i < this.monsters.length; i++) {
-      this.monsters[i].render(canvas);
+      for (let i: number = 0; i < this.walls.length; i++) {
+        const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
+        const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
+        CanvasRenderer.drawRectangle(
+          this.canvas,
+          this.walls[i].getLeftX(),
+          this.walls[i].getTopY(),
+          width,
+          height,
+          this.walls[i].getColor(),
+        );
+      }
+      this.player.render(this.canvas);
     }
-
-    for (let i: number = 0; i < this.walls.length; i++) {
-      const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
-      const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
-      CanvasRenderer.drawRectangle(
-        this.canvas,
-        this.walls[i].getLeftX(),
-        this.walls[i].getTopY(),
-        width,
-        height,
-        this.walls[i].getColor(),
-      );
-    }
-    this.player.render(this.canvas);
-    this.tasks[1].render(this.canvas);
   }
-
 
 }
