@@ -60,7 +60,7 @@ export default class Word extends Task {
   }
 
   public override getIsCompleted(): boolean {
-    throw new Error('Method not implemented.');
+    return false;
   }
 
   /**

@@ -51,9 +51,10 @@ export default class GameLevel extends Level {
     this.canvas = canvas;
 
     this.populateWalls();
-    canvas.style.marginLeft = '';
-    canvas.style.width = '';
-    canvas.style.height = '';
+    canvas.style.marginLeft = '17.5%';
+    canvas.style.marginTop = '4%';
+    canvas.style.width = '1408px';
+    canvas.style.height = '792px';
     canvas.style.overflow = 'hidden';
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
@@ -70,11 +71,11 @@ export default class GameLevel extends Level {
     //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
     switch (this.currentLevel) {
       case 1: {
-        this.tasks.push(new Word(1), new Word(2), new Word(3));
+        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
         break;
       }
       case 2: {
-        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
         break;
       }
       // case 3: {
@@ -82,7 +83,6 @@ export default class GameLevel extends Level {
       //    break;
       // }
     }
-
   }
 
   private populateWalls(): void {
@@ -172,13 +172,15 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
-    this.currentLevel++;
-    return new GameLevel(canvas, this.currentLevel);
+    // this.currentLevel++;
+    // return new GameLevel(canvas, this.currentLevel);
+    return null;
   }
 
   /**
-   * method to change the photos in the arrey by pressing the space bar
-   * @param keyListener adding the key listener so we can use the space bar
+   *
+   * @param keyListener
+   * @param mouseListener
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
@@ -194,11 +196,6 @@ export default class GameLevel extends Level {
       this.tasks[this.questionNumber].render(this.canvas);
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
-
-
-
-      canvas.style.marginLeft = '17.5%';
-      canvas.style.marginTop = '4%';
 
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
@@ -219,9 +216,6 @@ export default class GameLevel extends Level {
         );
       }
       this.player.render(this.canvas);
-      this.tasks[4].render(this.canvas);
-
-
     }
   }
 }

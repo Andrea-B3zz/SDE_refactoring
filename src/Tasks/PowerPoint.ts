@@ -30,7 +30,7 @@ export default class PowerPoint extends Task {
   }
 
   private addButtons(): void {
-    this.buttons.push(new Button(56, 222, 80, 90));
+    this.buttons.push(new Button(166, 222, 35, 135));
     this.buttons.push(new Button(296, 355, 35, 135));
     this.buttons.push(new Button(320, 410, 3, 27));
     this.buttons.push(new Button(585, 700, 3, 27));
@@ -40,6 +40,7 @@ export default class PowerPoint extends Task {
   /**
    *
    * @param mouseListener
+   * @param keyListener
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
