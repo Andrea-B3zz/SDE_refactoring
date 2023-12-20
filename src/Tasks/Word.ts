@@ -15,7 +15,6 @@ export default class Word extends Task {
 
     this.rightAnswer = rightAnswer;
     this.baseImage = CanvasRenderer.loadNewImage('./assets/Word_main.png');
-    this.addButtons();
   }
 
   private addButtons(): void {
@@ -60,6 +59,10 @@ export default class Word extends Task {
     return false;
   }
 
+  public override getIsCompleted(): boolean {
+    throw new Error('Method not implemented.');
+  }
+
   /**
    *
    * @param elapsed
@@ -72,8 +75,7 @@ export default class Word extends Task {
    * @param canvas
    */
   public override render(canvas: HTMLCanvasElement): void {
-    CanvasRenderer.drawImage(canvas, this.baseImage, -80, 0);
-
+    CanvasRenderer.drawImage(canvas, this.baseImage, 0, 0);
     for (let i: number = 0; i < this.buttons.length; i++) {
       const width: number = this.buttons[i].getRightX() - this.buttons[i].getLeftX();
       const height: number = this.buttons[i].getBottomY() - this.buttons[i].getTopY();
