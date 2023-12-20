@@ -1,16 +1,21 @@
 import CanvasRenderer from '../Utility/CanvasRenderer.js';
 import KeyListener from '../Utility/KeyListener.js';
+import Monster from './Monster.js';
 import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 
 export default class Player extends MovingCharacter {
   private walls: Wall[];
 
+  private monsters: Monster[];
+
   private fovImage: HTMLImageElement;
 
-  public constructor(walls: Wall[]) {
+  public constructor(walls: Wall[], monsters: Monster[]) {
     super();
     this.walls = walls;
+    this.monsters = monsters;
+    console.log(monsters);
 
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
@@ -66,7 +71,7 @@ export default class Player extends MovingCharacter {
       newPosY += 4 * this.speed;
     }
 
-    if (!this.isColliding(newPosX, newPosY)) {
+    if (!this.isCollidingWithWalls(newPosX, newPosY)) {
       this.posX = newPosX;
       this.posY = newPosY;
     }
@@ -78,7 +83,7 @@ export default class Player extends MovingCharacter {
    * @param newPosY receives the possible next posY
    * @returns true if there is collision, and false - if not
    */
-  public isColliding(newPosX: number, newPosY: number): boolean {
+  public isCollidingWithWalls(newPosX: number, newPosY: number): boolean {
     for (let i: number = 0; i < this.walls.length; i++) {
       const item: Wall = this.walls[i];
       if (
@@ -86,6 +91,21 @@ export default class Player extends MovingCharacter {
         && newPosX + this.getWidth() > item.getLeftX()
         && newPosY + this.getHeight() > item.getTopY()
         && newPosY < item.getBottomY()
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public isCollidingWithMonster(newPosX: number, newPosY: number): boolean {
+    for (let i: number = 0; i < this.monsters.length; i++) {
+      const item: Monster = this.monsters[i];
+      if (
+        newPosX < item.getPosX() + item.getWidth()
+        && newPosX + this.getWidth() > item.getPosX()
+        && newPosY + this.getHeight() > item.getPosY()
+        && newPosY < item.getPosY() + item.getHeight()
       ) {
         return true;
       }
