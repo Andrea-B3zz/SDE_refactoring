@@ -32,7 +32,7 @@ export default class Controller extends Game {
   }
 
   public processInput(): void {
-    this.currentLevel.processInput(this.keyListener);
+    this.currentLevel.processInput(this.keyListener, this.mouseListener);
   }
 
   /**

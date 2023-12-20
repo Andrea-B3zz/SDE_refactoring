@@ -1,4 +1,5 @@
 import KeyListener from './Utility/KeyListener.js';
+import MouseListener from './Utility/MouseListener.js';
 
 export default abstract class Level {
   protected image: HTMLImageElement;
@@ -9,7 +10,7 @@ export default abstract class Level {
 
   public abstract nextLevel(canvas: HTMLCanvasElement): Level | null;
 
-  public abstract processInput(keyListener: KeyListener): void;
+  public abstract processInput(keyListener: KeyListener, mouseListener: MouseListener): void;
 
   public abstract render(canvas: HTMLCanvasElement): void;
 }

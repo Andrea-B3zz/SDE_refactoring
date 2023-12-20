@@ -8,6 +8,7 @@ import Ghost from './MovingCharacters/Ghost.js';
 import MouseListener from './Utility/MouseListener.js';
 import Task from './Tasks/Task.js';
 import PowerPoint from './Tasks/PowerPoint.js';
+import Word from './Tasks/Word.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -28,29 +29,32 @@ export default class GameLevel extends Level {
 
   private tasks: Task[];
 
-  private inATask: boolean;
+  private currentLevel: number;
 
+  private inATask: boolean;
+  
   private monsterColliding: number;
 
   private questionNumber: number;
 
-  public constructor(canvas: HTMLCanvasElement) {
+  public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
     super();
     this.walls = [];
     this.player = new Player(this.walls);
     this.keyListener = new KeyListener();
     this.inATask = false;
+
+    this.currentLevel = currentLevel;
+
     this.questionNumber = 0;
 
     this.canvas = canvas;
 
     this.populateWalls();
-    canvas.style.marginLeft = '17.5%';
-    canvas.style.marginTop = '4%';
-
-    canvas.style.width = '1408px';
-    canvas.style.height = '792px';
-    this.canvas.style.overflow = 'hidden';
+    canvas.style.marginLeft = '';
+    canvas.style.width = '';
+    canvas.style.height = '';
+    canvas.style.overflow = 'hidden';
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
     this.mouseListener = new MouseListener(this.canvas);
@@ -62,7 +66,22 @@ export default class GameLevel extends Level {
     this.createMonsters();
 
     this.tasks = [];
-    this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+    //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+    switch(this.currentLevel) {
+      case 1: {
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
+         break;
+      }
+      case 2: {
+        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+         break;
+      }
+      // case 3: {
+      //   this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+      //    break;
+      // }
+    }
+
   }
 
   private populateWalls(): void {
@@ -152,14 +171,15 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
-    return null;
+    this.currentLevel++;
+    return new GameLevel(canvas, this.currentLevel);
   }
 
   /**
    * method to change the photos in the arrey by pressing the space bar
    * @param keyListener adding the key listener so we can use the space bar
    */
-  public override processInput(keyListener: KeyListener): void {
+  public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
@@ -174,24 +194,30 @@ export default class GameLevel extends Level {
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
-      for (let i: number = 0; i < this.monsters.length; i++) {
-        this.monsters[i].render(canvas);
-      }
 
-      for (let i: number = 0; i < this.walls.length; i++) {
-        const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
-        const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
-        CanvasRenderer.drawRectangle(
-          this.canvas,
-          this.walls[i].getLeftX(),
-          this.walls[i].getTopY(),
-          width,
-          height,
-          this.walls[i].getColor(),
-        );
-      }
-      this.player.render(this.canvas);
+    canvas.style.marginLeft = '17.5%';
+    canvas.style.marginTop = '4%';
+
+    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+
+    for (let i: number = 0; i < this.monsters.length; i++) {
+      this.monsters[i].render(canvas);
     }
+
+    for (let i: number = 0; i < this.walls.length; i++) {
+      const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
+      const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
+      CanvasRenderer.drawRectangle(
+        this.canvas,
+        this.walls[i].getLeftX(),
+        this.walls[i].getTopY(),
+        width,
+        height,
+        this.walls[i].getColor(),
+      );
+    }
+    this.player.render(this.canvas);
+    this.tasks[1].render(this.canvas);
   }
 
 
