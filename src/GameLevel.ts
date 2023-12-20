@@ -53,7 +53,6 @@ export default class GameLevel extends Level {
     this.populateWalls();
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
-
     canvas.style.width = '1408px';
     canvas.style.height = '792px';
     canvas.style.overflow = 'hidden';
@@ -68,16 +67,15 @@ export default class GameLevel extends Level {
     this.createMonsters();
 
     this.tasks = [];
+
     //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
     switch (this.currentLevel) {
       case 1: {
         this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-
         break;
       }
       case 2: {
         this.tasks.push(new Word(1), new Word(2), new Word(3));
-
         break;
       }
       // case 3: {
@@ -85,7 +83,6 @@ export default class GameLevel extends Level {
       //    break;
       // }
     }
-
   }
 
   private populateWalls(): void {
@@ -182,8 +179,9 @@ export default class GameLevel extends Level {
   }
 
   /**
-   * method to change the photos in the arrey by pressing the space bar
-   * @param keyListener adding the key listener so we can use the space bar
+   *
+   * @param keyListener
+   * @param mouseListener
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
@@ -223,5 +221,4 @@ export default class GameLevel extends Level {
       this.player.render(this.canvas);
     }
   }
-
 }

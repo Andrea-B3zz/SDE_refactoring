@@ -40,6 +40,7 @@ export default class PowerPoint extends Task {
   /**
    *
    * @param mouseListener
+   * @param keyListener
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
