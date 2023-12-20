@@ -28,19 +28,22 @@ export default class GameLevel extends Level {
 
   private tasks: Task[];
 
+  private inATask: boolean;
+
   public constructor(canvas: HTMLCanvasElement) {
     super();
     this.walls = [];
     this.player = new Player(this.walls);
     this.keyListener = new KeyListener();
+    this.inATask = false;
 
     this.canvas = canvas;
 
     this.populateWalls();
-    canvas.style.marginLeft = '';
-    canvas.style.width = '';
-    canvas.style.height = '';
-    canvas.style.overflow = 'hidden';
+    this.canvas.style.marginLeft = '';
+    this.canvas.style.width = '';
+    this.canvas.style.height = '';
+    this.canvas.style.overflow = 'hidden';
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
     this.mouseListener = new MouseListener(this.canvas);
@@ -119,6 +122,10 @@ export default class GameLevel extends Level {
       console.log(this.mouseListener.getMousePosition().x);
       console.log(this.mouseListener.getMousePosition().y);
     }
+
+    if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+      this.inATask = true;
+    }
   }
 
   /**
@@ -136,6 +143,9 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener): void {
     this.player.processInput(keyListener);
+    this.tasks[0].processInput(this.mouseListener);
+    // console.log(this.mouseListener.getMousePosition().x);
+    // console.log(this.mouseListener.getMousePosition().y);
   }
 
   /**
@@ -143,31 +153,36 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    canvas.style.width='1408px';
-    canvas.style.height='792px';
-
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
 
-    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+    if (this.inATask) {
+      this.tasks[1].render(this.canvas);
+      canvas.style.width = '1408px';
+      canvas.style.height = '792px';
+    } else {
+      canvas.style.width = '1408px';
+      canvas.style.height = '792px';
 
-    for (let i: number = 0; i < this.monsters.length; i++) {
-      this.monsters[i].render(canvas);
-    }
+      CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
-    for (let i: number = 0; i < this.walls.length; i++) {
-      const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
-      const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
-      CanvasRenderer.drawRectangle(
-        this.canvas,
-        this.walls[i].getLeftX(),
-        this.walls[i].getTopY(),
-        width,
-        height,
-        this.walls[i].getColor(),
-      );
+      for (let i: number = 0; i < this.monsters.length; i++) {
+        this.monsters[i].render(canvas);
+      }
+
+      for (let i: number = 0; i < this.walls.length; i++) {
+        const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
+        const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
+        CanvasRenderer.drawRectangle(
+          this.canvas,
+          this.walls[i].getLeftX(),
+          this.walls[i].getTopY(),
+          width,
+          height,
+          this.walls[i].getColor(),
+        );
+      }
+      this.player.render(this.canvas);
     }
-    this.player.render(this.canvas);
-    this.tasks[1].render(this.canvas);
   }
 }
