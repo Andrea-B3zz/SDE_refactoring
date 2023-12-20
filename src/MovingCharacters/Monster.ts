@@ -7,11 +7,12 @@ export default abstract class Monster extends MovingCharacter {
   private level: number = 1;
 
   public constructor(walls: Wall[], MapWidth: number, MapHeight: number) {
-    const randomX: number = Math.floor(Math.random() * MapWidth);
-    const randomY: number = Math.floor(Math.random() * MapHeight);
     super();
-    this.posX = randomX;
-    this.posY = randomY;
+    this.image = new Image();
+    do {
+      this.posX = Math.floor(Math.random() * MapWidth);
+      this.posY = Math.floor(Math.random() * MapHeight);
+    } while (this.isColliding(walls, this.posX, this.posY));
     this.speed = 0.05;
   }
 
