@@ -113,9 +113,8 @@ export default class GameLevel extends Level {
     }
 
     // triggers a task when u are colliding with a monster and also clikc on it
-    if(this.player.isCollidingWithMonster(this.player.getPosX(), this.player.getPosY())){
+    if(this.player.isCollidingWithMonster(this.monsters)){
       if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-
       }
     }
   }
