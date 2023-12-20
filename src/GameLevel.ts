@@ -114,12 +114,6 @@ export default class GameLevel extends Level {
     //   console.log(this.mouseListener.getMousePosition().x);
     //   console.log(this.mouseListener.getMousePosition().y);
     // }
-
-    if (this.keyListener.isKeyDown(KeyListener.KEY_SPACE)
-    && this.player.isCollidingWithMonster(this.monsters)) {
-      console.log('Collision with Monster!');
-      // open a new task
-    }
   }
 
   /**
