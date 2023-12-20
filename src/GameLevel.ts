@@ -162,7 +162,6 @@ export default class GameLevel extends Level {
       this.inATask = false;
       if (this.questionNumber < this.tasks.length - 1)
         this.questionNumber += 1;
-      console.log(this.questionNumber);
     }
   }
 
@@ -185,7 +184,6 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
-    console.log(this.tasks[this.questionNumber]);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
 
   }
