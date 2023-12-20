@@ -98,21 +98,6 @@ export default class Player extends MovingCharacter {
     return false;
   }
 
-  public isCollidingWithMonster(newPosX: number, newPosY: number): boolean {
-    for (let i: number = 0; i < this.monsters.length; i++) {
-      const item: Monster = this.monsters[i];
-      if (
-        newPosX < item.getPosX() + item.getWidth()
-        && newPosX + this.getWidth() > item.getPosX()
-        && newPosY + this.getHeight() > item.getPosY()
-        && newPosY < item.getPosY() + item.getHeight()
-      ) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   /**
    * Checks if the player collides with monsters
    * @param monsters array of monsters
