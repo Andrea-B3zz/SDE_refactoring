@@ -29,11 +29,17 @@ export default class GameLevel extends Level {
 
   private tasks: Task[];
 
-  public constructor(canvas: HTMLCanvasElement) {
+  private currentLevel: number;
+
+  private inATask: boolean;
+
+  public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
     super();
     this.walls = [];
     this.player = new Player(this.walls);
     this.keyListener = new KeyListener();
+    this.inATask = false;
+    this.currentLevel = currentLevel;
 
     this.canvas = canvas;
 
@@ -54,7 +60,20 @@ export default class GameLevel extends Level {
 
     this.tasks = [];
     //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-    this.tasks.push(new Word(1), new Word(2), new Word(3));
+    switch(this.currentLevel) {
+      case 1: {
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
+         break;
+      }
+      case 2: {
+        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+         break;
+      }
+      // case 3: {
+      //   this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+      //    break;
+      // }
+    }
   }
 
   private populateWalls(): void {
@@ -117,9 +136,9 @@ export default class GameLevel extends Level {
       }
     }
 
-    if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-      console.log(this.mouseListener.getMousePosition().x);
-      console.log(this.mouseListener.getMousePosition().y);
+    if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)
+    && this.player.isColliding(this.player.getPosX(), this.player.getPosY())) {
+
     }
   }
 
@@ -129,7 +148,8 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
-    return null;
+    this.currentLevel++;
+    return new GameLevel(canvas, this.currentLevel);
   }
 
   /**

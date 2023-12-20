@@ -6,9 +6,12 @@ import Button from './Button.js';
 export default class Word extends Task {
   private baseImage: HTMLImageElement;
 
+  private currentTask: number;
+
   public constructor(rightAnswer: number) {
     super();
     this.buttons = [];
+    this.currentTask = 0;
 
     this.rightAnswer = rightAnswer;
     this.baseImage = CanvasRenderer.loadNewImage('./assets/Word_main.png');
@@ -28,11 +31,11 @@ export default class Word extends Task {
    * @param mouseListener
    */
   public override processInput(mouseListener: MouseListener): void {
-    if (mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-      if (this.isCollidingWithRectangle(mouseListener)) {
-        console.log('collision with mouse');
-      }
-    }
+    // if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
+    //   if (this.isCollidingWithRectangle(mouseListener)) {
+    //     console.log('collision with mouse');
+    //   }
+    // }
   }
 
   /**
