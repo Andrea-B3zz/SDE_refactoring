@@ -6,12 +6,12 @@ import Wall from './Wall.js';
 export default abstract class Monster extends MovingCharacter {
   private level: number = 1;
 
-  public constructor(walls: Wall[]) {
+  public constructor(walls: Wall[], MapWidth: number, MapHeight: number) {
     super();
     this.image = new Image();
     do {
-      this.posX = Math.floor(Math.random() * window.innerWidth);
-      this.posY = Math.floor(Math.random() * window.innerHeight);
+      this.posX = Math.floor(Math.random() * MapWidth);
+      this.posY = Math.floor(Math.random() * MapHeight);
     } while (this.isColliding(walls, this.posX, this.posY));
     this.speed = 0.05;
   }
@@ -19,8 +19,9 @@ export default abstract class Monster extends MovingCharacter {
   /**
    * updating our monsters
    * @param elapsed time elapsed
+   * @param walls the array of walls
    */
-  public override update(elapsed: number): void {
+  public override update(elapsed: number, walls: Wall[]): void {
 
   }
 
