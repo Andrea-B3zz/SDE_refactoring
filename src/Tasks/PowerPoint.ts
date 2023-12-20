@@ -28,33 +28,6 @@ export default class PowerPoint extends Task {
    * @param mouseListener
    */
   public override processInput(mouseListener: MouseListener): void {
-    if (mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-      if (this.isCollidingWithRectangle(mouseListener)) {
-        console.log('collision with mouse');
-      }
-    }
-  }
-
-  /**
-   *
-   * @param mouseListener
-   * @returns
-   */
-  public isCollidingWithRectangle(mouseListener: MouseListener): boolean {
-    console.log(mouseListener.getMousePosition().x);
-    console.log(mouseListener.getMousePosition().y);
-    for (let i: number = 0; i < this.buttons.length; i++) {
-      const item: Button = this.buttons[i];
-      if (
-        mouseListener.getMousePosition().x * 1.363636 < item.getRightX()
-        && mouseListener.getMousePosition().x * 1.363636 > item.getLeftX()
-        && mouseListener.getMousePosition().y * 1.363636 > item.getTopY()
-        && mouseListener.getMousePosition().y * 1.363636 < item.getBottomY()
-      ) {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
