@@ -41,13 +41,15 @@ export default class PowerPoint extends Task {
    * @returns
    */
   public isCollidingWithRectangle(mouseListener: MouseListener): boolean {
+    console.log(mouseListener.getMousePosition().x);
+    console.log(mouseListener.getMousePosition().y);
     for (let i: number = 0; i < this.buttons.length; i++) {
       const item: Button = this.buttons[i];
       if (
-        mouseListener.getMousePosition().x < item.getRightX()
-        && mouseListener.getMousePosition().x > item.getLeftX()
-        && mouseListener.getMousePosition().y > item.getTopY()
-        && mouseListener.getMousePosition().y < item.getBottomY()
+        mouseListener.getMousePosition().x * 1.363636 < item.getRightX()
+        && mouseListener.getMousePosition().x * 1.363636 > item.getLeftX()
+        && mouseListener.getMousePosition().y * 1.363636 > item.getTopY()
+        && mouseListener.getMousePosition().y * 1.363636 < item.getBottomY()
       ) {
         return true;
       }

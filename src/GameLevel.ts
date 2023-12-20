@@ -40,9 +40,11 @@ export default class GameLevel extends Level {
     this.canvas = canvas;
 
     this.populateWalls();
-    this.canvas.style.marginLeft = '';
-    this.canvas.style.width = '';
-    this.canvas.style.height = '';
+    canvas.style.marginLeft = '17.5%';
+    canvas.style.marginTop = '4%';
+
+    canvas.style.width = '1408px';
+    canvas.style.height = '792px';
     this.canvas.style.overflow = 'hidden';
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
@@ -55,7 +57,7 @@ export default class GameLevel extends Level {
     this.createMonsters();
 
     this.tasks = [];
-    this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+    this.tasks.push(new PowerPoint(1));
   }
 
   private populateWalls(): void {
@@ -119,8 +121,8 @@ export default class GameLevel extends Level {
     }
 
     if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-      console.log(this.mouseListener.getMousePosition().x);
-      console.log(this.mouseListener.getMousePosition().y);
+      //console.log(this.mouseListener.getMousePosition().x);
+      //console.log(this.mouseListener.getMousePosition().y);
     }
 
     if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
@@ -153,17 +155,9 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    canvas.style.marginLeft = '17.5%';
-    canvas.style.marginTop = '4%';
-
     if (this.inATask) {
-      this.tasks[1].render(this.canvas);
-      canvas.style.width = '1408px';
-      canvas.style.height = '792px';
+      this.tasks[0].render(this.canvas);
     } else {
-      canvas.style.width = '1408px';
-      canvas.style.height = '792px';
-
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
       for (let i: number = 0; i < this.monsters.length; i++) {
