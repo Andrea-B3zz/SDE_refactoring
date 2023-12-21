@@ -72,20 +72,21 @@ export default class GameLevel extends Level {
     this.tasks = [];
 
     //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-    // switch (this.currentLevel) {
-    //   case 1: {
-    //     this.tasks.push(new Word(1), new Word(2), new Word(3));
-    //     break;
-    //   }
-    //   case 2: {
-    //     this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-    //     break;
-    //   }
-    //   case 3: {
-    //     this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
-    //     break;
-    //   }
-    // }
+
+    switch (this.currentLevel) {
+      case 1: {
+        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+        break;
+      }
+      case 2: {
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
+        break;
+      }
+      case 3: {
+        this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+         break;
+      }
+    }
   }
 
   private populateWalls(): void {
@@ -209,6 +210,7 @@ export default class GameLevel extends Level {
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
+
   }
 
   /**
@@ -220,10 +222,6 @@ export default class GameLevel extends Level {
       this.tasks[this.questionNumber].render(this.canvas);
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
-
-
-      canvas.style.marginLeft = '17.5%';
-      canvas.style.marginTop = '4%';
 
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
@@ -244,7 +242,6 @@ export default class GameLevel extends Level {
         );
       }
       this.player.render(this.canvas);
-      this.tasks[1].render(this.canvas);
     }
   }
 }
