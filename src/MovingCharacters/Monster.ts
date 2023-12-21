@@ -8,16 +8,20 @@ export default abstract class Monster extends MovingCharacter {
 
   public constructor(randomX: number, randomY: number) {
     super();
-    this.posX = randomX;
-    this.posY = randomY;
+    this.image = new Image();
+    do {
+      this.posX = Math.floor(Math.random() * MapWidth);
+      this.posY = Math.floor(Math.random() * MapHeight);
+    } while (this.isColliding(walls, this.posX, this.posY));
     this.speed = 0.05;
   }
 
   /**
    * updating our monsters
    * @param elapsed time elapsed
+   * @param walls the array of walls
    */
-  public override update(elapsed: number): void {
+  public override update(elapsed: number, walls: Wall[]): void {
 
   }
 

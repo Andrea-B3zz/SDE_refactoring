@@ -13,4 +13,12 @@ export default abstract class Level {
   public abstract processInput(keyListener: KeyListener, mouseListener: MouseListener): void;
 
   public abstract render(canvas: HTMLCanvasElement): void;
+
+  public getMapWidth(): number {
+    return this.image.width;
+  }
+
+  public getMapHeight(): number {
+    return this.image.height;
+  }
 }

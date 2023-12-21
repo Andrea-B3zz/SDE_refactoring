@@ -1,5 +1,6 @@
 import CanvasRenderer from '../Utility/CanvasRenderer.js';
 import KeyListener from '../Utility/KeyListener.js';
+import Monster from './Monster.js';
 import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 import Monster from './Monster.js';
@@ -7,11 +8,15 @@ import Monster from './Monster.js';
 export default class Player extends MovingCharacter {
   private walls: Wall[];
 
+  private monsters: Monster[];
+
   private fovImage: HTMLImageElement;
 
-  public constructor(walls: Wall[]) {
+  public constructor(walls: Wall[], monsters: Monster[]) {
     super();
     this.walls = walls;
+    this.monsters = monsters;
+    console.log(monsters);
 
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
@@ -67,7 +72,7 @@ export default class Player extends MovingCharacter {
       newPosY += 4 * this.speed;
     }
 
-    if (!this.isColliding(newPosX, newPosY)) {
+    if (!this.isCollidingWithWalls(newPosX, newPosY)) {
       this.posX = newPosX;
       this.posY = newPosY;
     }
@@ -79,7 +84,7 @@ export default class Player extends MovingCharacter {
    * @param newPosY receives the possible next posY
    * @returns true if there is collision, and false - if not
    */
-  public isColliding(newPosX: number, newPosY: number): boolean {
+  public isCollidingWithWalls(newPosX: number, newPosY: number): boolean {
     for (let i: number = 0; i < this.walls.length; i++) {
       const item: Wall = this.walls[i];
       if (
@@ -115,6 +120,26 @@ export default class Player extends MovingCharacter {
   }
 
   /**
+   * Checks if the player collides with monsters
+   * @param monsters array of monsters
+   * @returns true if there is collision with monsters, and false - if not
+   */
+  public isCollidingWithMonster(monsters: Monster[]): boolean {
+    for (let i: number = 0; i < monsters.length; i++) {
+      const monster: Monster = monsters[i];
+      if (
+        this.posX < monster.getPosX() + monster.getWidth() &&
+        this.posX + this.getWidth() > monster.getPosX() &&
+        this.posY < monster.getPosY() + monster.getHeight() &&
+        this.posY + this.getHeight() > monster.getPosY()
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * if this method is called, the player doesn't change its position
    */
   public doNotMove(): void {
@@ -127,8 +152,8 @@ export default class Player extends MovingCharacter {
    * @param canvas our canvas where everything will be displayed
    */
   public override render(canvas: HTMLCanvasElement): void {
-    CanvasRenderer.drawImage
-    (canvas, this.fovImage, this.posX - this.fovImage.width / 2 + this.getWidth() / 2,
+    CanvasRenderer.drawImage(canvas, this.fovImage,
+      this.posX - this.fovImage.width / 2 + this.getWidth() / 2,
       this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
 
     CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);

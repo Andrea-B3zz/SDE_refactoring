@@ -41,7 +41,6 @@ export default class GameLevel extends Level {
   public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
     super();
     this.walls = [];
-    this.player = new Player(this.walls);
     this.keyListener = new KeyListener();
     this.inATask = false;
 
@@ -57,14 +56,17 @@ export default class GameLevel extends Level {
     canvas.style.width = '1408px';
     canvas.style.height = '792px';
     canvas.style.overflow = 'hidden';
+
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
     this.mouseListener = new MouseListener(this.canvas);
+    this.keyListener = new KeyListener();
 
     this.monsters = [];
 
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
+    
     this.createMonsters();
 
     this.tasks = [];
@@ -83,6 +85,7 @@ export default class GameLevel extends Level {
         break;
       }
     }
+    this.player = new Player(this.walls, this.monsters);
   }
 
   private populateWalls(): void {
@@ -127,6 +130,7 @@ export default class GameLevel extends Level {
     }
   }
 
+
   /**
    * updates the images
    * @param elapsed still no function
@@ -138,7 +142,7 @@ export default class GameLevel extends Level {
     const newPosX: number = this.player.getPosX();
     const newPosY: number = this.player.getPosY();
 
-    if (this.player.isColliding(newPosX, newPosY)) {
+    if (this.player.isCollidingWithWalls(newPosX, newPosY)) {
       this.player.doNotMove();
     } else {
       this.player.move(this.keyListener);
@@ -146,6 +150,7 @@ export default class GameLevel extends Level {
 
     for (let i: number = 0; i < this.monsters.length; i++) {
       this.monsters[i].move(elapsed);
+      this.monsters[i].update(elapsed, this.walls);
       if (this.monsters[i].isColliding(this.walls,
         this.monsters[i].getPosX(),
         this.monsters[i].getPosY())) {
