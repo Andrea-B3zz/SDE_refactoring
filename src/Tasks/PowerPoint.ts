@@ -51,7 +51,7 @@ export default class PowerPoint extends Task {
       }
     }
 
-    if (keyListener.keyPressed(KeyListener.KEY_SPACE) && this.status >= this.images.length-1) {
+    if (keyListener.keyPressed(KeyListener.KEY_SPACE) && this.status >= this.images.length - 1) {
       this.isCompleted = true;
     }
   }
@@ -90,10 +90,11 @@ export default class PowerPoint extends Task {
 
   public buttonRefactor(): void {
     if (this.rightAnswer == 0) {
+      //
     } else if (this.rightAnswer == 1) {
       // this.status >= this.buttons.length
     } else {
-
+      //
     }
   }
 

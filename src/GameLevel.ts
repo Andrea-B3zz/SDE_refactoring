@@ -9,6 +9,9 @@ import MouseListener from './Utility/MouseListener.js';
 import Task from './Tasks/Task.js';
 import PowerPoint from './Tasks/PowerPoint.js';
 import Word from './Tasks/Word.js';
+import Excel from './Tasks/Excel.js';
+// import RedMonster from './MovingCharacters/RedMonster.js';
+// import Zombie from './MovingCharacters/Zombie.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -69,6 +72,7 @@ export default class GameLevel extends Level {
     this.tasks = [];
 
     //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+
     switch (this.currentLevel) {
       case 1: {
         this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
@@ -78,10 +82,10 @@ export default class GameLevel extends Level {
         this.tasks.push(new Word(1), new Word(2), new Word(3));
         break;
       }
-      // case 3: {
-      //   this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
-      //    break;
-      // }
+      case 3: {
+        this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+         break;
+      }
     }
   }
 
@@ -117,6 +121,26 @@ export default class GameLevel extends Level {
         this.monsters.push(new Ghost(this.walls));
       }
     }
+
+    // if (this.currentLevel = 1) {
+    //   for (let i: number = 0; i <= 2; i++) {
+    //     if (this.level = 1) {
+    //       this.monsters.push(new Ghost(this.walls));
+    //     }
+    //   }
+    // } else if (this.currentLevel = 2) {
+    //   for (let i: number = 0; i <= 2; i++) {
+    //     if (this.level = 1) {
+    //       this.monsters.push(new RedMonster(this.walls));
+    //     }
+    //   }
+    // } else {
+    //   for (let i: number = 0; i <= 2; i++) {
+    //     if (this.level = 1) {
+    //       this.monsters.push(new Zombie(this.walls));
+    //     }
+    //   }
+    // }
   }
 
   /**
@@ -160,8 +184,9 @@ export default class GameLevel extends Level {
     if (this.tasks[this.questionNumber].getIsCompleted()) {
       this.monsters.splice(this.monsterColliding, 1);
       this.inATask = false;
-      if (this.questionNumber < this.tasks.length - 1)
+      if (this.questionNumber < this.tasks.length - 1) {
         this.questionNumber += 1;
+      }
     }
   }
 
