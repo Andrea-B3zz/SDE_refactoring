@@ -6,6 +6,12 @@ import KeyListener from './Utility/KeyListener.js';
 import CanvasRenderer from './Utility/CanvasRenderer.js';
 import Ghost from './MovingCharacters/Ghost.js';
 import MouseListener from './Utility/MouseListener.js';
+import Task from './Tasks/Task.js';
+import PowerPoint from './Tasks/PowerPoint.js';
+import Word from './Tasks/Word.js';
+import Excel from './Tasks/Excel.js';
+import RedMonster from './MovingCharacters/RedMonster.js';
+import Zombie from './MovingCharacters/Zombie.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -16,25 +22,39 @@ export default class GameLevel extends Level {
 
   private walls: Wall[];
 
-  private level: number;
-
   private timeElapsedRight: number;
 
   private timeElapsedLeft: number;
 
   private mouseListener: MouseListener;
 
-  public constructor(canvas: HTMLCanvasElement) {
+  private tasks: Task[];
+
+  private currentLevel: number;
+
+  private inATask: boolean;
+
+  private monsterColliding: number;
+
+  private questionNumber: number;
+
+  public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
     super();
     this.walls = [];
     this.keyListener = new KeyListener();
+    this.inATask = false;
+
+    this.currentLevel = currentLevel;
+
+    this.questionNumber = 0;
 
     this.canvas = canvas;
 
     this.populateWalls();
-    canvas.style.marginLeft = '';
-    canvas.style.width = '';
-    canvas.style.height = '';
+    canvas.style.marginLeft = '17.5%';
+    canvas.style.marginTop = '4%';
+    canvas.style.width = '1408px';
+    canvas.style.height = '792px';
     canvas.style.overflow = 'hidden';
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
@@ -43,10 +63,28 @@ export default class GameLevel extends Level {
     this.keyListener = new KeyListener();
 
     this.monsters = [];
-    this.level = 1;
+
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
-    this.createMonsters(this.getMapWidth(), this.getMapHeight());
+    
+    this.createMonsters();
+
+    this.tasks = [];
+    switch (this.currentLevel) {
+      case 1: {
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
+
+        break;
+      }
+      case 2: {
+        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+        break;
+      }
+      case 3: {
+        this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+        break;
+      }
+    }
     this.player = new Player(this.walls, this.monsters);
   }
 
@@ -76,10 +114,18 @@ export default class GameLevel extends Level {
   /**
    * creating 3 monster per level
    */
-  public createMonsters(MapWidth: number, MapHeight: number): void {
-    for (let i: number = 0; i <= 2; i++) {
-      if (this.level === 1) {
-        this.monsters.push(new Ghost(this.walls, MapWidth, MapHeight));
+  public createMonsters(): void {
+    if (this.currentLevel === 1) {
+      for (let i: number = 0; i <= 2; i++) {
+        this.monsters.push(new Ghost(this.walls));
+      }
+    } else if (this.currentLevel === 2) {
+      for (let i: number = 0; i <= 2; i++) {
+        this.monsters.push(new RedMonster(this.walls));
+      }
+    } else {
+      for (let i: number = 0; i <= 2; i++) {
+        this.monsters.push(new Zombie(this.walls));
       }
     }
   }
@@ -112,9 +158,23 @@ export default class GameLevel extends Level {
       }
     }
 
-    // triggers a task when u are colliding with a monster and also clikc on it
-    if(this.player.isCollidingWithMonster(this.monsters)){
-      if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
+    //if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
+    //console.log(this.mouseListener.getMousePosition().x);
+    //console.log(this.mouseListener.getMousePosition().y);
+    //}
+
+    if (this.player.isCollidingWithMonster(this.monsters) > 0) {
+      if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+        this.monsterColliding = this.player.isCollidingWithMonster(this.monsters) - 1;
+        this.inATask = true;
+      }
+    }
+
+    if (this.tasks[this.questionNumber].getIsCompleted()) {
+      this.monsters.splice(this.monsterColliding, 1);
+      this.inATask = false;
+      if (this.questionNumber < this.tasks.length - 1) {
+        this.questionNumber += 1;
       }
     }
   }
@@ -125,15 +185,23 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
-    return null;
+    if (this.monsters.length != 0) {
+      return null;
+    } else {
+      this.currentLevel += 1;
+      return new GameLevel(canvas, this.currentLevel);
+    }
   }
 
   /**
-   * method to change the photos in the arrey by pressing the space bar
-   * @param keyListener adding the key listener so we can use the space bar
+   *
+   * @param keyListener
+   * @param mouseListener
    */
-  public override processInput(keyListener: KeyListener): void {
+  public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
+    console.log(this.tasks);
+    this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
   /**
@@ -141,30 +209,30 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    canvas.style.width = '1408px';
-    canvas.style.height = '792px';
+    if (this.inATask) {
+      this.tasks[this.questionNumber].render(this.canvas);
+    } else {
+      CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
-    canvas.style.marginLeft = '17.5%';
-    canvas.style.marginTop = '4%';
+      CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
-    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+      for (let i: number = 0; i < this.monsters.length; i++) {
+        this.monsters[i].render(canvas);
+      }
 
-    for (let i: number = 0; i < this.monsters.length; i++) {
-      this.monsters[i].render(canvas);
+      for (let i: number = 0; i < this.walls.length; i++) {
+        const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
+        const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
+        CanvasRenderer.drawRectangle(
+          this.canvas,
+          this.walls[i].getLeftX(),
+          this.walls[i].getTopY(),
+          width,
+          height,
+          this.walls[i].getColor(),
+        );
+      }
+      this.player.render(this.canvas);
     }
-
-    for (let i: number = 0; i < this.walls.length; i++) {
-      const width: number = this.walls[i].getRightX() - this.walls[i].getLeftX();
-      const height: number = this.walls[i].getBottomY() - this.walls[i].getTopY();
-      CanvasRenderer.drawRectangle(
-        this.canvas,
-        this.walls[i].getLeftX(),
-        this.walls[i].getTopY(),
-        width,
-        height,
-        this.walls[i].getColor(),
-      );
-    }
-    this.player.render(this.canvas);
   }
 }

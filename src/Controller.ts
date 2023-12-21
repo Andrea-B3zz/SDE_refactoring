@@ -32,7 +32,7 @@ export default class Controller extends Game {
   }
 
   public processInput(): void {
-    this.currentLevel.processInput(this.keyListener);
+    this.currentLevel.processInput(this.keyListener, this.mouseListener);
   }
 
   /**
@@ -45,7 +45,7 @@ export default class Controller extends Game {
 
     const newLevel: Level = this.currentLevel.nextLevel(this.canvas);
     if (newLevel != null) {
-      this.levelCount+=1;
+      this.levelCount += 1;
       this.currentLevel = newLevel;
     }
 
@@ -58,7 +58,6 @@ export default class Controller extends Game {
   public override render(): void {
     CanvasRenderer.clearCanvas(this.canvas);
 
-      this.currentLevel.render(this.canvas);
-
+    this.currentLevel.render(this.canvas);
   }
 }

@@ -6,7 +6,7 @@ import Wall from './Wall.js';
 export default abstract class Monster extends MovingCharacter {
   private level: number = 1;
 
-  public constructor(walls: Wall[], MapWidth: number, MapHeight: number) {
+  public constructor(randomX: number, randomY: number) {
     super();
     this.image = new Image();
     do {

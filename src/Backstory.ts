@@ -32,7 +32,7 @@ export default class Backstory extends Level {
 
   /**
    * updates the images
-   * @param elapsed i don't know what that does
+   * @param elapsed that does nothing here, but it's used in the abstract class Level
    */
   public override update(elapsed: number): void {
     this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
@@ -45,7 +45,7 @@ export default class Backstory extends Level {
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
     if (this.currentImage >= this.arrayOfImages.length) {
-      return new GameLevel(canvas);
+      return new GameLevel(canvas, 1);
     } else {
       return null;
     }
@@ -57,7 +57,7 @@ export default class Backstory extends Level {
    */
   public override processInput(keyListener: KeyListener): void {
     if (keyListener.keyPressed(KeyListener.KEY_SPACE)) {
-      this.currentImage++;
+      this.currentImage = this.currentImage + 1;
     }
   }
 
