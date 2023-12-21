@@ -4,7 +4,7 @@ import Task from './Task.js';
 import Button from './Button.js';
 import KeyListener from '../Utility/KeyListener.js';
 
-export default class Word extends Task {
+export default class Excel extends Task {
   public constructor(rightAnswer: number) {
     super();
     this.status = 0;
@@ -13,15 +13,16 @@ export default class Word extends Task {
     this.rightAnswer = rightAnswer;
     this.images = [];
     if (this.rightAnswer == 1) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-2.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task1-1.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task1-2.png'));
     } else if (this.rightAnswer == 2) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task2-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task2-2.png'));
-    } else {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task3-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task3-2.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-1.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-2.png'));
     }
+    // else {
+    //   this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-1.png'));
+    //   this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-2.png'));
+    // }
 
     this.addButtons();
   }

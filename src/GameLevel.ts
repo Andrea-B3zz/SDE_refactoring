@@ -9,6 +9,9 @@ import MouseListener from './Utility/MouseListener.js';
 import Task from './Tasks/Task.js';
 import PowerPoint from './Tasks/PowerPoint.js';
 import Word from './Tasks/Word.js';
+import Excel from './Tasks/Excel.js';
+// import RedMonster from './MovingCharacters/RedMonster.js';
+// import Zombie from './MovingCharacters/Zombie.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -51,9 +54,10 @@ export default class GameLevel extends Level {
     this.canvas = canvas;
 
     this.populateWalls();
-    canvas.style.marginLeft = '';
-    canvas.style.width = '';
-    canvas.style.height = '';
+    canvas.style.marginLeft = '17.5%';
+    canvas.style.marginTop = '4%';
+    canvas.style.width = '1408px';
+    canvas.style.height = '792px';
     canvas.style.overflow = 'hidden';
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
 
@@ -66,22 +70,22 @@ export default class GameLevel extends Level {
     this.createMonsters();
 
     this.tasks = [];
-    //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-    switch (this.currentLevel) {
-      case 1: {
-        this.tasks.push(new Word(1), new Word(2), new Word(3));
-        break;
-      }
-      case 2: {
-        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-        break;
-      }
-      // case 3: {
-      //   this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
-      //    break;
-      // }
-    }
 
+    //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+    // switch (this.currentLevel) {
+    //   case 1: {
+    //     this.tasks.push(new Word(1), new Word(2), new Word(3));
+    //     break;
+    //   }
+    //   case 2: {
+    //     this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+    //     break;
+    //   }
+    //   case 3: {
+    //     this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+    //     break;
+    //   }
+    // }
   }
 
   private populateWalls(): void {
@@ -116,6 +120,26 @@ export default class GameLevel extends Level {
         this.monsters.push(new Ghost(this.walls));
       }
     }
+
+    // if (this.currentLevel = 1) {
+    //   for (let i: number = 0; i <= 2; i++) {
+    //     if (this.level = 1) {
+    //       this.monsters.push(new Ghost(this.walls));
+    //     }
+    //   }
+    // } else if (this.currentLevel = 2) {
+    //   for (let i: number = 0; i <= 2; i++) {
+    //     if (this.level = 1) {
+    //       this.monsters.push(new RedMonster(this.walls));
+    //     }
+    //   }
+    // } else {
+    //   for (let i: number = 0; i <= 2; i++) {
+    //     if (this.level = 1) {
+    //       this.monsters.push(new Zombie(this.walls));
+    //     }
+    //   }
+    // }
   }
 
   /**
@@ -159,9 +183,9 @@ export default class GameLevel extends Level {
     if (this.tasks[this.questionNumber].getIsCompleted()) {
       this.monsters.splice(this.monsterColliding, 1);
       this.inATask = false;
-      if (this.questionNumber < this.tasks.length - 1)
+      if (this.questionNumber < this.tasks.length - 1) {
         this.questionNumber += 1;
-      console.log(this.questionNumber);
+      }
     }
   }
 
@@ -171,13 +195,16 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
+    /*
     this.currentLevel++;
-    return new GameLevel(canvas, this.currentLevel);
+    return new GameLevel(canvas, this.currentLevel);*/
+    return null;
   }
 
   /**
-   * method to change the photos in the arrey by pressing the space bar
-   * @param keyListener adding the key listener so we can use the space bar
+   *
+   * @param keyListener
+   * @param mouseListener
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
