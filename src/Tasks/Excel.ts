@@ -28,10 +28,10 @@ export default class Excel extends Task {
   }
 
   private addButtons(): void {
-    this.buttons.push(new Button(230, 255, 63, 90));
-    this.buttons.push(new Button(326, 371, 60, 95));
+    this.buttons.push(new Button(613, 659, 60, 95));
     this.buttons.push(new Button(375, 418, 60, 95));
-    this.buttons.push(new Button(833, 889, 8, 103));
+    this.buttons.push(new Button(326, 371, 60, 95));
+    this.buttons.push(new Button(230, 255, 63, 90));
     this.buttons.push(new Button(900, 990, 2, 28));
   }
 
@@ -45,7 +45,6 @@ export default class Excel extends Task {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         console.log(this.status);
         this.status += 1;
-        this.buttonRefactor();
       }
     }
 
@@ -84,16 +83,6 @@ export default class Excel extends Task {
 
   public getIsCompleted(): boolean {
     return this.isCompleted;
-  }
-
-  public buttonRefactor(): void {
-    if (this.rightAnswer == 0) {
-      //
-    } else if (this.rightAnswer == 1) {
-      // this.status >= this.buttons.length
-    } else {
-      //
-    }
   }
 
   /**

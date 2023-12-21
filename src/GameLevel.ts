@@ -71,6 +71,7 @@ export default class GameLevel extends Level {
     switch (this.currentLevel) {
       case 1: {
         this.tasks.push(new Word(1), new Word(2), new Word(3));
+
         break;
       }
       case 2: {

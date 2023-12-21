@@ -29,9 +29,9 @@ export default class Word extends Task {
 
   private addButtons(): void {
     this.buttons.push(new Button(133, 171, 78, 130));
-    this.buttons.push(new Button(326, 401, 25, 65));
-    this.buttons.push(new Button(470, 520, 83, 127));
     this.buttons.push(new Button(635, 670, 83, 127));
+    this.buttons.push(new Button(470, 520, 83, 127));
+    this.buttons.push(new Button(326, 401, 25, 65));
     this.buttons.push(new Button(635, 670, 23, 67));
   }
 
@@ -45,7 +45,6 @@ export default class Word extends Task {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         console.log(this.status);
         this.status += 1;
-        this.buttonRefactor();
       }
     }
 
@@ -84,16 +83,6 @@ export default class Word extends Task {
 
   public getIsCompleted(): boolean {
     return this.isCompleted;
-  }
-
-  public buttonRefactor(): void {
-    if (this.rightAnswer == 0) {
-      //
-    } else if (this.rightAnswer == 1) {
-      // this.status >= this.buttons.length
-    } else {
-      //
-    }
   }
 
   /**
