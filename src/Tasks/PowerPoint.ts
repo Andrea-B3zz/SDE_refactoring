@@ -31,10 +31,10 @@ export default class PowerPoint extends Task {
 
   private addButtons(): void {
     this.buttons.push(new Button(296, 355, 35, 135));
-    this.buttons.push(new Button(166, 222, 35, 135));
     this.buttons.push(new Button(320, 410, 3, 27));
-    this.buttons.push(new Button(585, 700, 3, 27));
     this.buttons.push(new Button(843, 965, 3, 27));
+    this.buttons.push(new Button(166, 222, 35, 135));
+    this.buttons.push(new Button(585, 700, 3, 27));
   }
 
   /**
@@ -45,9 +45,8 @@ export default class PowerPoint extends Task {
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
-        console.log(this.status);
         this.status += 1;
-        this.buttonRefactor();
+        this.buttons = this.buttonRefactor();
       }
     }
 
@@ -88,14 +87,27 @@ export default class PowerPoint extends Task {
     return this.isCompleted;
   }
 
-  public buttonRefactor(): void {
-    if (this.rightAnswer == 0) {
-      //
-    } else if (this.rightAnswer == 1) {
+  public buttonRefactor(): Button[] {
+    if (this.rightAnswer == 2) {
       // this.status >= this.buttons.length
-    } else {
-      //
+      this.buttons.splice(0, this.buttons.length);
+      this.buttons.push(new Button(320, 410, 3, 27));
+      this.buttons.push(new Button(330, 390, 35, 135));
+      this.buttons.push(new Button(185, 245, 35, 125));
+      this.buttons.push(new Button(630, 685, 35, 125));
+      this.buttons.push(new Button(800, 925, 3, 27));
+      if (this.status === 2) {
+        this.buttons.splice(0, this.buttons.length);
+        this.buttons.push(new Button(-320, -410, -3, -27));
+        this.buttons.push(new Button(242, 405, 255, 480));
+      }
+    } else if (this.rightAnswer == 3) {
+      this.buttons.splice(0, this.buttons.length);
+      this.buttons.push(new Button(580, 645, 50, 155));
+      this.buttons.push(new Button(755, 860, 50, 155));
+      this.buttons.push(new Button(20, 110, 50, 155));
     }
+    return this.buttons;
   }
 
   /**
