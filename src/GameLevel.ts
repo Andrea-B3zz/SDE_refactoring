@@ -70,7 +70,7 @@ export default class GameLevel extends Level {
     this.tasks = [];
     switch (this.currentLevel) {
       case 1: {
-        this.tasks.push(new Word(1), new Word(2), new Word(3));
+        this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
         break;
       }
       case 2: {
@@ -78,7 +78,7 @@ export default class GameLevel extends Level {
         break;
       }
       case 3: {
-        this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
         break;
       }
     }

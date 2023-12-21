@@ -28,11 +28,11 @@ export default class Excel extends Task {
   }
 
   private addButtons(): void {
-    this.buttons.push(new Button(133, 171, 78, 130));
-    this.buttons.push(new Button(326, 401, 25, 65));
-    this.buttons.push(new Button(470, 520, 83, 127));
-    this.buttons.push(new Button(635, 670, 83, 127));
-    this.buttons.push(new Button(635, 670, 23, 67));
+    this.buttons.push(new Button(230, 255, 63, 90));
+    this.buttons.push(new Button(326, 371, 60, 95));
+    this.buttons.push(new Button(375, 418, 60, 95));
+    this.buttons.push(new Button(833, 889, 8, 103));
+    this.buttons.push(new Button(900, 990, 2, 28));
   }
 
   /**
@@ -102,7 +102,7 @@ export default class Excel extends Task {
    */
   public override render(canvas: HTMLCanvasElement): void {
     if (this.status < this.images.length) {
-      CanvasRenderer.drawImage(canvas, this.images[this.status], 0, 0);
+      CanvasRenderer.drawImage(canvas, this.images[this.status], -40, 0);
     } else {
       CanvasRenderer.drawImage(canvas, this.images[this.images.length - 1], 0, 0);
     }
