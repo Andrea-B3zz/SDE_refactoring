@@ -14,7 +14,7 @@ export default class Word extends Task {
 
     this.images = [];
     if (this.rightAnswer == 1) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-1.png'));
       this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-2.png'));
     } else if (this.rightAnswer == 2) {
       this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task2-1.png'));
@@ -102,7 +102,7 @@ export default class Word extends Task {
    */
   public override render(canvas: HTMLCanvasElement): void {
     if (this.status < this.images.length) {
-      CanvasRenderer.drawImage(canvas, this.images[this.status], 0, 0);
+      CanvasRenderer.drawImage(canvas, this.images[this.status], -80, 0);
     } else {
       CanvasRenderer.drawImage(canvas, this.images[this.images.length - 1], 0, 0);
     }
