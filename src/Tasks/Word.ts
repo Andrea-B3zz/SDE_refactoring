@@ -8,14 +8,14 @@ export default class Word extends Task {
   private currentTask: number;
 
   private baseImage: HTMLImageElement;
-  
+
   public constructor(rightAnswer: number) {
     super();
     this.status = 0;
     this.buttons = [];
     this.isCompleted = false;
     this.rightAnswer = rightAnswer;
-    
+
     this.images = [];
     if (this.rightAnswer == 1) {
       this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-1.png'));
@@ -77,10 +77,6 @@ export default class Word extends Task {
       }
     }
     return -1;
-  }
-
-  public override getIsCompleted(): boolean {
-    return false;
   }
 
   /**

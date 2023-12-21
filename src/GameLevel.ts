@@ -71,8 +71,6 @@ export default class GameLevel extends Level {
 
     this.tasks = [];
 
-    //this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
-
     switch (this.currentLevel) {
       case 1: {
         this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
@@ -84,7 +82,7 @@ export default class GameLevel extends Level {
       }
       case 3: {
         this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
-         break;
+        break;
       }
     }
   }
