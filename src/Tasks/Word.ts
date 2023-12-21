@@ -5,10 +5,6 @@ import Button from './Button.js';
 import KeyListener from '../Utility/KeyListener.js';
 
 export default class Word extends Task {
-  private currentTask: number;
-
-  private baseImage: HTMLImageElement;
-
   public constructor(rightAnswer: number) {
     super();
     this.status = 0;
@@ -18,7 +14,7 @@ export default class Word extends Task {
 
     this.images = [];
     if (this.rightAnswer == 1) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-1.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1.png'));
       this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-2.png'));
     } else if (this.rightAnswer == 2) {
       this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task2-1.png'));

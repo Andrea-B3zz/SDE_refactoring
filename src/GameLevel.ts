@@ -10,8 +10,8 @@ import Task from './Tasks/Task.js';
 import PowerPoint from './Tasks/PowerPoint.js';
 import Word from './Tasks/Word.js';
 import Excel from './Tasks/Excel.js';
-// import RedMonster from './MovingCharacters/RedMonster.js';
-// import Zombie from './MovingCharacters/Zombie.js';
+import RedMonster from './MovingCharacters/RedMonster.js';
+import Zombie from './MovingCharacters/Zombie.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -21,8 +21,6 @@ export default class GameLevel extends Level {
   private monsters: Monster[];
 
   private walls: Wall[];
-
-  private level: number;
 
   private timeElapsedRight: number;
 
@@ -64,20 +62,19 @@ export default class GameLevel extends Level {
     this.mouseListener = new MouseListener(this.canvas);
 
     this.monsters = [];
-    this.level = 1;
+
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
     this.createMonsters();
 
     this.tasks = [];
-
     switch (this.currentLevel) {
       case 1: {
-        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+        this.tasks.push(new Word(1), new Word(2), new Word(3));
         break;
       }
       case 2: {
-        this.tasks.push(new Word(1), new Word(2), new Word(3));
+        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
         break;
       }
       case 3: {
@@ -114,31 +111,19 @@ export default class GameLevel extends Level {
    * creating 3 monster per level
    */
   public createMonsters(): void {
-    for (let i: number = 0; i <= 2; i++) {
-      if (this.level = 1) {
+    if (this.currentLevel === 1) {
+      for (let i: number = 0; i <= 2; i++) {
         this.monsters.push(new Ghost(this.walls));
       }
+    } else if (this.currentLevel === 2) {
+      for (let i: number = 0; i <= 2; i++) {
+        this.monsters.push(new RedMonster(this.walls));
+      }
+    } else {
+      for (let i: number = 0; i <= 2; i++) {
+        this.monsters.push(new Zombie(this.walls));
+      }
     }
-
-    // if (this.currentLevel = 1) {
-    //   for (let i: number = 0; i <= 2; i++) {
-    //     if (this.level = 1) {
-    //       this.monsters.push(new Ghost(this.walls));
-    //     }
-    //   }
-    // } else if (this.currentLevel = 2) {
-    //   for (let i: number = 0; i <= 2; i++) {
-    //     if (this.level = 1) {
-    //       this.monsters.push(new RedMonster(this.walls));
-    //     }
-    //   }
-    // } else {
-    //   for (let i: number = 0; i <= 2; i++) {
-    //     if (this.level = 1) {
-    //       this.monsters.push(new Zombie(this.walls));
-    //     }
-    //   }
-    // }
   }
 
   /**
@@ -194,10 +179,12 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
-    /*
-    this.currentLevel++;
-    return new GameLevel(canvas, this.currentLevel);*/
-    return null;
+    if (this.monsters.length != 0) {
+      return null;
+    } else {
+      this.currentLevel += 1;
+      return new GameLevel(canvas, this.currentLevel);
+    }
   }
 
   /**
@@ -207,8 +194,8 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
+    console.log(this.tasks);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
-
   }
 
   /**
