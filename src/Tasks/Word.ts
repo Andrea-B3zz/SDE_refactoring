@@ -87,4 +87,8 @@ export default class Word extends Task {
       );
     }
   }
+
+  public getIsCompleted(): boolean {
+    return true;
+  }
 }
