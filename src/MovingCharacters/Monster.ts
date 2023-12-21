@@ -6,13 +6,10 @@ import Wall from './Wall.js';
 export default abstract class Monster extends MovingCharacter {
   private level: number = 1;
 
-  public constructor(randomX: number, randomY: number) {
+  public constructor(MapWidth: number, MapHeight: number, walls: Wall[]) {
     super();
-    this.image = new Image();
-    do {
-      this.posX = Math.floor(Math.random() * MapWidth);
-      this.posY = Math.floor(Math.random() * MapHeight);
-    } while (this.isColliding(walls, this.posX, this.posY));
+    this.posX = Math.floor(Math.random() * MapWidth);
+    this.posY = Math.floor(Math.random() * MapHeight);
     this.speed = 0.05;
   }
 
@@ -45,10 +42,17 @@ export default abstract class Monster extends MovingCharacter {
     for (let i: number = 0; i < walls.length; i++) {
       const item: Wall = walls[i];
       if (
-        newPosX < item.getRightX()
-        && newPosX + this.getWidth() > item.getLeftX()
-        && newPosY + this.getHeight() > item.getTopY()
-        && newPosY < item.getBottomY()
+
+        /*
+        this.posX < monster.getPosX() + monster.getWidth() &&
+        this.posX + this.getWidth() > monster.getPosX() &&
+        this.posY < monster.getPosY() + monster.getHeight() &&
+        this.posY + this.getHeight() > monster.getPosY()
+         */
+        newPosX <= item.getRightX()
+        && newPosX + this.getWidth() >= item.getLeftX()
+        && newPosY + this.getHeight() >= item.getTopY()
+        && newPosY <= item.getBottomY()
       ) {
         return true;
       }

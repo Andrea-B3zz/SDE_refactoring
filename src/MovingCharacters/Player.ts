@@ -1,6 +1,5 @@
 import CanvasRenderer from '../Utility/CanvasRenderer.js';
 import KeyListener from '../Utility/KeyListener.js';
-import Monster from './Monster.js';
 import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 import Monster from './Monster.js';
@@ -119,25 +118,6 @@ export default class Player extends MovingCharacter {
     return -1;
   }
 
-  /**
-   * Checks if the player collides with monsters
-   * @param monsters array of monsters
-   * @returns true if there is collision with monsters, and false - if not
-   */
-  public isCollidingWithMonster(monsters: Monster[]): boolean {
-    for (let i: number = 0; i < monsters.length; i++) {
-      const monster: Monster = monsters[i];
-      if (
-        this.posX < monster.getPosX() + monster.getWidth() &&
-        this.posX + this.getWidth() > monster.getPosX() &&
-        this.posY < monster.getPosY() + monster.getHeight() &&
-        this.posY + this.getHeight() > monster.getPosY()
-      ) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   /**
    * if this method is called, the player doesn't change its position
