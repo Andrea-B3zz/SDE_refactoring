@@ -18,7 +18,7 @@ export default class Backstory extends Level {
     this.keyListener = new KeyListener();
     this.canvas = canvas;
 
-    this.arrayOfImages = ['./assets/Backstory00.png', './assets/Backstory01.jpg', './assets/Backstory02.jpg', './assets/Backstory03.jpg', './assets/Backstory04.jpg', './assets/Backstory05.jpg', './assets/Backstory06.jpg', './assets/Backstory07.jpg'];
+    this.arrayOfImages = ['./assets/Backstory00.jpg', './assets/Backstory01.jpg', './assets/Backstory02.jpg', './assets/Backstory03.jpg', './assets/Backstory04.jpg', './assets/Backstory05.jpg', './assets/Backstory06.jpg', './assets/Backstory07.jpg'];
     this.currentImage = 0;
 
     this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
