@@ -19,10 +19,10 @@ export default class Excel extends Task {
       this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-1.png'));
       this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-2.png'));
     }
-    // else {
-    //   this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-1.png'));
-    //   this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-2.png'));
-    // }
+    else {
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-1.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-2.png'));
+    }
 
     this.addButtons();
   }
