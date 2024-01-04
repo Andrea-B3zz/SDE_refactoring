@@ -38,7 +38,11 @@ export default class GameLevel extends Level {
 
   private questionNumber: number;
 
-  public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
+  private lives: number;
+
+  private lifeImg: HTMLImageElement;
+
+  public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number) {
     super();
     this.walls = [];
     this.keyListener = new KeyListener();
@@ -58,6 +62,7 @@ export default class GameLevel extends Level {
     canvas.style.overflow = 'hidden';
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
+    this.lifeImg = CanvasRenderer.loadNewImage('./assets/heart.png');
 
     this.mouseListener = new MouseListener(this.canvas);
     this.keyListener = new KeyListener();
@@ -66,7 +71,7 @@ export default class GameLevel extends Level {
 
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
-    
+
     this.createMonsters();
 
     this.tasks = [];
@@ -86,6 +91,7 @@ export default class GameLevel extends Level {
       }
     }
     this.player = new Player(this.walls, this.monsters);
+    this.lives=lives;
   }
 
   private populateWalls(): void {
@@ -177,6 +183,16 @@ export default class GameLevel extends Level {
         this.questionNumber += 1;
       }
     }
+
+    // mistake checking
+    for(let i :number=0; i<this.tasks.length; i++){
+      if(this.tasks[i].checkMistake()){
+        this.lives-=1;
+        if(this.lives==0){
+          console.log('Game over');
+        }
+      }
+    }
   }
 
   /**
@@ -189,7 +205,7 @@ export default class GameLevel extends Level {
       return null;
     } else {
       this.currentLevel += 1;
-      return new GameLevel(canvas, this.currentLevel);
+      return new GameLevel(canvas, this.currentLevel, this.lives);
     }
   }
 
@@ -202,6 +218,10 @@ export default class GameLevel extends Level {
     this.player.processInput(keyListener);
     console.log(this.tasks);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
+  }
+
+  public getLives(): number{
+    return this.lives;
   }
 
   /**
@@ -233,6 +253,10 @@ export default class GameLevel extends Level {
         );
       }
       this.player.render(this.canvas);
+    }
+
+    for(let i: number=0; i<this.lives; i++){
+      CanvasRenderer.drawImage(canvas, this.lifeImg, 100 + i*100, 100);
     }
   }
 }

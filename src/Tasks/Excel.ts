@@ -25,6 +25,8 @@ export default class Excel extends Task {
     // }
 
     this.addButtons();
+    this.mistakeGiven=false;
+    this.mistakeN=0;
   }
 
   private addButtons(): void {
@@ -45,6 +47,10 @@ export default class Excel extends Task {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         console.log(this.status);
         this.status += 1;
+      }else{
+        if(this.isCollidingWithRectangle(mouseListener) != -1){
+          this.mistakeN+=1;
+        }
       }
     }
 
