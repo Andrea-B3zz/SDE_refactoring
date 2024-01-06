@@ -217,6 +217,18 @@ export default class GameLevel extends Level {
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
+  private colorForBorder(): string {
+    let color: string;
+    if (this.currentLevel === 1) {
+      color = 'cyan';
+    } else if (this.currentLevel === 2) {
+      color = 'red';
+    } else if (this.currentLevel === 3) {
+      color = 'green';
+    }
+    return color;
+  }
+
   /**
    * drawing the images on the cancas
    * @param canvas HTML canvas element
@@ -242,7 +254,7 @@ export default class GameLevel extends Level {
           this.walls[i].getTopY(),
           width,
           height,
-          this.walls[i].getColor(),
+          this.colorForBorder(),
         );
       }
       this.player.render(this.canvas);
