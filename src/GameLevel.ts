@@ -38,6 +38,12 @@ export default class GameLevel extends Level {
 
   private questionNumber: number;
 
+  private levelStartAnimationDuration: number;
+
+  private levelStartFlag: boolean;
+
+  private levelAnimation: HTMLImageElement[];
+
   public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
     super();
     this.walls = [];
@@ -47,6 +53,7 @@ export default class GameLevel extends Level {
     this.currentLevel = currentLevel;
 
     this.questionNumber = 0;
+    this.levelStartAnimationDuration = 5000;
 
     this.canvas = canvas;
 
@@ -58,6 +65,10 @@ export default class GameLevel extends Level {
     canvas.style.overflow = 'hidden';
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
+    this.levelAnimation = [];
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelWord.jpg'));
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelPowerPoint.jpg'));
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelExcel.jpg'));
 
     this.mouseListener = new MouseListener(this.canvas);
     this.keyListener = new KeyListener();
@@ -150,7 +161,13 @@ export default class GameLevel extends Level {
    * @param elapsed still no function
    */
   public override update(elapsed: number): void {
-    // this.player.update(elapsed);
+    if (this.levelStartAnimationDuration > 0) {
+      this.levelStartAnimationDuration -= elapsed;
+      this.levelStartFlag = true;
+    } else {
+      this.levelStartFlag = false;
+    }
+
     this.timeElapsedRight -= 0.001 * elapsed;
 
     const newPosX: number = this.player.getPosX();
@@ -234,7 +251,9 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    if (this.inATask) {
+    if (this.levelStartFlag) {
+      CanvasRenderer.drawImage(canvas, this.levelAnimation[this.currentLevel - 1], 0, 0);
+    } else if (this.inATask) {
       this.tasks[this.questionNumber].render(this.canvas);
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);

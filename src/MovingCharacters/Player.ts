@@ -15,7 +15,6 @@ export default class Player extends MovingCharacter {
     super();
     this.walls = walls;
     this.monsters = monsters;
-    console.log(monsters);
 
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
