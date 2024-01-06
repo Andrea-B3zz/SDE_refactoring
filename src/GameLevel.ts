@@ -277,6 +277,8 @@ export default class GameLevel extends Level {
         );
       }
       this.player.render(this.canvas);
+
+      CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
     }
   }
 }
