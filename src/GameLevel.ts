@@ -66,14 +66,13 @@ export default class GameLevel extends Level {
 
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
-    
+
     this.createMonsters();
 
     this.tasks = [];
     switch (this.currentLevel) {
       case 1: {
         this.tasks.push(new Word(1), new Word(2), new Word(3));
-
         break;
       }
       case 2: {
@@ -116,16 +115,31 @@ export default class GameLevel extends Level {
    */
   public createMonsters(): void {
     if (this.currentLevel === 1) {
+      let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
-        this.monsters.push(new Ghost(this.walls));
+        ghost = new Ghost(this.walls);
+        while (ghost.isColliding(this.walls, ghost.getPosX(), ghost.getPosY())) {
+          ghost = new Ghost(this.walls);
+        }
+        this.monsters.push(ghost);
       }
     } else if (this.currentLevel === 2) {
+      let redMonster: RedMonster;
       for (let i: number = 0; i <= 2; i++) {
-        this.monsters.push(new RedMonster(this.walls));
+        redMonster = new RedMonster(this.walls);
+        while (redMonster.isColliding(this.walls, redMonster.getPosX(), redMonster.getPosY())) {
+          redMonster = new RedMonster(this.walls);
+        }
+        this.monsters.push(redMonster);
       }
     } else {
+      let zombie: Zombie;
       for (let i: number = 0; i <= 2; i++) {
-        this.monsters.push(new Zombie(this.walls));
+        zombie = new Zombie(this.walls);
+        while (zombie.isColliding(this.walls, zombie.getPosX(), zombie.getPosY())) {
+          zombie = new Zombie(this.walls);
+        }
+        this.monsters.push(zombie);
       }
     }
   }
@@ -200,7 +214,6 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
-    console.log(this.tasks);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
