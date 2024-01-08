@@ -255,8 +255,8 @@ export default class GameLevel extends Level {
       this.player.render(this.canvas);
     }
 
-    for(let i: number=0; i<this.lives; i++){
-      CanvasRenderer.drawImage(canvas, this.lifeImg, 100 + i*100, 100);
+    for(let i: number=1; i<=this.lives; i++){
+      CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*100, 100);
     }
   }
 }
