@@ -27,6 +27,8 @@ export default class PowerPoint extends Task {
     }
 
     this.addButtons();
+    this.mistakeN=0;
+    this.mistakeGiven=false;
   }
 
   private addButtons(): void {
@@ -47,6 +49,10 @@ export default class PowerPoint extends Task {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         this.status += 1;
         this.buttons = this.buttonRefactor();
+      }else{
+        if(this.isCollidingWithRectangle(mouseListener) != -1){
+          this.mistakeN+=1;
+        }
       }
     }
 

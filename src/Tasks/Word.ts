@@ -25,6 +25,8 @@ export default class Word extends Task {
     }
 
     this.addButtons();
+    this.mistakeGiven=false;
+this.mistakeN=0;
   }
 
   private addButtons(): void {
@@ -44,6 +46,10 @@ export default class Word extends Task {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         this.status += 1;
+      }else{
+        if(this.isCollidingWithRectangle(mouseListener) != -1){
+          this.mistakeN+=1;
+        }
       }
     }
 

@@ -38,6 +38,10 @@ export default class GameLevel extends Level {
   private monsterColliding: number;
 
   private questionNumber: number;
+  
+  private lives: number;
+
+  private lifeImg: HTMLImageElement;
 
   private levelStartAnimationDuration: number;
 
@@ -45,7 +49,7 @@ export default class GameLevel extends Level {
 
   private levelAnimation: HTMLImageElement[];
 
-  public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
+  public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number) {
     super();
     this.walls = [];
     this.keyListener = new KeyListener();
@@ -66,6 +70,7 @@ export default class GameLevel extends Level {
     canvas.style.overflow = 'hidden';
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
+    this.lifeImg = CanvasRenderer.loadNewImage('./assets/heart.png');
     this.levelAnimation = [];
     this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelWord.jpg'));
     this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelPowerPoint.jpg'));
@@ -97,6 +102,7 @@ export default class GameLevel extends Level {
       }
     }
     this.player = new Player(this.walls, this.monsters);
+    this.lives=lives;
   }
 
   private populateWalls(): void {
@@ -209,6 +215,16 @@ export default class GameLevel extends Level {
         this.questionNumber += 1;
       }
     }
+
+    // mistake checking
+    for(let i :number=0; i<this.tasks.length; i++){
+      if(this.tasks[i].checkMistake()){
+        this.lives-=1;
+        if(this.lives==0){
+          console.log('Game over');
+        }
+      }
+    }
   }
 
   /**
@@ -224,7 +240,7 @@ export default class GameLevel extends Level {
       if (this.currentLevel === 4) {
         return new EndingScreen(canvas);
       } else {
-        return new GameLevel(canvas, this.currentLevel);
+        return new GameLevel(canvas, this.currentLevel, this.lives);
       }
     }
   }
@@ -239,6 +255,10 @@ export default class GameLevel extends Level {
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
+  public getLives(): number{
+    return this.lives;
+  }
+  
   private colorForBorder(): string {
     let color: string;
     if (this.currentLevel === 1) {
@@ -284,6 +304,10 @@ export default class GameLevel extends Level {
       this.player.render(this.canvas);
 
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
+    }
+
+    for(let i: number=1; i<=this.lives; i++){
+      CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*100, 100);
     }
   }
 }
