@@ -140,6 +140,8 @@ export default class Player extends MovingCharacter {
 
     CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);
 
-    CanvasRenderer.drawImage(canvas, this.bfImage, 1450, 600);
+    CanvasRenderer.drawImage(canvas, this.bfImage,
+      window.innerWidth - this.bfImage.width,
+      window.innerHeight - this.bfImage.height);
   }
 }
