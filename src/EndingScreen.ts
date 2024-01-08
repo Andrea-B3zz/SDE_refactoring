@@ -4,10 +4,15 @@ import KeyListener from './Utility/KeyListener.js';
 import MouseListener from './Utility/MouseListener.js';
 
 export default class EndingScreen extends Level {
-  public constructor(canvas: HTMLCanvasElement) {
+  public constructor(canvas: HTMLCanvasElement, type: string) {
     super();
     this.canvas = canvas;
-    this.image = CanvasRenderer.loadNewImage('./assets/gameWin.png');
+    if (type === 'win') {
+      this.image = CanvasRenderer.loadNewImage('./assets/gameWin.png');
+    } else if (type === 'lose') {
+      console.log('Game Over');
+      this.image = CanvasRenderer.loadNewImage('./assets/gameOver.png');
+    }
     this.render();
   }
 

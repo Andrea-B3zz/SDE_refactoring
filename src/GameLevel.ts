@@ -220,9 +220,6 @@ export default class GameLevel extends Level {
     for(let i :number=0; i<this.tasks.length; i++){
       if(this.tasks[i].checkMistake()){
         this.lives-=1;
-        if(this.lives==0){
-          console.log('Game over');
-        }
       }
     }
   }
@@ -233,12 +230,15 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
+    if(this.lives==0){
+      return new EndingScreen(this.canvas, 'lose');
+    }
     if (this.monsters.length != 0) {
       return null;
     } else {
       this.currentLevel += 1;
       if (this.currentLevel === 4) {
-        return new EndingScreen(canvas);
+        return new EndingScreen(canvas, 'win');
       } else {
         return new GameLevel(canvas, this.currentLevel, this.lives);
       }
