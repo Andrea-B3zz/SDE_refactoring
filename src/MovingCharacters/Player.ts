@@ -15,7 +15,6 @@ export default class Player extends MovingCharacter {
     super();
     this.walls = walls;
     this.monsters = monsters;
-    console.log(monsters);
 
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
@@ -23,7 +22,7 @@ export default class Player extends MovingCharacter {
     // const randomX: number = Math.floor(Math.random() * window.innerWidth);
     // const randomY: number = Math.floor(Math.random() * window.innerHeight);
 
-    this.image = CanvasRenderer.loadNewImage('./assets/boy4.png');
+    this.image = CanvasRenderer.loadNewImage('./assets/boy.png');
     this.posX = 200;
     this.posY = 200;
 

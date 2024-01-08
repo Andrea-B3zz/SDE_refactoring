@@ -12,6 +12,7 @@ import Word from './Tasks/Word.js';
 import Excel from './Tasks/Excel.js';
 import RedMonster from './MovingCharacters/RedMonster.js';
 import Zombie from './MovingCharacters/Zombie.js';
+import EndingScreen from './EndingScreen.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -38,6 +39,12 @@ export default class GameLevel extends Level {
 
   private questionNumber: number;
 
+  private levelStartAnimationDuration: number;
+
+  private levelStartFlag: boolean;
+
+  private levelAnimation: HTMLImageElement[];
+
   public constructor(canvas: HTMLCanvasElement, currentLevel: number) {
     super();
     this.walls = [];
@@ -47,6 +54,7 @@ export default class GameLevel extends Level {
     this.currentLevel = currentLevel;
 
     this.questionNumber = 0;
+    this.levelStartAnimationDuration = 5000;
 
     this.canvas = canvas;
 
@@ -58,6 +66,10 @@ export default class GameLevel extends Level {
     canvas.style.overflow = 'hidden';
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
+    this.levelAnimation = [];
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelWord.jpg'));
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelPowerPoint.jpg'));
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelExcel.jpg'));
 
     this.mouseListener = new MouseListener(this.canvas);
     this.keyListener = new KeyListener();
@@ -150,7 +162,13 @@ export default class GameLevel extends Level {
    * @param elapsed still no function
    */
   public override update(elapsed: number): void {
-    // this.player.update(elapsed);
+    if (this.levelStartAnimationDuration > 0) {
+      this.levelStartAnimationDuration -= elapsed;
+      this.levelStartFlag = true;
+    } else {
+      this.levelStartFlag = false;
+    }
+
     this.timeElapsedRight -= 0.001 * elapsed;
 
     const newPosX: number = this.player.getPosX();
@@ -203,18 +221,34 @@ export default class GameLevel extends Level {
       return null;
     } else {
       this.currentLevel += 1;
-      return new GameLevel(canvas, this.currentLevel);
+      if (this.currentLevel === 4) {
+        return new EndingScreen(canvas);
+      } else {
+        return new GameLevel(canvas, this.currentLevel);
+      }
     }
   }
 
   /**
    *
-   * @param keyListener
-   * @param mouseListener
+   * @param keyListener passed
+   * @param mouseListener passed
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
+  }
+
+  private colorForBorder(): string {
+    let color: string;
+    if (this.currentLevel === 1) {
+      color = 'cyan';
+    } else if (this.currentLevel === 2) {
+      color = 'red';
+    } else if (this.currentLevel === 3) {
+      color = 'green';
+    }
+    return color;
   }
 
   /**
@@ -222,7 +256,9 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    if (this.inATask) {
+    if (this.levelStartFlag) {
+      CanvasRenderer.drawImage(canvas, this.levelAnimation[this.currentLevel - 1], 0, 0);
+    } else if (this.inATask) {
       this.tasks[this.questionNumber].render(this.canvas);
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
@@ -242,10 +278,12 @@ export default class GameLevel extends Level {
           this.walls[i].getTopY(),
           width,
           height,
-          this.walls[i].getColor(),
+          this.colorForBorder(),
         );
       }
       this.player.render(this.canvas);
+
+      CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
     }
   }
 }

@@ -28,11 +28,11 @@ export default class Word extends Task {
   }
 
   private addButtons(): void {
-    this.buttons.push(new Button(133, 171, 78, 130));
-    this.buttons.push(new Button(635, 670, 23, 67));
-    this.buttons.push(new Button(470, 520, 83, 127));
-    this.buttons.push(new Button(326, 401, 25, 65));
-    this.buttons.push(new Button(635, 670, 83, 127));
+    this.buttons.push(new Button(133, 171, 78, 130, 1));
+    this.buttons.push(new Button(635, 670, 23, 67, 1));
+    this.buttons.push(new Button(470, 520, 83, 127, 1));
+    this.buttons.push(new Button(326, 401, 25, 65, 1));
+    this.buttons.push(new Button(635, 670, 83, 127, 1));
   }
 
   /**
@@ -43,7 +43,6 @@ export default class Word extends Task {
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
-        console.log(this.status);
         this.status += 1;
       }
     }
