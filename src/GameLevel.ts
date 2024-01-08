@@ -38,7 +38,7 @@ export default class GameLevel extends Level {
   private monsterColliding: number;
 
   private questionNumber: number;
-  
+
   private lives: number;
 
   private lifeImg: HTMLImageElement;
@@ -258,7 +258,7 @@ export default class GameLevel extends Level {
   public getLives(): number{
     return this.lives;
   }
-  
+
   private colorForBorder(): string {
     let color: string;
     if (this.currentLevel === 1) {
@@ -303,11 +303,11 @@ export default class GameLevel extends Level {
       }
       this.player.render(this.canvas);
 
-      CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
-    }
+      for(let i: number=1; i<=this.lives; i++){
+        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*75, 10);
+      }
 
-    for(let i: number=1; i<=this.lives; i++){
-      CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*100, 100);
+      CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
     }
   }
 }
