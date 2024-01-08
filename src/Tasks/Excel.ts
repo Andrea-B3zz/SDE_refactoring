@@ -19,10 +19,10 @@ export default class Excel extends Task {
       this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-1.png'));
       this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-2.png'));
     }
-    // else {
-    //   this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-1.png'));
-    //   this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-2.png'));
-    // }
+    else {
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-1.png'));
+      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-2.png'));
+    }
 
     this.addButtons();
     this.mistakeGiven=false;
@@ -30,11 +30,11 @@ export default class Excel extends Task {
   }
 
   private addButtons(): void {
-    this.buttons.push(new Button(613, 659, 60, 95));
-    this.buttons.push(new Button(375, 418, 60, 95));
-    this.buttons.push(new Button(326, 371, 60, 95));
-    this.buttons.push(new Button(230, 255, 63, 90));
-    this.buttons.push(new Button(900, 990, 2, 28));
+    this.buttons.push(new Button(613, 659, 60, 95, 3));
+    this.buttons.push(new Button(375, 418, 60, 95, 3));
+    this.buttons.push(new Button(326, 371, 60, 95, 3));
+    this.buttons.push(new Button(230, 255, 63, 90, 3));
+    this.buttons.push(new Button(900, 990, 2, 28, 3));
   }
 
   /**
@@ -45,7 +45,6 @@ export default class Excel extends Task {
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
-        console.log(this.status);
         this.status += 1;
       }else{
         if(this.isCollidingWithRectangle(mouseListener) != -1){

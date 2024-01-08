@@ -5,7 +5,7 @@ import Wall from './Wall.js';
 export default class Zombie extends Monster{
   public constructor(walls: Wall[]){
     // super(walls);
-    super(1, 1);
-    this.image=CanvasRenderer.loadNewImage('./assets/zombie.png');
+    super(1280, 720, walls);
+    this.image=CanvasRenderer.loadNewImage('./assets/green_monster.png');
   }
 }

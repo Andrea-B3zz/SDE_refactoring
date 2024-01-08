@@ -12,6 +12,7 @@ import Word from './Tasks/Word.js';
 import Excel from './Tasks/Excel.js';
 import RedMonster from './MovingCharacters/RedMonster.js';
 import Zombie from './MovingCharacters/Zombie.js';
+import EndingScreen from './EndingScreen.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -37,10 +38,16 @@ export default class GameLevel extends Level {
   private monsterColliding: number;
 
   private questionNumber: number;
-
+  
   private lives: number;
 
   private lifeImg: HTMLImageElement;
+
+  private levelStartAnimationDuration: number;
+
+  private levelStartFlag: boolean;
+
+  private levelAnimation: HTMLImageElement[];
 
   public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number) {
     super();
@@ -51,6 +58,7 @@ export default class GameLevel extends Level {
     this.currentLevel = currentLevel;
 
     this.questionNumber = 0;
+    this.levelStartAnimationDuration = 5000;
 
     this.canvas = canvas;
 
@@ -63,6 +71,10 @@ export default class GameLevel extends Level {
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
     this.lifeImg = CanvasRenderer.loadNewImage('./assets/heart.png');
+    this.levelAnimation = [];
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelWord.jpg'));
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelPowerPoint.jpg'));
+    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelExcel.jpg'));
 
     this.mouseListener = new MouseListener(this.canvas);
     this.keyListener = new KeyListener();
@@ -78,7 +90,6 @@ export default class GameLevel extends Level {
     switch (this.currentLevel) {
       case 1: {
         this.tasks.push(new Word(1), new Word(2), new Word(3));
-
         break;
       }
       case 2: {
@@ -122,16 +133,31 @@ export default class GameLevel extends Level {
    */
   public createMonsters(): void {
     if (this.currentLevel === 1) {
+      let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
-        this.monsters.push(new Ghost(this.walls));
+        ghost = new Ghost(this.walls);
+        while (ghost.isColliding(this.walls, ghost.getPosX(), ghost.getPosY())) {
+          ghost = new Ghost(this.walls);
+        }
+        this.monsters.push(ghost);
       }
     } else if (this.currentLevel === 2) {
+      let redMonster: RedMonster;
       for (let i: number = 0; i <= 2; i++) {
-        this.monsters.push(new RedMonster(this.walls));
+        redMonster = new RedMonster(this.walls);
+        while (redMonster.isColliding(this.walls, redMonster.getPosX(), redMonster.getPosY())) {
+          redMonster = new RedMonster(this.walls);
+        }
+        this.monsters.push(redMonster);
       }
     } else {
+      let zombie: Zombie;
       for (let i: number = 0; i <= 2; i++) {
-        this.monsters.push(new Zombie(this.walls));
+        zombie = new Zombie(this.walls);
+        while (zombie.isColliding(this.walls, zombie.getPosX(), zombie.getPosY())) {
+          zombie = new Zombie(this.walls);
+        }
+        this.monsters.push(zombie);
       }
     }
   }
@@ -142,7 +168,13 @@ export default class GameLevel extends Level {
    * @param elapsed still no function
    */
   public override update(elapsed: number): void {
-    // this.player.update(elapsed);
+    if (this.levelStartAnimationDuration > 0) {
+      this.levelStartAnimationDuration -= elapsed;
+      this.levelStartFlag = true;
+    } else {
+      this.levelStartFlag = false;
+    }
+
     this.timeElapsedRight -= 0.001 * elapsed;
 
     const newPosX: number = this.player.getPosX();
@@ -205,23 +237,38 @@ export default class GameLevel extends Level {
       return null;
     } else {
       this.currentLevel += 1;
-      return new GameLevel(canvas, this.currentLevel, this.lives);
+      if (this.currentLevel === 4) {
+        return new EndingScreen(canvas);
+      } else {
+        return new GameLevel(canvas, this.currentLevel, this.lives);
+      }
     }
   }
 
   /**
    *
-   * @param keyListener
-   * @param mouseListener
+   * @param keyListener passed
+   * @param mouseListener passed
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
-    console.log(this.tasks);
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
   public getLives(): number{
     return this.lives;
+  }
+  
+  private colorForBorder(): string {
+    let color: string;
+    if (this.currentLevel === 1) {
+      color = 'cyan';
+    } else if (this.currentLevel === 2) {
+      color = 'red';
+    } else if (this.currentLevel === 3) {
+      color = 'green';
+    }
+    return color;
   }
 
   /**
@@ -229,7 +276,9 @@ export default class GameLevel extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
-    if (this.inATask) {
+    if (this.levelStartFlag) {
+      CanvasRenderer.drawImage(canvas, this.levelAnimation[this.currentLevel - 1], 0, 0);
+    } else if (this.inATask) {
       this.tasks[this.questionNumber].render(this.canvas);
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
@@ -249,10 +298,12 @@ export default class GameLevel extends Level {
           this.walls[i].getTopY(),
           width,
           height,
-          this.walls[i].getColor(),
+          this.colorForBorder(),
         );
       }
       this.player.render(this.canvas);
+
+      CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
     }
 
     for(let i: number=1; i<=this.lives; i++){
