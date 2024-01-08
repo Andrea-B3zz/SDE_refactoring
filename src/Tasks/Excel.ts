@@ -49,6 +49,7 @@ export default class Excel extends Task {
       }else{
         if(this.isCollidingWithRectangle(mouseListener) != -1){
           this.mistakeN+=1;
+          this.buttons.splice(this.isCollidingWithRectangle(mouseListener), 1);
         }
       }
     }

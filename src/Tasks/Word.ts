@@ -49,6 +49,7 @@ this.mistakeN=0;
       }else{
         if(this.isCollidingWithRectangle(mouseListener) != -1){
           this.mistakeN+=1;
+          this.buttons.splice(this.isCollidingWithRectangle(mouseListener)-1, 1);
         }
       }
     }

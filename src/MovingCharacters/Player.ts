@@ -29,7 +29,6 @@ export default class Player extends MovingCharacter {
     this.posY = 200;
 
     this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriend.png');
-    console.log(this.bfImage);
     this.speed = 0.4;
   }
 
