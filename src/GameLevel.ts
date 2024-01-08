@@ -231,8 +231,8 @@ export default class GameLevel extends Level {
 
   /**
    *
-   * @param keyListener
-   * @param mouseListener
+   * @param keyListener passed
+   * @param mouseListener passed
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);

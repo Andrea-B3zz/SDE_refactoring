@@ -9,12 +9,19 @@ export default class Button {
 
   private borderColor: string;
 
-  public constructor(leftX: number, rightX: number, topY: number, bottomY: number) {
+  public constructor(leftX: number, rightX: number,
+    topY: number, bottomY: number, currentLevel: number) {
     this.leftX = leftX;
     this.rightX = rightX;
     this.topY = topY;
     this.bottomY = bottomY;
-    this.borderColor = 'green';
+    if (currentLevel === 1) {
+      this.borderColor = 'cyan';
+    } else if (currentLevel === 2) {
+      this.borderColor = 'red';
+    } else if (currentLevel === 3) {
+      this.borderColor = 'green';
+    }
   }
 
   public getLeftX(): number {

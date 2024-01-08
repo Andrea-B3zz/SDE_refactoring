@@ -28,11 +28,11 @@ export default class Excel extends Task {
   }
 
   private addButtons(): void {
-    this.buttons.push(new Button(613, 659, 60, 95));
-    this.buttons.push(new Button(375, 418, 60, 95));
-    this.buttons.push(new Button(326, 371, 60, 95));
-    this.buttons.push(new Button(230, 255, 63, 90));
-    this.buttons.push(new Button(900, 990, 2, 28));
+    this.buttons.push(new Button(613, 659, 60, 95, 3));
+    this.buttons.push(new Button(375, 418, 60, 95, 3));
+    this.buttons.push(new Button(326, 371, 60, 95, 3));
+    this.buttons.push(new Button(230, 255, 63, 90, 3));
+    this.buttons.push(new Button(900, 990, 2, 28, 3));
   }
 
   /**
