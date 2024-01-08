@@ -280,6 +280,9 @@ export default class GameLevel extends Level {
       CanvasRenderer.drawImage(canvas, this.levelAnimation[this.currentLevel - 1], 0, 0);
     } else if (this.inATask) {
       this.tasks[this.questionNumber].render(this.canvas);
+      for(let i: number=1; i<=this.lives; i++){
+        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*75, 10);
+      }
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
