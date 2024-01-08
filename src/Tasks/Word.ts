@@ -43,7 +43,6 @@ export default class Word extends Task {
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
-        console.log(this.status);
         this.status += 1;
       }
     }

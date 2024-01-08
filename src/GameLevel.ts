@@ -12,6 +12,7 @@ import Word from './Tasks/Word.js';
 import Excel from './Tasks/Excel.js';
 import RedMonster from './MovingCharacters/RedMonster.js';
 import Zombie from './MovingCharacters/Zombie.js';
+import EndingScreen from './EndingScreen.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -220,7 +221,11 @@ export default class GameLevel extends Level {
       return null;
     } else {
       this.currentLevel += 1;
-      return new GameLevel(canvas, this.currentLevel);
+      if (this.currentLevel === 4) {
+        return new EndingScreen(canvas);
+      } else {
+        return new GameLevel(canvas, this.currentLevel);
+      }
     }
   }
 
