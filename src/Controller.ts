@@ -31,6 +31,9 @@ export default class Controller extends Game {
     this.levelCount = 0;
   }
 
+  /**
+   * using the keylistener and mouselistener
+   */
   public processInput(): void {
     this.currentLevel.processInput(this.keyListener, this.mouseListener);
   }
@@ -57,7 +60,6 @@ export default class Controller extends Game {
    */
   public override render(): void {
     CanvasRenderer.clearCanvas(this.canvas);
-
     this.currentLevel.render(this.canvas);
   }
 }

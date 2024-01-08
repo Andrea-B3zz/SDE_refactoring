@@ -26,6 +26,8 @@ export default class GameLevel extends Level {
 
   private timeElapsedLeft: number;
 
+  private battleMusic: HTMLAudioElement;
+
   private mouseListener: MouseListener;
 
   private tasks: Task[];
@@ -58,6 +60,11 @@ export default class GameLevel extends Level {
     canvas.style.overflow = 'hidden';
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
+    this.battleMusic = document.querySelector('#battle');
+    this.battleMusic.src = 'assets/Audio/battle.ogg';
+    this.music = document.querySelector('#audio');
+    this.music.src = 'assets/Audio/dungeon.ogg';
+    this.music.play();
 
     this.mouseListener = new MouseListener(this.canvas);
     this.keyListener = new KeyListener();
@@ -73,7 +80,6 @@ export default class GameLevel extends Level {
     switch (this.currentLevel) {
       case 1: {
         this.tasks.push(new Word(1), new Word(2), new Word(3));
-
         break;
       }
       case 2: {
@@ -119,7 +125,7 @@ export default class GameLevel extends Level {
       let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
         ghost = new Ghost(this.walls);
-        while (ghost.isColliding(this.walls, ghost.getPosX(), ghost.getPosY())) {
+        while (ghost.isSpawnedOnWAll(this.walls, ghost.getPosX(), ghost.getPosY())) {
           ghost = new Ghost(this.walls);
         }
         this.monsters.push(ghost);
@@ -210,8 +216,8 @@ export default class GameLevel extends Level {
 
   /**
    *
-   * @param keyListener
-   * @param mouseListener
+   * @param keyListener using the mouse
+   * @param mouseListener using the keyboard
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
@@ -225,9 +231,12 @@ export default class GameLevel extends Level {
   public render(canvas: HTMLCanvasElement): void {
     if (this.inATask) {
       this.tasks[this.questionNumber].render(this.canvas);
+      this.music.pause();
+      this.battleMusic.play();
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
-
+      this.battleMusic.pause();
+      this.music.play();
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
       for (let i: number = 0; i < this.monsters.length; i++) {
