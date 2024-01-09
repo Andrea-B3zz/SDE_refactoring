@@ -37,6 +37,7 @@ export default class Backstory extends Level {
    * @param elapsed that does nothing here, but it's used in the abstract class Level
    */
   public override update(elapsed: number): void {
+    this.music.play();
     this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
   }
 
@@ -70,6 +71,4 @@ export default class Backstory extends Level {
   public render(canvas: HTMLCanvasElement): void {
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
   }
-
-  
 }
