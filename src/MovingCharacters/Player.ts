@@ -18,11 +18,7 @@ export default class Player extends MovingCharacter {
     this.walls = walls;
     this.monsters = monsters;
 
-    //this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
-
-    // random positions for the Player object
-    // const randomX: number = Math.floor(Math.random() * window.innerWidth);
-    // const randomY: number = Math.floor(Math.random() * window.innerHeight);
+    this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
     this.image = CanvasRenderer.loadNewImage('./assets/boy.png');
     this.posX = 200;
