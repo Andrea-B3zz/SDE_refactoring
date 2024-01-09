@@ -20,6 +20,8 @@ export default class Backstory extends Level {
 
     this.arrayOfImages = ['./assets/Backstory00.jpg', './assets/Backstory01.jpg', './assets/Backstory02.jpg', './assets/Backstory03.jpg', './assets/Backstory04.jpg', './assets/Backstory05.jpg', './assets/Backstory06.jpg', './assets/Backstory07.jpg'];
     this.currentImage = 0;
+    this.music = document.querySelector('#audio');
+    this.music.src = 'assets/Audio/backstoryMusic.ogg';
 
     this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
     this.canvas.width = this.image.width;
@@ -68,4 +70,6 @@ export default class Backstory extends Level {
   public render(canvas: HTMLCanvasElement): void {
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
   }
+
+  
 }

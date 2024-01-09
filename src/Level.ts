@@ -6,6 +6,8 @@ export default abstract class Level {
 
   protected canvas: HTMLCanvasElement;
 
+  protected music: HTMLAudioElement;
+
   public abstract update(elapsed: number): void;
 
   public abstract nextLevel(canvas: HTMLCanvasElement): Level | null;

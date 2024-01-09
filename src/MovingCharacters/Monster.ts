@@ -11,6 +11,7 @@ export default abstract class Monster extends MovingCharacter {
     this.posX = Math.floor(Math.random() * MapWidth);
     this.posY = Math.floor(Math.random() * MapHeight);
     this.speed = 0.05;
+
   }
 
   /**
@@ -53,6 +54,26 @@ export default abstract class Monster extends MovingCharacter {
         && newPosX + this.getWidth() >= item.getLeftX()
         && newPosY + this.getHeight() >= item.getTopY()
         && newPosY <= item.getBottomY()
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public isSpawnedOnWAll(walls: Wall[], newPosX: number, newPosY: number): boolean {
+    for (let i: number = 0; i < walls.length; i++) {
+      const item: Wall = walls[i];
+      const width: number = item.getRightX() - item.getLeftX();
+      const height: number = item.getBottomY() - item.getTopY();
+      if (
+        this.posY + this.getHeight() > item.getTopY() &&
+        this.posX <= item.getRightX() &&
+        this.posY <= item.getTopY()
+        // newPosX <= item.getRightX()
+        // && newPosX + this.getWidth() >= item.getLeftX()
+        // && newPosY + this.getHeight() >= item.getTopY()
+        // && newPosY <= item.getBottomY()
       ) {
         return true;
       }

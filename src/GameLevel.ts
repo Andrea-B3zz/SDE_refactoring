@@ -27,6 +27,8 @@ export default class GameLevel extends Level {
 
   private timeElapsedLeft: number;
 
+  private battleMusic: HTMLAudioElement;
+
   private mouseListener: MouseListener;
 
   private tasks: Task[];
@@ -70,11 +72,18 @@ export default class GameLevel extends Level {
     canvas.style.overflow = 'hidden';
 
     this.image = CanvasRenderer.loadNewImage('./assets/FinalMap2.png');
+    this.battleMusic = document.querySelector('#battle');
+    this.battleMusic.src = 'assets/Audio/battle.ogg';
+    this.music = document.querySelector('#audio');
+    this.music.src = 'assets/Audio/dungeon.ogg';
+    this.music.play();
+
     this.lifeImg = CanvasRenderer.loadNewImage('./assets/heart.png');
     this.levelAnimation = [];
     this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelWord.jpg'));
     this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelPowerPoint.jpg'));
     this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelExcel.jpg'));
+
 
     this.mouseListener = new MouseListener(this.canvas);
     this.keyListener = new KeyListener();
@@ -136,7 +145,7 @@ export default class GameLevel extends Level {
       let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
         ghost = new Ghost(this.walls);
-        while (ghost.isColliding(this.walls, ghost.getPosX(), ghost.getPosY())) {
+        while (ghost.isSpawnedOnWAll(this.walls, ghost.getPosX(), ghost.getPosY())) {
           ghost = new Ghost(this.walls);
         }
         this.monsters.push(ghost);
@@ -246,9 +255,8 @@ export default class GameLevel extends Level {
   }
 
   /**
-   *
-   * @param keyListener passed
-   * @param mouseListener passed
+   * @param keyListener using the mouse
+   * @param mouseListener using the keyboard
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
@@ -272,7 +280,7 @@ export default class GameLevel extends Level {
   }
 
   /**
-   * drawing the images on the cancas
+   * drawing the images on the canvas
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
@@ -280,12 +288,15 @@ export default class GameLevel extends Level {
       CanvasRenderer.drawImage(canvas, this.levelAnimation[this.currentLevel - 1], 0, 0);
     } else if (this.inATask) {
       this.tasks[this.questionNumber].render(this.canvas);
+      this.music.pause();
+      this.battleMusic.play();
       for(let i: number=1; i<=this.lives; i++){
         CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*75, 10);
       }
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
-
+      this.battleMusic.pause();
+      this.music.play();
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
       for (let i: number = 0; i < this.monsters.length; i++) {

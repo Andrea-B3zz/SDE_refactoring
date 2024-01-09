@@ -18,7 +18,7 @@ export default class Player extends MovingCharacter {
     this.walls = walls;
     this.monsters = monsters;
 
-    this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
+    //this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
     // random positions for the Player object
     // const randomX: number = Math.floor(Math.random() * window.innerWidth);
@@ -134,9 +134,9 @@ export default class Player extends MovingCharacter {
    * @param canvas our canvas where everything will be displayed
    */
   public override render(canvas: HTMLCanvasElement): void {
-    CanvasRenderer.drawImage(canvas, this.fovImage,
-      this.posX - this.fovImage.width / 2 + this.getWidth() / 2,
-      this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
+    // CanvasRenderer.drawImage(canvas, this.fovImage,
+    //   this.posX - this.fovImage.width / 2 + this.getWidth() / 2,
+    //   this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
 
     CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);
 
