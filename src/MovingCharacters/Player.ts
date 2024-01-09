@@ -100,11 +100,11 @@ export default class Player extends MovingCharacter {
     return false;
   }
 
- /**
-   * Checks if the player collides with monsters
-   * @param monsters array of monsters
-   * @returns true if there is collision with monsters, and false - if not
-   */
+  /**
+    * Checks if the player collides with monsters
+    * @param monsters array of monsters
+    * @returns true if there is collision with monsters, and false - if not
+    */
   public isCollidingWithMonster(monsters: Monster[]): number {
     for (let i: number = 0; i < monsters.length; i++) {
       const monster: Monster = monsters[i];
@@ -114,7 +114,7 @@ export default class Player extends MovingCharacter {
         this.posY < monster.getPosY() + monster.getHeight() &&
         this.posY + this.getHeight() > monster.getPosY()
       ) {
-        return i+1;
+        return i + 1;
       }
     }
     return -1;
@@ -134,9 +134,9 @@ export default class Player extends MovingCharacter {
    * @param canvas our canvas where everything will be displayed
    */
   public override render(canvas: HTMLCanvasElement): void {
-    // CanvasRenderer.drawImage(canvas, this.fovImage,
-    //   this.posX - this.fovImage.width / 2 + this.getWidth() / 2,
-    //   this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
+    CanvasRenderer.drawImage(canvas, this.fovImage,
+      this.posX - this.fovImage.width / 2 + this.getWidth() / 2,
+      this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
 
     CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);
 
