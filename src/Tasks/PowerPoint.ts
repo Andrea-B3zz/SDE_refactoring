@@ -27,14 +27,16 @@ export default class PowerPoint extends Task {
     }
 
     this.addButtons();
+    this.mistakeN=0;
+    this.mistakeGiven=false;
   }
 
   private addButtons(): void {
-    this.buttons.push(new Button(296, 355, 35, 135));
-    this.buttons.push(new Button(320, 410, 3, 27));
-    this.buttons.push(new Button(843, 965, 3, 27));
-    this.buttons.push(new Button(166, 222, 35, 135));
-    this.buttons.push(new Button(585, 700, 3, 27));
+    this.buttons.push(new Button(296, 355, 35, 135, 2));
+    this.buttons.push(new Button(320, 410, 3, 27, 2));
+    this.buttons.push(new Button(843, 965, 3, 27, 2));
+    this.buttons.push(new Button(166, 222, 35, 135, 2));
+    this.buttons.push(new Button(585, 700, 3, 27, 2));
   }
 
   /**
@@ -47,6 +49,11 @@ export default class PowerPoint extends Task {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         this.status += 1;
         this.buttons = this.buttonRefactor();
+      }else{
+        if(this.isCollidingWithRectangle(mouseListener) != -1){
+          this.mistakeN+=1;
+          this.buttons.splice(this.isCollidingWithRectangle(mouseListener), 1);
+        }
       }
     }
 
@@ -91,28 +98,28 @@ export default class PowerPoint extends Task {
     if (this.rightAnswer == 2) {
       // this.status >= this.buttons.length
       this.buttons.splice(0, this.buttons.length);
-      this.buttons.push(new Button(320, 410, 3, 27));
-      this.buttons.push(new Button(330, 390, 35, 135));
-      this.buttons.push(new Button(185, 245, 35, 125));
-      this.buttons.push(new Button(630, 685, 35, 125));
-      this.buttons.push(new Button(800, 925, 3, 27));
+      this.buttons.push(new Button(320, 410, 3, 27, 2));
+      this.buttons.push(new Button(330, 390, 35, 135, 2));
+      this.buttons.push(new Button(185, 245, 35, 125, 2));
+      this.buttons.push(new Button(630, 685, 35, 125, 2));
+      this.buttons.push(new Button(800, 925, 3, 27, 2));
       if (this.status === 2) {
         this.buttons.splice(0, this.buttons.length);
-        this.buttons.push(new Button(-320, -410, -3, -27));
-        this.buttons.push(new Button(242, 405, 255, 480));
+        this.buttons.push(new Button(-320, -410, -3, -27, 2));
+        this.buttons.push(new Button(242, 405, 255, 480, 2));
       }
     } else if (this.rightAnswer == 3) {
       this.buttons.splice(0, this.buttons.length);
-      this.buttons.push(new Button(580, 645, 50, 155));
-      this.buttons.push(new Button(755, 860, 50, 155));
-      this.buttons.push(new Button(20, 110, 50, 155));
+      this.buttons.push(new Button(580, 645, 50, 155, 2));
+      this.buttons.push(new Button(755, 860, 50, 155, 2));
+      this.buttons.push(new Button(20, 110, 50, 155, 2));
     }
     return this.buttons;
   }
 
   /**
    *
-   * @param canvas
+   * @param canvas passed
    */
   public override render(canvas: HTMLCanvasElement): void {
     if (this.status < this.images.length) {

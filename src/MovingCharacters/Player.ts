@@ -11,11 +11,12 @@ export default class Player extends MovingCharacter {
 
   private fovImage: HTMLImageElement;
 
+  private bfImage: HTMLImageElement;
+
   public constructor(walls: Wall[], monsters: Monster[]) {
     super();
     this.walls = walls;
     this.monsters = monsters;
-    console.log(monsters);
 
     //this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
@@ -23,10 +24,11 @@ export default class Player extends MovingCharacter {
     // const randomX: number = Math.floor(Math.random() * window.innerWidth);
     // const randomY: number = Math.floor(Math.random() * window.innerHeight);
 
-    this.image = CanvasRenderer.loadNewImage('./assets/boy4.png');
+    this.image = CanvasRenderer.loadNewImage('./assets/boy.png');
     this.posX = 200;
     this.posY = 200;
 
+    this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriend.png');
     this.speed = 0.4;
   }
 
@@ -137,5 +139,9 @@ export default class Player extends MovingCharacter {
     //   this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
 
     CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);
+
+    CanvasRenderer.drawImage(canvas, this.bfImage,
+      window.innerWidth - this.bfImage.width,
+      window.innerHeight - this.bfImage.height);
   }
 }
