@@ -32,17 +32,17 @@ export default class PowerPoint extends Task {
    */
   protected override loadImages(language: string, letters: string): void {
     if (this.rightAnswer == 1) {
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_1${letters}.png`));
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_2${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_02${letters}.png`));
     } else if (this.rightAnswer == 2) {
-      this.images.push(CanvasRenderer.loadNewImage(`./assetsPowerPoint_tasks/${language}/PowerPoint_task2_1${letters}.png`));
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_2${letters}.png`));
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_3${letters}.png`));
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_4${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assetsPowerPoint_tasks/${language}/PowerPoint_task2_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_02${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_03${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_04${letters}.png`));
     } else {
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_1${letters}.png`));
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_2${letters}.png`));
-      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_3${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_02${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_03${letters}.png`));
     }
   }
 
