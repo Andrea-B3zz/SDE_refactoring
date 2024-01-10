@@ -106,15 +106,18 @@ export default class GameLevel extends Level {
     this.tasks = [];
     switch (this.currentLevel) {
       case 1: {
-        this.tasks.push(new Word(1), new Word(2), new Word(3));
+        this.tasks.push(new Word(1, this.language), new Word(2, this.language),
+          new Word(3, this.language));
         break;
       }
       case 2: {
-        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+        this.tasks.push(new PowerPoint(1, this.language),
+          new PowerPoint(2, this.language), new PowerPoint(3, this.language));
         break;
       }
       case 3: {
-        this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+        this.tasks.push(new Excel(1, this.language), new Excel(2, this.language),
+          new Excel(3, this.language));
         break;
       }
     }

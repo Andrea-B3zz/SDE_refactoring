@@ -17,11 +17,11 @@ export default class Backstory extends Level {
     super();
     this.keyListener = new KeyListener();
     this.canvas = canvas;
-    this.language=language;
+    this.language = language;
 
-    if(language==0){
+    if (language == 0) {
       this.arrayOfImages = ['./assets/Backstory/English/Backstory01EN.jpg', './assets/Backstory/English/Backstory02EN.jpg', './assets/Backstory/English/Backstory03EN.jpg', './assets/Backstory/English/Backstory04EN.jpg', './assets/Backstory/English/Backstory05EN.jpg', './assets/Backstory/English/Backstory06EN.jpg', './assets/Backstory/English/Backstory07EN.jpg'];
-    }else{
+    } else {
       this.arrayOfImages = ['./assets/Backstory/Dutch/Backstory01NL.jpg', './assets/Backstory/Dutch/Backstory02NL.jpg', './assets/Backstory/Dutch/Backstory03NL.jpg', './assets/Backstory/Dutch/Backstory04NL.jpg', './assets/Backstory/Dutch/Backstory05NL.jpg', './assets/Backstory/Dutch/Backstory06NL.jpg', './assets/Backstory/Dutch/Backstory07NL.jpg'];
     }
     this.currentImage = 0;

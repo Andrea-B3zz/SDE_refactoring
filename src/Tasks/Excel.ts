@@ -5,28 +5,42 @@ import Button from './Button.js';
 import KeyListener from '../Utility/KeyListener.js';
 
 export default class Excel extends Task {
-  public constructor(rightAnswer: number) {
+  public constructor(rightAnswer: number, language: number) {
     super();
     this.status = 0;
     this.buttons = [];
     this.isCompleted = false;
     this.rightAnswer = rightAnswer;
     this.images = [];
-    if (this.rightAnswer == 1) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task1-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task1-2.png'));
-    } else if (this.rightAnswer == 2) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task2-2.png'));
-    }
-    else {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Excel_tasks/Excel_task3-2.png'));
+
+    this.images = [];
+    if (language == 0) {
+      this.loadImages('English', 'EN');
+    } else {
+      this.loadImages('Dutch', 'NL');
     }
 
     this.addButtons();
-    this.mistakeGiven=false;
-    this.mistakeN=0;
+    this.mistakeGiven = false;
+    this.mistakeN = 0;
+  }
+
+  /**
+   * loads the specific images, depending on the chosen language
+   * @param language the language that is chosen
+   * @param letters short letters
+   */
+  protected override loadImages(language: string, letters: string): void {
+    if (this.rightAnswer == 1) {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Excel_tasks/${language}/Excel_task1-1${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Excel_tasks/${language}/Excel_task1-2${letters}.png`));
+    } else if (this.rightAnswer == 2) {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Excel_tasks/${language}/Excel_task2-1${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Excel_tasks/${language}/Excel_task2-2${letters}.png`));
+    } else {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Excel_tasks/${language}/Excel_task3-1${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Excel_tasks/${language}/Excel_task3-2${letters}.png`));
+    }
   }
 
   private addButtons(): void {
@@ -46,9 +60,9 @@ export default class Excel extends Task {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         this.status += 1;
-      }else{
-        if(this.isCollidingWithRectangle(mouseListener) != -1){
-          this.mistakeN+=1;
+      } else {
+        if (this.isCollidingWithRectangle(mouseListener) != -1) {
+          this.mistakeN += 1;
           this.buttons.splice(this.isCollidingWithRectangle(mouseListener), 1);
         }
       }
@@ -78,13 +92,6 @@ export default class Excel extends Task {
       }
     }
     return -1;
-  }
-
-  /**
-   *
-   * @param elapsed
-   */
-  public override update(elapsed: number): void {
   }
 
   public getIsCompleted(): boolean {
