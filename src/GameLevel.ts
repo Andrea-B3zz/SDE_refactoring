@@ -51,7 +51,9 @@ export default class GameLevel extends Level {
 
   private levelAnimation: HTMLImageElement[];
 
-  public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number) {
+  private bfImage: HTMLImageElement;
+
+  public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number, language: number) {
     super();
     this.walls = [];
     this.keyListener = new KeyListener();
@@ -61,7 +63,7 @@ export default class GameLevel extends Level {
 
     this.questionNumber = 0;
     this.levelStartAnimationDuration = 5000;
-
+    this.language = language;
     this.canvas = canvas;
 
     this.populateWalls();
@@ -80,9 +82,15 @@ export default class GameLevel extends Level {
 
     this.lifeImg = CanvasRenderer.loadNewImage('./assets/heart.png');
     this.levelAnimation = [];
-    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelWord.jpg'));
-    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelPowerPoint.jpg'));
-    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelExcel.jpg'));
+    if (language == 0) {
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelWordEN.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelPowerPointEN.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelExcelEN.jpg'));
+    } else {
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelWordNL.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelPowerPointNL.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelExcelNL.jpg'));
+    }
 
 
     this.mouseListener = new MouseListener(this.canvas);
@@ -111,7 +119,12 @@ export default class GameLevel extends Level {
       }
     }
     this.player = new Player(this.walls, this.monsters);
-    this.lives=lives;
+    this.lives = lives;
+    if (language == 0) {
+      this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendEN.png');
+    } else {
+      this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendNL.png');
+    }
   }
 
   private populateWalls(): void {
@@ -226,9 +239,9 @@ export default class GameLevel extends Level {
     }
 
     // mistake checking
-    for(let i :number=0; i<this.tasks.length; i++){
-      if(this.tasks[i].checkMistake()){
-        this.lives-=1;
+    for (let i: number = 0; i < this.tasks.length; i++) {
+      if (this.tasks[i].checkMistake()) {
+        this.lives -= 1;
       }
     }
   }
@@ -239,17 +252,17 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
-    if(this.lives==0){
-      return new EndingScreen(this.canvas, 'lose');
+    if (this.lives == 0) {
+      return new EndingScreen(this.canvas, 'lose', this.language);
     }
     if (this.monsters.length != 0) {
       return null;
     } else {
       this.currentLevel += 1;
       if (this.currentLevel === 4) {
-        return new EndingScreen(canvas, 'win');
+        return new EndingScreen(canvas, 'win', this.language);
       } else {
-        return new GameLevel(canvas, this.currentLevel, this.lives);
+        return new GameLevel(canvas, this.currentLevel, this.lives, this.language);
       }
     }
   }
@@ -263,7 +276,7 @@ export default class GameLevel extends Level {
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
-  public getLives(): number{
+  public getLives(): number {
     return this.lives;
   }
 
@@ -290,8 +303,8 @@ export default class GameLevel extends Level {
       this.tasks[this.questionNumber].render(this.canvas);
       this.music.pause();
       this.battleMusic.play();
-      for(let i: number=1; i<=this.lives; i++){
-        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*75, 10);
+      for (let i: number = 1; i <= this.lives; i++) {
+        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
@@ -317,8 +330,12 @@ export default class GameLevel extends Level {
       }
       this.player.render(this.canvas);
 
-      for(let i: number=1; i<=this.lives; i++){
-        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*75, 10);
+      CanvasRenderer.drawImage(canvas, this.bfImage,
+        window.innerWidth - this.bfImage.width,
+        window.innerHeight - this.bfImage.height);
+
+      for (let i: number = 1; i <= this.lives; i++) {
+        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
 
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');

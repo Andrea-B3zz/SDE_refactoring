@@ -11,8 +11,6 @@ export default class Player extends MovingCharacter {
 
   private fovImage: HTMLImageElement;
 
-  private bfImage: HTMLImageElement;
-
   public constructor(walls: Wall[], monsters: Monster[]) {
     super();
     this.walls = walls;
@@ -24,7 +22,6 @@ export default class Player extends MovingCharacter {
     this.posX = 200;
     this.posY = 200;
 
-    this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriend.png');
     this.speed = 0.4;
   }
 
@@ -135,9 +132,5 @@ export default class Player extends MovingCharacter {
       this.posY - this.fovImage.height / 2 + this.getHeight() / 2);
 
     CanvasRenderer.drawImage(canvas, this.image, this.posX, this.posY);
-
-    CanvasRenderer.drawImage(canvas, this.bfImage,
-      window.innerWidth - this.bfImage.width,
-      window.innerHeight - this.bfImage.height);
   }
 }

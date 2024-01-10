@@ -13,12 +13,17 @@ export default class Backstory extends Level {
 
   private keyListener: KeyListener;
 
-  public constructor(canvas: HTMLCanvasElement) {
+  public constructor(canvas: HTMLCanvasElement, language: number) {
     super();
     this.keyListener = new KeyListener();
     this.canvas = canvas;
+    this.language=language;
 
-    this.arrayOfImages = ['./assets/Backstory01.jpg', './assets/Backstory02.jpg', './assets/Backstory03.jpg', './assets/Backstory04.jpg', './assets/Backstory05.jpg', './assets/Backstory06.jpg', './assets/Backstory07.jpg'];
+    if(language==0){
+      this.arrayOfImages = ['./assets/Backstory/English/Backstory01EN.jpg', './assets/Backstory/English/Backstory02EN.jpg', './assets/Backstory/English/Backstory03EN.jpg', './assets/Backstory/English/Backstory04EN.jpg', './assets/Backstory/English/Backstory05EN.jpg', './assets/Backstory/English/Backstory06EN.jpg', './assets/Backstory/English/Backstory07EN.jpg'];
+    }else{
+      this.arrayOfImages = ['./assets/Backstory/Dutch/Backstory01NL.jpg', './assets/Backstory/Dutch/Backstory02NL.jpg', './assets/Backstory/Dutch/Backstory03NL.jpg', './assets/Backstory/Dutch/Backstory04NL.jpg', './assets/Backstory/Dutch/Backstory05NL.jpg', './assets/Backstory/Dutch/Backstory06NL.jpg', './assets/Backstory/Dutch/Backstory07NL.jpg'];
+    }
     this.currentImage = 0;
     this.music = document.querySelector('#audio');
     this.music.src = 'assets/Audio/backstoryMusic.ogg';
@@ -48,7 +53,7 @@ export default class Backstory extends Level {
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
     if (this.currentImage >= this.arrayOfImages.length) {
-      return new GameLevel(canvas, 1, 3);
+      return new GameLevel(canvas, 1, 3, this.language);
     } else {
       return null;
     }

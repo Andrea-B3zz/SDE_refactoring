@@ -10,9 +10,6 @@ export default class LanguageSelection extends Level {
 
   private mouseListener: MouseListener;
 
-  // 0 is english, 1 is dutch
-  private language: number;
-
   private languageChosen: boolean;
 
   private dutchFlag: HTMLImageElement;
@@ -68,7 +65,7 @@ export default class LanguageSelection extends Level {
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
     if (this.languageChosen) {
-      return new Backstory(canvas);
+      return new Backstory(canvas, this.language);
     } else {
       return null;
     }
