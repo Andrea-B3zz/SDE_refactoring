@@ -29,12 +29,19 @@ export default class Backstory extends Level {
     this.music.src = 'assets/Audio/backstoryMusic.ogg';
 
     this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
-    this.canvas.width = this.image.width;
-    this.canvas.height = this.image.height;
+    this.image.onload = (): void => {
+      this.canvas.width = this.image.width;
+      this.canvas.height = this.image.height;
+    };
 
     this.canvas.style.width = '94%';
     this.canvas.style.height = '94%';
     this.canvas.style.marginLeft = '3%';
+
+    this.arrayOfImages.forEach((imagePath: string) => {
+      const image: HTMLImageElement = new Image();
+      image.src = imagePath;
+    });
   }
 
   /**
@@ -74,6 +81,7 @@ export default class Backstory extends Level {
    * @param canvas HTML canvas element
    */
   public render(canvas: HTMLCanvasElement): void {
+    CanvasRenderer.clearCanvas(canvas);
     CanvasRenderer.drawImage(canvas, this.image, 0, 0);
   }
 }
