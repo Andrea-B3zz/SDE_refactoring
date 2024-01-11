@@ -35,7 +35,7 @@ export default class PowerPoint extends Task {
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_01${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_02${letters}.png`));
     } else if (this.rightAnswer == 2) {
-      this.images.push(CanvasRenderer.loadNewImage(`./assetsPowerPoint_tasks/${language}/PowerPoint_task2_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_01${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_02${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_03${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_04${letters}.png`));
