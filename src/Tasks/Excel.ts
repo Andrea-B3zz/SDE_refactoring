@@ -120,6 +120,7 @@ export default class Excel extends Task {
           width,
           height,
           this.buttons[i].getColor(),
+          this.buttons[i].getBorderWidth()
         );
       }
     }

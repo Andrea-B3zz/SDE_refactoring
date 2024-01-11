@@ -9,6 +9,8 @@ export default class Button {
 
   private borderColor: string;
 
+  private borderWidth: number;
+
   public constructor(leftX: number, rightX: number,
     topY: number, bottomY: number, currentLevel: number) {
     this.leftX = leftX;
@@ -22,6 +24,7 @@ export default class Button {
     } else if (currentLevel === 3) {
       this.borderColor = 'green';
     }
+    this.borderWidth = 4;
   }
 
   public getLeftX(): number {
@@ -42,5 +45,9 @@ export default class Button {
 
   public getColor(): string {
     return this.borderColor;
+  }
+
+  public getBorderWidth(): number {
+    return this.borderWidth;
   }
 }

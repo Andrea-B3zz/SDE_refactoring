@@ -147,6 +147,7 @@ export default class PowerPoint extends Task {
           width,
           height,
           this.buttons[i].getColor(),
+          this.buttons[i].getBorderWidth()
         );
       }
     }

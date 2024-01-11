@@ -120,7 +120,7 @@ export default class Word extends Task {
           width,
           height,
           this.buttons[i].getColor(),
-        );
+          this.buttons[i].getBorderWidth());
       }
     }
   }
