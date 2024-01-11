@@ -5,30 +5,45 @@ import Button from './Button.js';
 import KeyListener from '../Utility/KeyListener.js';
 
 export default class PowerPoint extends Task {
-  public constructor(rightAnswer: number) {
+  public constructor(rightAnswer: number, language: number) {
     super();
     this.status = 0;
     this.buttons = [];
     this.isCompleted = false;
     this.rightAnswer = rightAnswer;
     this.images = [];
-    if (this.rightAnswer == 1) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task1_01.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task1_02.png'));
-    } else if (this.rightAnswer == 2) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task2_01.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task2_02.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task2_03.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task2_04.png'));
+
+    this.images = [];
+    if (language == 0) {
+      this.loadImages('English', 'EN');
     } else {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task3_01.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task3_02.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/PowerPoint_tasks/PowerPoint_task3_03.png'));
+      this.loadImages('Dutch', 'NL');
     }
 
     this.addButtons();
-    this.mistakeN=0;
-    this.mistakeGiven=false;
+    this.mistakeN = 0;
+    this.mistakeGiven = false;
+  }
+
+  /**
+   * loads the specific images, depending on the chosen language
+   * @param language the language that is chosen
+   * @param letters short letters
+   */
+  protected override loadImages(language: string, letters: string): void {
+    if (this.rightAnswer == 1) {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_02${letters}.png`));
+    } else if (this.rightAnswer == 2) {
+      this.images.push(CanvasRenderer.loadNewImage(`./assetsPowerPoint_tasks/${language}/PowerPoint_task2_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_02${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_03${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_04${letters}.png`));
+    } else {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_02${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task3_03${letters}.png`));
+    }
   }
 
   private addButtons(): void {
@@ -49,9 +64,9 @@ export default class PowerPoint extends Task {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         this.status += 1;
         this.buttons = this.buttonRefactor();
-      }else{
-        if(this.isCollidingWithRectangle(mouseListener) != -1){
-          this.mistakeN+=1;
+      } else {
+        if (this.isCollidingWithRectangle(mouseListener) != -1) {
+          this.mistakeN += 1;
           this.buttons.splice(this.isCollidingWithRectangle(mouseListener), 1);
         }
       }
@@ -81,13 +96,6 @@ export default class PowerPoint extends Task {
       }
     }
     return -1;
-  }
-
-  /**
-   *
-   * @param elapsed
-   */
-  public override update(elapsed: number): void {
   }
 
   public getIsCompleted(): boolean {
