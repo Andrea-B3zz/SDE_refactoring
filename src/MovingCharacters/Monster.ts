@@ -6,12 +6,12 @@ import Wall from './Wall.js';
 export default abstract class Monster extends MovingCharacter {
   private level: number = 1;
 
+  private possibleCoordinates: { x: number; y: number }[];
+
   public constructor(MapWidth: number, MapHeight: number, walls: Wall[]) {
     super();
-    this.posX = Math.floor(Math.random() * MapWidth);
-    this.posY = Math.floor(Math.random() * MapHeight);
     this.speed = 0.05;
-
+    this.possibleCoordinates = [];
   }
 
   /**
@@ -60,27 +60,6 @@ export default abstract class Monster extends MovingCharacter {
     }
     return false;
   }
-
-  public isSpawnedOnWAll(walls: Wall[], newPosX: number, newPosY: number): boolean {
-    for (let i: number = 0; i < walls.length; i++) {
-      const item: Wall = walls[i];
-      const width: number = item.getRightX() - item.getLeftX();
-      const height: number = item.getBottomY() - item.getTopY();
-      if (
-        this.posY + this.getHeight() > item.getTopY() &&
-        this.posX <= item.getRightX() &&
-        this.posY <= item.getTopY()
-        // newPosX <= item.getRightX()
-        // && newPosX + this.getWidth() >= item.getLeftX()
-        // && newPosY + this.getHeight() >= item.getTopY()
-        // && newPosY <= item.getBottomY()
-      ) {
-        return true;
-      }
-    }
-    return false;
-  }
-
 
   /**
    * moving our monster around

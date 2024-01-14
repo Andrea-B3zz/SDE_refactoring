@@ -67,6 +67,7 @@ export default class GameLevel extends Level {
     this.canvas = canvas;
 
     this.populateWalls();
+
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
     canvas.style.width = '1408px';
@@ -154,39 +155,33 @@ export default class GameLevel extends Level {
   }
 
   /**
-   * creating 3 monster per level
+   * spawns 3 monsters specific to the level
    */
   public createMonsters(): void {
+    const coordinates: { x: number; y: number }[] = [];
     if (this.currentLevel === 1) {
       let ghost: Ghost;
+      coordinates.push({ x: 90, y: 90 }, { x: 200, y: 340 }, { x: 600, y: 250 });
       for (let i: number = 0; i <= 2; i++) {
-        ghost = new Ghost(this.walls);
-        while (ghost.isSpawnedOnWAll(this.walls, ghost.getPosX(), ghost.getPosY())) {
-          ghost = new Ghost(this.walls);
-        }
+        ghost = new Ghost(coordinates[i].x, coordinates[i].y, this.walls);
         this.monsters.push(ghost);
       }
     } else if (this.currentLevel === 2) {
       let redMonster: RedMonster;
+      coordinates.push({ x: 400, y: 90 }, { x: 800, y: 340 }, { x: 200, y: 550 });
       for (let i: number = 0; i <= 2; i++) {
-        redMonster = new RedMonster(this.walls);
-        while (redMonster.isColliding(this.walls, redMonster.getPosX(), redMonster.getPosY())) {
-          redMonster = new RedMonster(this.walls);
-        }
+        redMonster = new RedMonster(coordinates[i].x, coordinates[i].y, this.walls);
         this.monsters.push(redMonster);
       }
     } else {
       let zombie: Zombie;
+      coordinates.push({ x: 200, y: 550 }, { x: 200, y: 340 }, { x: 800, y: 240 });
       for (let i: number = 0; i <= 2; i++) {
-        zombie = new Zombie(this.walls);
-        while (zombie.isColliding(this.walls, zombie.getPosX(), zombie.getPosY())) {
-          zombie = new Zombie(this.walls);
-        }
+        zombie = new Zombie(coordinates[i].x, coordinates[i].y, this.walls);
         this.monsters.push(zombie);
       }
     }
   }
-
 
   /**
    * updates the images
