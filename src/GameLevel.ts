@@ -368,7 +368,7 @@ export default class GameLevel extends Level {
       this.music.play();
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
-      if (this.angel != null) {
+      if (this.angel != null && this.lives<=2) {
         this.angel.render(canvas);
       }
 
