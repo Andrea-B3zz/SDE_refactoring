@@ -56,6 +56,8 @@ export default class GameLevel extends Level {
 
   private bfImage: HTMLImageElement;
 
+  private coordinates: number[][];
+
   public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number, language: number) {
     super();
     this.walls = [];
@@ -105,6 +107,8 @@ export default class GameLevel extends Level {
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
 
+    this.coordinates=[];
+    this.populateCoordinates();
     this.createMonsters();
     this.angel = new Angel(this.walls);
 
@@ -133,7 +137,20 @@ export default class GameLevel extends Level {
     } else {
       this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendNL.png');
     }
+  }
 
+  private populateCoordinates(): void{
+    for(let i: number=0; i<9; i++){
+      this.coordinates.push([90, 90]);
+      this.coordinates.push([200, 340]);
+      this.coordinates.push([60, 250]);
+      this.coordinates.push([400, 90]);
+      this.coordinates.push([800, 340]);
+      this.coordinates.push([600, 250]);
+      this.coordinates.push([200, 550]);
+      this.coordinates.push([200, 340]);
+      this.coordinates.push([800, 240]);
+    }
   }
 
   private populateWalls(): void {
@@ -163,29 +180,52 @@ export default class GameLevel extends Level {
    * spawns 3 monsters specific to the level
    */
   public createMonsters(): void {
-    const coordinates: { x: number; y: number }[] = [];
     if (this.currentLevel === 1) {
       let ghost: Ghost;
-      coordinates.push({ x: 90, y: 90 }, { x: 200, y: 340 }, { x: 600, y: 250 });
       for (let i: number = 0; i <= 2; i++) {
-        ghost = new Ghost(coordinates[i].x, coordinates[i].y, this.walls);
+        let randomCoordinates: number = Math.floor(Math.random()*8);
+        ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        console.log(randomCoordinates);
+        while(this.isAlreadyThere(ghost)){
+          randomCoordinates = Math.floor(Math.random()*8);
+          console.log(randomCoordinates);
+          ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        }
         this.monsters.push(ghost);
       }
     } else if (this.currentLevel === 2) {
       let redMonster: RedMonster;
-      coordinates.push({ x: 400, y: 90 }, { x: 800, y: 340 }, { x: 200, y: 550 });
       for (let i: number = 0; i <= 2; i++) {
-        redMonster = new RedMonster(coordinates[i].x, coordinates[i].y, this.walls);
+        let randomCoordinates: number = Math.floor(Math.random()*8);
+        redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        while(this.isAlreadyThere(redMonster)){
+          randomCoordinates = Math.floor(Math.random()*8);
+          redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        }
         this.monsters.push(redMonster);
       }
     } else {
       let zombie: Zombie;
-      coordinates.push({ x: 200, y: 550 }, { x: 200, y: 340 }, { x: 800, y: 240 });
       for (let i: number = 0; i <= 2; i++) {
-        zombie = new Zombie(coordinates[i].x, coordinates[i].y, this.walls);
+        let randomCoordinates: number = Math.floor(Math.random()*8);
+        zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        while(this.isAlreadyThere(zombie)){
+          randomCoordinates = Math.floor(Math.random()*8);
+          zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        }
         this.monsters.push(zombie);
       }
     }
+  }
+
+  public isAlreadyThere(monster: Monster): boolean{
+    for(let i:number = 0; i<this.monsters.length; i++){
+      if(this.monsters[i].getPosY()==monster.getPosY()&&
+      this.monsters[i].getPosX()==monster.getPosX()){
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -225,11 +265,6 @@ export default class GameLevel extends Level {
     //console.log(this.mouseListener.getMousePosition().x);
     //console.log(this.mouseListener.getMousePosition().y);
     //}
-
-    if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
-      console.log(this.player.getPosX());
-      console.log(this.player.getPosY());
-    }
 
     if (this.player.isCollidingWithMonster(this.monsters) > 0) {
       if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
