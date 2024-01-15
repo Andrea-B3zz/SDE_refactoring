@@ -8,6 +8,9 @@ export default abstract class Level {
 
   protected music: HTMLAudioElement;
 
+  // 0 is english, 1 is dutch
+  protected language: number;
+
   public abstract update(elapsed: number): void;
 
   public abstract nextLevel(canvas: HTMLCanvasElement): Level | null;

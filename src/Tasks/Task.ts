@@ -17,12 +17,16 @@ export default abstract class Task {
 
   protected mistakeGiven: boolean;
 
-  public abstract processInput(mouseListener: MouseListener, keyListener: KeyListener): void;
+  protected language: number;
 
-  public abstract update(elapsed: number): void;
+  public abstract processInput(mouseListener: MouseListener, keyListener: KeyListener): void;
 
   public abstract render(canvas: HTMLCanvasElement): void;
 
+  /**
+   *
+   * @returns true if a mistake is made
+   */
   public checkMistake(): boolean {
     if (this.mistakeN == 2 && this.mistakeGiven == false) {
       this.mistakeGiven = true;
@@ -33,4 +37,6 @@ export default abstract class Task {
   }
 
   public abstract getIsCompleted(): boolean;
+
+  protected abstract loadImages(language: string, letters: string): void;
 }

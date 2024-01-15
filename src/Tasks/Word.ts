@@ -5,28 +5,42 @@ import Button from './Button.js';
 import KeyListener from '../Utility/KeyListener.js';
 
 export default class Word extends Task {
-  public constructor(rightAnswer: number) {
+  public constructor(rightAnswer: number, language: number) {
     super();
     this.status = 0;
     this.buttons = [];
     this.isCompleted = false;
     this.rightAnswer = rightAnswer;
+    this.language = language;
 
     this.images = [];
-    if (this.rightAnswer == 1) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task1-2.png'));
-    } else if (this.rightAnswer == 2) {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task2-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task2-2.png'));
+    if (language == 0) {
+      this.loadImages('English', 'EN');
     } else {
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task3-1.png'));
-      this.images.push(CanvasRenderer.loadNewImage('./assets/Word_tasks/Word_task3-2.png'));
+      this.loadImages('Dutch', 'NL');
     }
 
     this.addButtons();
-    this.mistakeGiven=false;
-this.mistakeN=0;
+    this.mistakeGiven = false;
+    this.mistakeN = 0;
+  }
+
+  /**
+   * loads the specific images, depending on the chosen language
+   * @param language the language that is chosen
+   * @param letters short letters
+   */
+  protected override loadImages(language: string, letters: string): void {
+    if (this.rightAnswer == 1) {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Word_tasks/${language}/Word_task1-1${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Word_tasks/${language}/Word_task1-2${letters}.png`));
+    } else if (this.rightAnswer == 2) {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Word_tasks/${language}/Word_task2-1${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Word_tasks/${language}/Word_task2-2${letters}.png`));
+    } else {
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Word_tasks/${language}/Word_task3-1${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/Word_tasks/${language}/Word_task3-2${letters}.png`));
+    }
   }
 
   private addButtons(): void {
@@ -39,17 +53,17 @@ this.mistakeN=0;
 
   /**
    *
-   * @param mouseListener
-   * @param keyListener
+   * @param mouseListener passed parameter
+   * @param keyListener passed parameter
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
       if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
         this.status += 1;
-      }else{
-        if(this.isCollidingWithRectangle(mouseListener) != -1){
-          this.mistakeN+=1;
-          this.buttons.splice(this.isCollidingWithRectangle(mouseListener)-1, 1);
+      } else {
+        if (this.isCollidingWithRectangle(mouseListener) != -1) {
+          this.mistakeN += 1;
+          this.buttons.splice(this.isCollidingWithRectangle(mouseListener) - 1, 1);
         }
       }
     }
@@ -61,8 +75,8 @@ this.mistakeN=0;
 
   /**
    *
-   * @param mouseListener
-   * @returns
+   * @param mouseListener passed parameter
+   * @returns the rectangle it collides with
    */
   public isCollidingWithRectangle(mouseListener: MouseListener): number {
     // 1.363636 bc there is a problem with canvas height and width
@@ -78,13 +92,6 @@ this.mistakeN=0;
       }
     }
     return -1;
-  }
-
-  /**
-   *
-   * @param elapsed
-   */
-  public override update(elapsed: number): void {
   }
 
   public getIsCompleted(): boolean {

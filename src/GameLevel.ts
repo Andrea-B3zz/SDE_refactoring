@@ -54,7 +54,9 @@ export default class GameLevel extends Level {
 
   private levelAnimation: HTMLImageElement[];
 
-  public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number) {
+  private bfImage: HTMLImageElement;
+
+  public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number, language: number) {
     super();
     this.walls = [];
     this.keyListener = new KeyListener();
@@ -64,10 +66,11 @@ export default class GameLevel extends Level {
 
     this.questionNumber = 0;
     this.levelStartAnimationDuration = 5000;
-
+    this.language = language;
     this.canvas = canvas;
 
     this.populateWalls();
+
     canvas.style.marginLeft = '17.5%';
     canvas.style.marginTop = '4%';
     canvas.style.width = '1408px';
@@ -83,9 +86,15 @@ export default class GameLevel extends Level {
 
     this.lifeImg = CanvasRenderer.loadNewImage('./assets/heart.png');
     this.levelAnimation = [];
-    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelWord.jpg'));
-    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelPowerPoint.jpg'));
-    this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/LevelExcel.jpg'));
+    if (language == 0) {
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelWordEN.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelPowerPointEN.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelExcelEN.jpg'));
+    } else {
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelWordNL.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelPowerPointNL.jpg'));
+      this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelExcelNL.jpg'));
+    }
 
 
     this.mouseListener = new MouseListener(this.canvas);
@@ -102,20 +111,29 @@ export default class GameLevel extends Level {
     this.tasks = [];
     switch (this.currentLevel) {
       case 1: {
-        this.tasks.push(new Word(1), new Word(2), new Word(3));
+        this.tasks.push(new Word(1, this.language), new Word(2, this.language),
+          new Word(3, this.language));
         break;
       }
       case 2: {
-        this.tasks.push(new PowerPoint(1), new PowerPoint(2), new PowerPoint(3));
+        this.tasks.push(new PowerPoint(1, this.language),
+          new PowerPoint(2, this.language), new PowerPoint(3, this.language));
         break;
       }
       case 3: {
-        this.tasks.push(new Excel(1), new Excel(2), new Excel(3));
+        this.tasks.push(new Excel(1, this.language), new Excel(2, this.language),
+          new Excel(3, this.language));
         break;
       }
     }
     this.player = new Player(this.walls, this.monsters);
     this.lives = lives;
+    if (language == 0) {
+      this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendEN.png');
+    } else {
+      this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendNL.png');
+    }
+
   }
 
   private populateWalls(): void {
@@ -142,34 +160,29 @@ export default class GameLevel extends Level {
   }
 
   /**
-   * creating 3 monster per level
+   * spawns 3 monsters specific to the level
    */
   public createMonsters(): void {
+    const coordinates: { x: number; y: number }[] = [];
     if (this.currentLevel === 1) {
       let ghost: Ghost;
+      coordinates.push({ x: 90, y: 90 }, { x: 200, y: 340 }, { x: 600, y: 250 });
       for (let i: number = 0; i <= 2; i++) {
-        ghost = new Ghost(this.walls);
-        while (ghost.isSpawnedOnWAll(this.walls, ghost.getPosX(), ghost.getPosY())) {
-          ghost = new Ghost(this.walls);
-        }
+        ghost = new Ghost(coordinates[i].x, coordinates[i].y, this.walls);
         this.monsters.push(ghost);
       }
     } else if (this.currentLevel === 2) {
       let redMonster: RedMonster;
+      coordinates.push({ x: 400, y: 90 }, { x: 800, y: 340 }, { x: 200, y: 550 });
       for (let i: number = 0; i <= 2; i++) {
-        redMonster = new RedMonster(this.walls);
-        while (redMonster.isColliding(this.walls, redMonster.getPosX(), redMonster.getPosY())) {
-          redMonster = new RedMonster(this.walls);
-        }
+        redMonster = new RedMonster(coordinates[i].x, coordinates[i].y, this.walls);
         this.monsters.push(redMonster);
       }
     } else {
       let zombie: Zombie;
+      coordinates.push({ x: 200, y: 550 }, { x: 200, y: 340 }, { x: 800, y: 240 });
       for (let i: number = 0; i <= 2; i++) {
-        zombie = new Zombie(this.walls);
-        while (zombie.isColliding(this.walls, zombie.getPosX(), zombie.getPosY())) {
-          zombie = new Zombie(this.walls);
-        }
+        zombie = new Zombie(coordinates[i].x, coordinates[i].y, this.walls);
         this.monsters.push(zombie);
       }
     }
@@ -261,16 +274,16 @@ export default class GameLevel extends Level {
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
     if (this.lives == 0) {
-      return new EndingScreen(this.canvas, 'lose');
+      return new EndingScreen(this.canvas, 'lose', this.language);
     }
     if (this.monsters.length != 0) {
       return null;
     } else {
       this.currentLevel += 1;
       if (this.currentLevel === 4) {
-        return new EndingScreen(canvas, 'win');
+        return new EndingScreen(canvas, 'win', this.language);
       } else {
-        return new GameLevel(canvas, this.currentLevel, this.lives);
+        return new GameLevel(canvas, this.currentLevel, this.lives, this.language);
       }
     }
   }
@@ -342,6 +355,9 @@ export default class GameLevel extends Level {
       }
       this.player.render(this.canvas);
 
+      CanvasRenderer.drawImage(canvas, this.bfImage,
+        window.innerWidth - this.bfImage.width,
+        window.innerHeight - this.bfImage.height);
       for (let i: number = 1; i <= this.lives; i++) {
         CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
