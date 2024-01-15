@@ -40,7 +40,7 @@ export default class EndingScreen extends Level {
    * @param keyListener passed
    * @param mouseListener passed
    */
-  public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
+  public override processInput(keyListener: KeyListener): void {
     // doesn't have any implementation
   }
 
@@ -48,7 +48,7 @@ export default class EndingScreen extends Level {
    *
    * @param elapsed time in ms
    */
-  public override update(elapsed: number): void {
+  public override update(): void {
     // doesn't have any implementation
   }
 

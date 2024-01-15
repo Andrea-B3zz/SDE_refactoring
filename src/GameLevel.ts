@@ -38,6 +38,8 @@ export default class GameLevel extends Level {
 
   private currentLevel: number;
 
+  private monsterCounter: number;
+
   private inATask: boolean;
 
   private monsterColliding: number;
@@ -56,13 +58,18 @@ export default class GameLevel extends Level {
 
   private bfImage: HTMLImageElement;
 
-  public constructor(canvas: HTMLCanvasElement, currentLevel: number, lives: number, language: number) {
+  public constructor(canvas: HTMLCanvasElement,
+    currentLevel: number,
+    lives: number,
+    language: number) {
     super();
+
     this.walls = [];
     this.keyListener = new KeyListener();
     this.inATask = false;
 
     this.currentLevel = currentLevel;
+    this.monsterCounter = this.monsterCounter;
 
     this.questionNumber = 0;
     this.levelStartAnimationDuration = 5000;
@@ -200,6 +207,15 @@ export default class GameLevel extends Level {
       this.levelStartFlag = false;
     }
 
+    //
+    if (this.monsters.length == 3) {
+      this.monsterCounter = 3;
+    } else if (this.monsters.length == 2) {
+      this.monsterCounter = 2;
+    } else if (this.monsters.length == 1) {
+      this.monsterCounter = 1;
+    }
+
     this.timeElapsedRight -= 0.001 * elapsed;
 
     const newPosX: number = this.player.getPosX();
@@ -294,7 +310,7 @@ export default class GameLevel extends Level {
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
     this.player.processInput(keyListener);
-    this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
+    this.tasks[this.questionNumber].processInput(mouseListener, keyListener);
   }
 
   public getLives(): number {
@@ -362,6 +378,7 @@ export default class GameLevel extends Level {
         CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
+      CanvasRenderer.writeText(this.canvas, `Monsters left: ${this.monsterCounter}`, 20, 110, 'left', 'Bungee Spice', 40, 'white');
     }
   }
 }
