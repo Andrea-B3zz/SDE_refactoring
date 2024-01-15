@@ -6,12 +6,19 @@ import Wall from './Wall.js';
 export default abstract class Monster extends MovingCharacter {
   private level: number = 1;
 
-  private possibleCoordinates: { x: number; y: number }[];
+  private selectedPos: number[];
 
   public constructor(MapWidth: number, MapHeight: number, walls: Wall[]) {
     super();
+    const pos: number[][] =
+    [[60, 85], [1135, 165], [1085, 515],
+    [50, 495], [700, 548], [630, 80],
+    [430, 570], [420, 240], [870, 60]];
+    
+    this.selectedPos = pos[Math.floor(Math.random() * pos.length)];
+    this.posX = this.selectedPos[0];
+    this.posY = this.selectedPos[1];
     this.speed = 0.05;
-    this.possibleCoordinates = [];
   }
 
   /**

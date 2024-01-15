@@ -3,6 +3,7 @@ import KeyListener from '../Utility/KeyListener.js';
 import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 import Monster from './Monster.js';
+import Angel from './Angel.js';
 
 export default class Player extends MovingCharacter {
   private walls: Wall[];
@@ -114,6 +115,19 @@ export default class Player extends MovingCharacter {
     return -1;
   }
 
+  public isCollidingWithAngel(angel: Monster): boolean {
+    if (angel != null) {
+      if (
+        this.posX < angel.getPosX() + angel.getWidth() &&
+        this.posX + this.getWidth() > angel.getPosX() &&
+        this.posY < angel.getPosY() + angel.getHeight() &&
+        this.posY + this.getHeight() > angel.getPosY()
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * if this method is called, the player doesn't change its position

@@ -13,6 +13,7 @@ import Excel from './Tasks/Excel.js';
 import RedMonster from './MovingCharacters/RedMonster.js';
 import Zombie from './MovingCharacters/Zombie.js';
 import EndingScreen from './EndingScreen.js';
+import Angel from './MovingCharacters/Angel.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -22,6 +23,8 @@ export default class GameLevel extends Level {
   private monsters: Monster[];
 
   private walls: Wall[];
+
+  private angel: Angel;
 
   private timeElapsedRight: number;
 
@@ -103,6 +106,7 @@ export default class GameLevel extends Level {
     this.timeElapsedLeft = 2;
 
     this.createMonsters();
+    this.angel = new Angel(this.walls);
 
     this.tasks = [];
     switch (this.currentLevel) {
@@ -129,6 +133,7 @@ export default class GameLevel extends Level {
     } else {
       this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendNL.png');
     }
+
   }
 
   private populateWalls(): void {
@@ -221,10 +226,26 @@ export default class GameLevel extends Level {
     //console.log(this.mouseListener.getMousePosition().y);
     //}
 
+    if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+      console.log(this.player.getPosX());
+      console.log(this.player.getPosY());
+    }
+
     if (this.player.isCollidingWithMonster(this.monsters) > 0) {
       if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
         this.monsterColliding = this.player.isCollidingWithMonster(this.monsters) - 1;
         this.inATask = true;
+      }
+    }
+
+    if (this.player.isCollidingWithAngel(this.angel)) {
+      if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+        if (this.lives < 3) {
+          this.lives += 1;
+          this.angel = null;
+        }else {
+          this.lives = this.lives;
+        }
       }
     }
 
@@ -233,6 +254,7 @@ export default class GameLevel extends Level {
       this.inATask = false;
       if (this.questionNumber < this.tasks.length - 1) {
         this.questionNumber += 1;
+        console.log(this.questionNumber);
       }
     }
 
@@ -242,6 +264,7 @@ export default class GameLevel extends Level {
         this.lives -= 1;
       }
     }
+
   }
 
   /**
@@ -310,6 +333,10 @@ export default class GameLevel extends Level {
       this.music.play();
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
+      if (this.angel != null) {
+        this.angel.render(canvas);
+      }
+
       for (let i: number = 0; i < this.monsters.length; i++) {
         this.monsters[i].render(canvas);
       }
@@ -331,11 +358,9 @@ export default class GameLevel extends Level {
       CanvasRenderer.drawImage(canvas, this.bfImage,
         window.innerWidth - this.bfImage.width,
         window.innerHeight - this.bfImage.height);
-
       for (let i: number = 1; i <= this.lives; i++) {
         CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
-
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
     }
   }
