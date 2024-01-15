@@ -26,13 +26,13 @@ export default class Player extends MovingCharacter {
 
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
-    this.image = CanvasRenderer.loadNewImage('./assets/boy.png');
+    this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_front01.png');
     this.posX = 200;
     this.posY = 200;
 
     this.speed = 0.4;
     this.movementFlag = false;
-    this.frameChangeTime = 1000;
+    this.frameChangeTime = 400;
     this.frameChangeCounter = 0;
   }
 
@@ -53,7 +53,7 @@ export default class Player extends MovingCharacter {
       }
     } else {
       this.frameChangeCounter += 1;
-      this.frameChangeTime = 1000;
+      this.frameChangeTime = 400;
       this.movementFlag = false;
     }
   }
