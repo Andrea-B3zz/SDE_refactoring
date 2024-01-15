@@ -13,6 +13,7 @@ import Excel from './Tasks/Excel.js';
 import RedMonster from './MovingCharacters/RedMonster.js';
 import Zombie from './MovingCharacters/Zombie.js';
 import EndingScreen from './EndingScreen.js';
+import Angel from './MovingCharacters/Angel.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -22,6 +23,8 @@ export default class GameLevel extends Level {
   private monsters: Monster[];
 
   private walls: Wall[];
+
+  private angel: Angel;
 
   private timeElapsedRight: number;
 
@@ -94,6 +97,7 @@ export default class GameLevel extends Level {
     this.timeElapsedLeft = 2;
 
     this.createMonsters();
+    this.angel = new Angel(this.walls);
 
     this.tasks = [];
     switch (this.currentLevel) {
@@ -111,7 +115,7 @@ export default class GameLevel extends Level {
       }
     }
     this.player = new Player(this.walls, this.monsters);
-    this.lives=lives;
+    this.lives = lives;
   }
 
   private populateWalls(): void {
@@ -171,7 +175,6 @@ export default class GameLevel extends Level {
     }
   }
 
-
   /**
    * updates the images
    * @param elapsed still no function
@@ -217,20 +220,33 @@ export default class GameLevel extends Level {
       }
     }
 
+    if (this.player.isCollidingWithAngel(this.angel)) {
+      if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+        if (this.lives < 3) {
+          this.lives += 1;
+          this.angel = null;
+        }else {
+          this.lives = this.lives;
+        }
+      }
+    }
+
     if (this.tasks[this.questionNumber].getIsCompleted()) {
       this.monsters.splice(this.monsterColliding, 1);
       this.inATask = false;
       if (this.questionNumber < this.tasks.length - 1) {
         this.questionNumber += 1;
+        console.log(this.questionNumber);
       }
     }
 
     // mistake checking
-    for(let i :number=0; i<this.tasks.length; i++){
-      if(this.tasks[i].checkMistake()){
-        this.lives-=1;
+    for (let i: number = 0; i < this.tasks.length; i++) {
+      if (this.tasks[i].checkMistake()) {
+        this.lives -= 1;
       }
     }
+
   }
 
   /**
@@ -239,7 +255,7 @@ export default class GameLevel extends Level {
    * @returns null for now
    */
   public override nextLevel(canvas: HTMLCanvasElement): Level | null {
-    if(this.lives==0){
+    if (this.lives == 0) {
       return new EndingScreen(this.canvas, 'lose');
     }
     if (this.monsters.length != 0) {
@@ -263,7 +279,7 @@ export default class GameLevel extends Level {
     this.tasks[this.questionNumber].processInput(this.mouseListener, keyListener);
   }
 
-  public getLives(): number{
+  public getLives(): number {
     return this.lives;
   }
 
@@ -290,14 +306,18 @@ export default class GameLevel extends Level {
       this.tasks[this.questionNumber].render(this.canvas);
       this.music.pause();
       this.battleMusic.play();
-      for(let i: number=1; i<=this.lives; i++){
-        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*75, 10);
+      for (let i: number = 1; i <= this.lives; i++) {
+        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
     } else {
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
       this.battleMusic.pause();
       this.music.play();
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
+
+      if (this.angel != null) {
+        this.angel.render(canvas);
+      }
 
       for (let i: number = 0; i < this.monsters.length; i++) {
         this.monsters[i].render(canvas);
@@ -317,10 +337,9 @@ export default class GameLevel extends Level {
       }
       this.player.render(this.canvas);
 
-      for(let i: number=1; i<=this.lives; i++){
-        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i*75, 10);
+      for (let i: number = 1; i <= this.lives; i++) {
+        CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
-
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
     }
   }

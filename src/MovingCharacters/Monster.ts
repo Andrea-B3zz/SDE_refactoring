@@ -8,10 +8,9 @@ export default abstract class Monster extends MovingCharacter {
 
   public constructor(MapWidth: number, MapHeight: number, walls: Wall[]) {
     super();
-    this.posX = Math.floor(Math.random() * MapWidth);
-    this.posY = Math.floor(Math.random() * MapHeight);
+    this.posX = Math.floor(Math.random() * ((MapWidth - 40) - 40 + 1)) + 40; //Math.floor(Math.random() * MapWidth);
+    this.posY = Math.floor(Math.random() * ((MapHeight - 40) - 40 + 1)) + 40; //Math.floor(Math.random() * MapHeight);
     this.speed = 0.05;
-
   }
 
   /**
