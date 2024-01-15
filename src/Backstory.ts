@@ -46,9 +46,8 @@ export default class Backstory extends Level {
 
   /**
    * updates the images
-   * @param elapsed that does nothing here, but it's used in the abstract class Level
    */
-  public override update(elapsed: number): void {
+  public override update(): void {
     this.music.play();
     this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
   }
@@ -70,7 +69,7 @@ export default class Backstory extends Level {
    * method to change the photos in the arrey by pressing the space bar
    * @param keyListener adding the key listener so we can use the space bar
    */
-  public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
+  public override processInput(keyListener: KeyListener): void {
     if (keyListener.keyPressed(KeyListener.KEY_SPACE)) {
       this.currentImage = this.currentImage + 1;
     }

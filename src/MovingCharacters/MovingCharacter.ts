@@ -52,6 +52,5 @@ export default abstract class MovingCharacter {
 
   public setPosY(posY: number): void {
     this.posY = posY;
-
   }
 }

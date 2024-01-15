@@ -56,8 +56,8 @@ export default class PowerPoint extends Task {
 
   /**
    *
-   * @param mouseListener
-   * @param keyListener
+   * @param mouseListener passed parameter
+   * @param keyListener passed parameter
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
@@ -80,8 +80,8 @@ export default class PowerPoint extends Task {
 
   /**
    *
-   * @param mouseListener
-   * @returns
+   * @param mouseListener passed parameter
+   * @returns the rectangle it collides with
    */
   public isCollidingWithRectangle(mouseListener: MouseListener): number {
     // 1.363636 bc there is a problem with canvas height and width
@@ -103,6 +103,10 @@ export default class PowerPoint extends Task {
     return this.isCompleted;
   }
 
+  /**
+   * changes the buttons according to the tasks' pictures
+   * @returns buttons
+   */
   public buttonRefactor(): Button[] {
     if (this.rightAnswer == 2) {
       // this.status >= this.buttons.length

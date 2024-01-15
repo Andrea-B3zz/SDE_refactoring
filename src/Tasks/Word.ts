@@ -100,8 +100,8 @@ export default class Word extends Task {
   }
 
   /**
-   *
-   * @param canvas
+   * renders the images for the word tasks
+   * @param canvas HTML canvas element
    */
   public override render(canvas: HTMLCanvasElement): void {
     if (this.status < this.images.length) {
