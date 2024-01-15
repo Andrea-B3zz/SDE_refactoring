@@ -132,6 +132,7 @@ export default class CanvasRenderer {
    * @param width the width of the rectangle from x to the right
    * @param height the height of the rectrangle from y downwards
    * @param color the color of the rectangle outline
+   * @param borderWidth the width of the border
    */
   public static drawRectangle(
     canvas: HTMLCanvasElement,
@@ -140,10 +141,12 @@ export default class CanvasRenderer {
     width: number,
     height: number,
     color: string = 'red',
+    borderWidth: number = 2,
   ): void {
     const ctx: CanvasRenderingContext2D = CanvasRenderer.getCanvasContext(canvas);
     ctx.beginPath();
     ctx.strokeStyle = color;
+    ctx.lineWidth = borderWidth;
     ctx.rect(dx, dy, width, height);
     ctx.stroke();
   }

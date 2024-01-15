@@ -58,12 +58,13 @@ export default class Excel extends Task {
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
-      if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
+      const answer: number = this.isCollidingWithRectangle(mouseListener);
+      if (answer == this.rightAnswer) {
         this.status += 1;
       } else {
-        if (this.isCollidingWithRectangle(mouseListener) != -1) {
+        if (answer != -1) {
           this.mistakeN += 1;
-          this.buttons.splice(this.isCollidingWithRectangle(mouseListener), 1);
+          this.buttons[answer-1].delete();
         }
       }
     }
@@ -120,6 +121,7 @@ export default class Excel extends Task {
           width,
           height,
           this.buttons[i].getColor(),
+          this.buttons[i].getBorderWidth()
         );
       }
     }
