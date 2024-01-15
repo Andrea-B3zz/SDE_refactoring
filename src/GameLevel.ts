@@ -342,6 +342,7 @@ export default class GameLevel extends Level {
       }
 
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
+      CanvasRenderer.writeText(this.canvas, `Monsters: ${this.currentLevel}`, 20, 110, 'left', 'Bungee Spice', 40, 'white');
     }
   }
 }
