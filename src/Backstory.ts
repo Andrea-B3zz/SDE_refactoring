@@ -20,9 +20,9 @@ export default class Backstory extends Level {
     this.language = language;
 
     if (language == 0) {
-      this.arrayOfImages = ['./assets/Backstory/English/Backstory01EN.jpg', './assets/Backstory/English/Backstory02EN.jpg', './assets/Backstory/English/Backstory03EN.jpg', './assets/Backstory/English/Backstory04EN.jpg', './assets/Backstory/English/Backstory05EN.jpg', './assets/Backstory/English/Backstory06EN.jpg', './assets/Backstory/English/Backstory07EN.jpg'];
+      this.arrayOfImages = ['./assets/Backstory/English/Backstory01EN.jpg', './assets/Backstory/English/Backstory02EN.jpg', './assets/Backstory/English/Backstory03EN.jpg', './assets/Backstory/English/Backstory04EN.jpg', './assets/Backstory/English/Backstory05EN.jpg', './assets/Backstory/English/Backstory06EN.jpg', './assets/Backstory/English/Backstory07EN.jpg', './assets/Backstory/English/Backstory08EN.jpg'];
     } else {
-      this.arrayOfImages = ['./assets/Backstory/Dutch/Backstory01NL.jpg', './assets/Backstory/Dutch/Backstory02NL.jpg', './assets/Backstory/Dutch/Backstory03NL.jpg', './assets/Backstory/Dutch/Backstory04NL.jpg', './assets/Backstory/Dutch/Backstory05NL.jpg', './assets/Backstory/Dutch/Backstory06NL.jpg', './assets/Backstory/Dutch/Backstory07NL.jpg'];
+      this.arrayOfImages = ['./assets/Backstory/Dutch/Backstory01NL.jpg', './assets/Backstory/Dutch/Backstory02NL.jpg', './assets/Backstory/Dutch/Backstory03NL.jpg', './assets/Backstory/Dutch/Backstory04NL.jpg', './assets/Backstory/Dutch/Backstory05NL.jpg', './assets/Backstory/Dutch/Backstory06NL.jpg', './assets/Backstory/Dutch/Backstory07NL.jpg', './assets/Backstory/Dutch/Backstory08NL.jpg'];
     }
     this.currentImage = 0;
     this.music = document.querySelector('#audio');

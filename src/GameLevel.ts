@@ -261,6 +261,8 @@ export default class GameLevel extends Level {
     const newPosX: number = this.player.getPosX();
     const newPosY: number = this.player.getPosY();
 
+    this.player.update(elapsed);
+
     if (this.player.isCollidingWithWalls(newPosX, newPosY)) {
       this.player.doNotMove();
     } else {
