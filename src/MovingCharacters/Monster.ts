@@ -11,7 +11,6 @@ export default abstract class Monster extends MovingCharacter {
     this.posX = Math.floor(Math.random() * MapWidth);
     this.posY = Math.floor(Math.random() * MapHeight);
     this.speed = 0.05;
-
   }
 
   /**

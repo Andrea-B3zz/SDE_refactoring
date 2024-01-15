@@ -50,4 +50,11 @@ export default class Button {
   public getBorderWidth(): number {
     return this.borderWidth;
   }
+
+  public delete(): void{
+    this.topY=-10;
+    this.bottomY=-10;
+    this.rightX=-10;
+    this.leftX=-10;
+  }
 }

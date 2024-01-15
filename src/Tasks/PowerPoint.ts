@@ -35,7 +35,7 @@ export default class PowerPoint extends Task {
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_01${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task1_02${letters}.png`));
     } else if (this.rightAnswer == 2) {
-      this.images.push(CanvasRenderer.loadNewImage(`./assetsPowerPoint_tasks/${language}/PowerPoint_task2_01${letters}.png`));
+      this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_01${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_02${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_03${letters}.png`));
       this.images.push(CanvasRenderer.loadNewImage(`./assets/PowerPoint_tasks/${language}/PowerPoint_task2_04${letters}.png`));
@@ -61,13 +61,14 @@ export default class PowerPoint extends Task {
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
-      if (this.isCollidingWithRectangle(mouseListener) == this.rightAnswer) {
+      const answer: number = this.isCollidingWithRectangle(mouseListener);
+      if (answer == this.rightAnswer) {
         this.status += 1;
         this.buttons = this.buttonRefactor();
       } else {
-        if (this.isCollidingWithRectangle(mouseListener) != -1) {
+        if (answer != -1) {
           this.mistakeN += 1;
-          this.buttons.splice(this.isCollidingWithRectangle(mouseListener), 1);
+          this.buttons[answer-1].delete();
         }
       }
     }

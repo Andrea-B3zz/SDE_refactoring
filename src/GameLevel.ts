@@ -161,7 +161,7 @@ export default class GameLevel extends Level {
       let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
         ghost = new Ghost(this.walls);
-        while (ghost.isSpawnedOnWAll(this.walls, ghost.getPosX(), ghost.getPosY())) {
+        while (ghost.isColliding(this.walls, ghost.getPosX(), ghost.getPosY())) {
           ghost = new Ghost(this.walls);
         }
         this.monsters.push(ghost);
