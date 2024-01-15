@@ -19,7 +19,7 @@ export default abstract class Monster extends MovingCharacter {
    * @param walls the array of walls
    */
   public override update(elapsed: number, walls: Wall[]): void {
-
+    
   }
 
   /**
