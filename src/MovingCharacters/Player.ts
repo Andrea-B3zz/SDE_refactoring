@@ -12,6 +12,14 @@ export default class Player extends MovingCharacter {
 
   private fovImage: HTMLImageElement;
 
+  private movementFlag: boolean;
+
+  private frameChangeTime: number;
+
+  private frameChangeCounter: number;
+
+  private keyListener: KeyListener;
+
   public constructor(walls: Wall[], monsters: Monster[]) {
     super();
     this.walls = walls;
@@ -19,11 +27,14 @@ export default class Player extends MovingCharacter {
 
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
-    this.image = CanvasRenderer.loadNewImage('./assets/boy.png');
+    this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_front01.png');
     this.posX = 200;
     this.posY = 200;
 
     this.speed = 0.4;
+    this.movementFlag = false;
+    this.frameChangeTime = 400;
+    this.frameChangeCounter = 0;
   }
 
 
@@ -36,6 +47,17 @@ export default class Player extends MovingCharacter {
     const fovY: number = this.posY - this.fovImage.height / 2;
     this.fovImage.style.left = fovX + 'px';
     this.fovImage.style.top = fovY + 'px';
+
+    if (this.frameChangeTime > 0) {
+      this.frameChangeTime -= elapsed;
+      if (this.frameChangeCounter % 2 === 0) {
+        this.movementFlag = true;
+      }
+    } else {
+      this.frameChangeCounter += 1;
+      this.frameChangeTime = 400;
+      this.movementFlag = false;
+    }
   }
 
   /**
@@ -50,21 +72,42 @@ export default class Player extends MovingCharacter {
    * @param keyListener user input
    */
   public move(keyListener: KeyListener): void {
+    this.keyListener = keyListener;
     let newPosX: number = this.posX;
     let newPosY: number = this.posY;
 
     if (keyListener.isKeyDown(KeyListener.KEY_W)
       || keyListener.isKeyDown(KeyListener.KEY_UP)) {
       newPosY -= 4 * this.speed;
+      if (this.movementFlag === true) {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_back01.png');
+      } else {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_back02.png');
+      }
     } else if (keyListener.isKeyDown(KeyListener.KEY_A)
       || keyListener.isKeyDown(KeyListener.KEY_LEFT)) {
       newPosX -= 4 * this.speed;
+      if (this.movementFlag === true) {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_sideLeft01.png');
+      } else {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_sideLeft02.png');
+      }
     } else if (keyListener.isKeyDown(KeyListener.KEY_D)
       || keyListener.isKeyDown(KeyListener.KEY_RIGHT)) {
       newPosX += 4 * this.speed;
+      if (this.movementFlag === true) {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_sideRight01.png');
+      } else {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_sideRight02.png');
+      }
     } else if (keyListener.isKeyDown(KeyListener.KEY_S)
       || keyListener.isKeyDown(KeyListener.KEY_DOWN)) {
       newPosY += 4 * this.speed;
+      if (this.movementFlag === true) {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_front01.png');
+      } else {
+        this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_front02.png');
+      }
     }
 
     if (!this.isCollidingWithWalls(newPosX, newPosY)) {
