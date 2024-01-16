@@ -60,6 +60,16 @@ export default class GameLevel extends Level {
 
   private coordinates: number[][];
 
+  private triggerEffect: boolean;
+
+  private arrayOfEffect: string[];
+
+  private currentImage: HTMLImageElement;
+
+  private currentItem: number;
+
+  private timeToNextItem: number;
+
   public constructor(canvas: HTMLCanvasElement,
     currentLevel: number,
     lives: number,
@@ -104,8 +114,6 @@ export default class GameLevel extends Level {
       this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelPowerPointNL.jpg'));
       this.levelAnimation.push(CanvasRenderer.loadNewImage('./assets/Animations/LevelExcelNL.jpg'));
     }
-
-
     this.mouseListener = new MouseListener(this.canvas);
     this.keyListener = new KeyListener();
 
@@ -114,7 +122,7 @@ export default class GameLevel extends Level {
     this.timeElapsedRight = 2;
     this.timeElapsedLeft = 2;
 
-    this.coordinates=[];
+    this.coordinates = [];
     this.populateCoordinates();
     this.createMonsters();
     this.angel = new Angel(this.walls);
@@ -144,10 +152,29 @@ export default class GameLevel extends Level {
     } else {
       this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendNL.png');
     }
+
+    if (currentLevel === 1) {
+      this.arrayOfEffect = ['./assets/specialeffect/1.png', './assets/specialeffect/2.png', './assets/specialeffect/3.png',
+        './assets/specialeffect/4.png', './assets/specialeffect/5.png', './assets/specialeffect/6.png',
+        './assets/specialeffect/7.png', './assets/specialeffect/8.png', './assets/specialeffect/9.png'];
+    } else if (currentLevel === 2) {
+      this.arrayOfEffect = ['./assets/specialeffect/10.png', './assets/specialeffect/12.png', './assets/specialeffect/13.png',
+        './assets/specialeffect/14.png', './assets/specialeffect/15.png', './assets/specialeffect/16.png',
+        './assets/specialeffect/17.png', './assets/specialeffect/18.png',];
+    } else if (currentLevel === 3) {
+      this.arrayOfEffect = ['./assets/specialeffect/19.png', './assets/specialeffect/20.png', './assets/specialeffect/21.png',
+        './assets/specialeffect/22.png', './assets/specialeffect/23.png', './assets/specialeffect/24.png',
+        './assets/specialeffect/25.png'];
+    }
+
+    this.triggerEffect = false;
+    this.currentItem = 0;
+    this.currentImage = CanvasRenderer.loadNewImage(this.arrayOfEffect[this.currentItem]);
+    this.timeToNextItem = 1;
   }
 
-  private populateCoordinates(): void{
-    for(let i: number=0; i<9; i++){
+  private populateCoordinates(): void {
+    for (let i: number = 0; i < 9; i++) {
       this.coordinates.push([90, 90]);
       this.coordinates.push([200, 340]);
       this.coordinates.push([60, 250]);
@@ -190,12 +217,10 @@ export default class GameLevel extends Level {
     if (this.currentLevel === 1) {
       let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
-        let randomCoordinates: number = Math.floor(Math.random()*8);
+        let randomCoordinates: number = Math.floor(Math.random() * 8);
         ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
-        console.log(randomCoordinates);
-        while(this.isAlreadyThere(ghost)){
-          randomCoordinates = Math.floor(Math.random()*8);
-          console.log(randomCoordinates);
+        while (this.isAlreadyThere(ghost)) {
+          randomCoordinates = Math.floor(Math.random() * 8);
           ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         }
         this.monsters.push(ghost);
@@ -203,10 +228,10 @@ export default class GameLevel extends Level {
     } else if (this.currentLevel === 2) {
       let redMonster: RedMonster;
       for (let i: number = 0; i <= 2; i++) {
-        let randomCoordinates: number = Math.floor(Math.random()*8);
+        let randomCoordinates: number = Math.floor(Math.random() * 8);
         redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
-        while(this.isAlreadyThere(redMonster)){
-          randomCoordinates = Math.floor(Math.random()*8);
+        while (this.isAlreadyThere(redMonster)) {
+          randomCoordinates = Math.floor(Math.random() * 8);
           redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         }
         this.monsters.push(redMonster);
@@ -214,10 +239,10 @@ export default class GameLevel extends Level {
     } else {
       let zombie: Zombie;
       for (let i: number = 0; i <= 2; i++) {
-        let randomCoordinates: number = Math.floor(Math.random()*8);
+        let randomCoordinates: number = Math.floor(Math.random() * 8);
         zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
-        while(this.isAlreadyThere(zombie)){
-          randomCoordinates = Math.floor(Math.random()*8);
+        while (this.isAlreadyThere(zombie)) {
+          randomCoordinates = Math.floor(Math.random() * 8);
           zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         }
         this.monsters.push(zombie);
@@ -225,10 +250,10 @@ export default class GameLevel extends Level {
     }
   }
 
-  public isAlreadyThere(monster: Monster): boolean{
-    for(let i:number = 0; i<this.monsters.length; i++){
-      if(this.monsters[i].getPosY()==monster.getPosY()&&
-      this.monsters[i].getPosX()==monster.getPosX()){
+  public isAlreadyThere(monster: Monster): boolean {
+    for (let i: number = 0; i < this.monsters.length; i++) {
+      if (this.monsters[i].getPosY() == monster.getPosY() &&
+        this.monsters[i].getPosX() == monster.getPosX()) {
         return true;
       }
     }
@@ -260,7 +285,7 @@ export default class GameLevel extends Level {
 
     const newPosX: number = this.player.getPosX();
     const newPosY: number = this.player.getPosY();
-
+    console.log();
     if (this.player.isCollidingWithWalls(newPosX, newPosY)) {
       this.player.doNotMove();
     } else {
@@ -284,8 +309,22 @@ export default class GameLevel extends Level {
 
     if (this.player.isCollidingWithMonster(this.monsters) > 0) {
       if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
+        this.triggerEffect = true;
         this.monsterColliding = this.player.isCollidingWithMonster(this.monsters) - 1;
-        this.inATask = true;
+      }
+    }
+
+    if (this.triggerEffect) {
+      this.timeToNextItem -= 0.015 * elapsed;
+      if (this.timeToNextItem < 0) {
+        this.currentItem++;
+        if (this.currentItem > this.arrayOfEffect.length - 1) {
+          this.currentItem = 0;
+          this.triggerEffect = false;
+          this.inATask = true;
+        }
+        this.currentImage = CanvasRenderer.loadNewImage(this.arrayOfEffect[this.currentItem]);
+        this.timeToNextItem = 1;
       }
     }
 
@@ -294,7 +333,7 @@ export default class GameLevel extends Level {
         if (this.lives < 3) {
           this.lives += 1;
           this.angel = null;
-        }else {
+        } else {
           this.lives = this.lives;
         }
       }
@@ -305,7 +344,6 @@ export default class GameLevel extends Level {
       this.inATask = false;
       if (this.questionNumber < this.tasks.length - 1) {
         this.questionNumber += 1;
-        console.log(this.questionNumber);
       }
     }
 
@@ -384,7 +422,7 @@ export default class GameLevel extends Level {
       this.music.play();
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
 
-      if (this.angel != null && this.lives<=2) {
+      if (this.angel != null && this.lives <= 2) {
         this.angel.render(canvas);
       }
 
@@ -414,6 +452,9 @@ export default class GameLevel extends Level {
       }
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
       CanvasRenderer.writeText(this.canvas, `Monsters left: ${this.monsterCounter}`, 20, 110, 'left', 'Bungee Spice', 40, 'white');
+      if (this.triggerEffect) {
+        CanvasRenderer.drawImage(canvas, this.currentImage, this.monsters[this.monsterColliding].getPosX(), this.monsters[this.monsterColliding].getPosY());
+      }
     }
   }
 }

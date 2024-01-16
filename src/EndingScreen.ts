@@ -15,7 +15,6 @@ export default class EndingScreen extends Level {
         this.image = CanvasRenderer.loadNewImage('./assets/Ending_scene/gameWinNL.png');
       }
     } else if (type === 'lose') {
-      console.log('Game Over');
       if (this.language == 0) {
         this.image = CanvasRenderer.loadNewImage('./assets/Ending_scene/gameOverEN.png');
       } else {
