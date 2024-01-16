@@ -47,6 +47,7 @@ export default class Player extends MovingCharacter {
     const fovY: number = this.posY - this.fovImage.height / 2;
     this.fovImage.style.left = fovX + 'px';
     this.fovImage.style.top = fovY + 'px';
+
     if (this.frameChangeTime > 0) {
       this.frameChangeTime -= elapsed;
       if (this.frameChangeCounter % 2 === 0) {
