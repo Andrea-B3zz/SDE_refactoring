@@ -1,19 +1,19 @@
 import Level from './Level.js';
-import Player from './MovingCharacters/Player.js';
-import Monster from './MovingCharacters/Monster.js';
-import Wall from './MovingCharacters/Wall.js';
-import KeyListener from './Utility/KeyListener.js';
-import CanvasRenderer from './Utility/CanvasRenderer.js';
-import Ghost from './MovingCharacters/Ghost.js';
-import MouseListener from './Utility/MouseListener.js';
-import Task from './Tasks/Task.js';
-import PowerPoint from './Tasks/PowerPoint.js';
-import Word from './Tasks/Word.js';
-import Excel from './Tasks/Excel.js';
-import RedMonster from './MovingCharacters/RedMonster.js';
-import Zombie from './MovingCharacters/Zombie.js';
+import Player from '../MovingCharacters/Player.js';
+import Monster from '../MovingCharacters/Monster.js';
+import Wall from '../MovingCharacters/Wall.js';
+import KeyListener from '../Utility/KeyListener.js';
+import CanvasRenderer from '../Utility/CanvasRenderer.js';
+import Ghost from '../MovingCharacters/Ghost.js';
+import MouseListener from '../Utility/MouseListener.js';
+import Task from '../Tasks/Task.js';
+import PowerPoint from '../Tasks/PowerPoint.js';
+import Word from '../Tasks/Word.js';
+import Excel from '../Tasks/Excel.js';
+import RedMonster from '../MovingCharacters/RedMonster.js';
+import Zombie from '../MovingCharacters/Zombie.js';
 import EndingScreen from './EndingScreen.js';
-import Angel from './MovingCharacters/Angel.js';
+import Angel from '../MovingCharacters/Angel.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -218,10 +218,14 @@ export default class GameLevel extends Level {
       let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
         let randomCoordinates: number = Math.floor(Math.random() * 9);
-        ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        ghost = new Ghost(this.coordinates[randomCoordinates][0],
+          this.coordinates[randomCoordinates][1],
+          this.walls);
         while (this.isAlreadyThere(ghost)) {
           randomCoordinates = Math.floor(Math.random() * 9);
-          ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+          ghost = new Ghost(this.coordinates[randomCoordinates][0],
+            this.coordinates[randomCoordinates][1],
+            this.walls);
         }
         this.monsters.push(ghost);
       }
@@ -229,10 +233,14 @@ export default class GameLevel extends Level {
       let redMonster: RedMonster;
       for (let i: number = 0; i <= 2; i++) {
         let randomCoordinates: number = Math.floor(Math.random() * 9);
-        redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        redMonster = new RedMonster(this.coordinates[randomCoordinates][0],
+          this.coordinates[randomCoordinates][1],
+          this.walls);
         while (this.isAlreadyThere(redMonster)) {
           randomCoordinates = Math.floor(Math.random() * 9);
-          redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+          redMonster = new RedMonster(this.coordinates[randomCoordinates][0],
+            this.coordinates[randomCoordinates][1],
+            this.walls);
         }
         this.monsters.push(redMonster);
       }
@@ -240,16 +248,25 @@ export default class GameLevel extends Level {
       let zombie: Zombie;
       for (let i: number = 0; i <= 2; i++) {
         let randomCoordinates: number = Math.floor(Math.random() * 9);
-        zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+        zombie = new Zombie(this.coordinates[randomCoordinates][0],
+          this.coordinates[randomCoordinates][1],
+          this.walls);
         while (this.isAlreadyThere(zombie)) {
           randomCoordinates = Math.floor(Math.random() * 9);
-          zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
+          zombie = new Zombie(this.coordinates[randomCoordinates][0],
+            this.coordinates[randomCoordinates][1],
+            this.walls);
         }
         this.monsters.push(zombie);
       }
     }
   }
 
+  /**
+   * Checking if there is a monster already in that position
+   * @param monster the new moster to spawn
+   * @returns true or false
+   */
   public isAlreadyThere(monster: Monster): boolean {
     for (let i: number = 0; i < this.monsters.length; i++) {
       if (this.monsters[i].getPosY() == monster.getPosY() &&
@@ -318,7 +335,7 @@ export default class GameLevel extends Level {
     if (this.triggerEffect) {
       this.timeToNextItem -= 0.015 * elapsed;
       if (this.timeToNextItem < 0) {
-        this.currentItem++;
+        this.currentItem = this.currentItem + 1;
         if (this.currentItem > this.arrayOfEffect.length - 1) {
           this.currentItem = 0;
           this.triggerEffect = false;
@@ -354,7 +371,6 @@ export default class GameLevel extends Level {
         this.lives -= 1;
       }
     }
-
   }
 
   /**
@@ -454,7 +470,9 @@ export default class GameLevel extends Level {
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
       CanvasRenderer.writeText(this.canvas, `Monsters left: ${this.monsterCounter}`, 20, 110, 'left', 'Bungee Spice', 40, 'white');
       if (this.triggerEffect) {
-        CanvasRenderer.drawImage(canvas, this.currentImage, this.monsters[this.monsterColliding].getPosX(), this.monsters[this.monsterColliding].getPosY());
+        CanvasRenderer.drawImage(canvas, this.currentImage,
+          this.monsters[this.monsterColliding].getPosX(),
+          this.monsters[this.monsterColliding].getPosY());
       }
     }
   }

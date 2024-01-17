@@ -52,9 +52,9 @@ export default class Excel extends Task {
   }
 
   /**
-   *
-   * @param mouseListener
-   * @param keyListener
+   * process the input of the player
+   * @param mouseListener the button that the player has pressed
+   * @param keyListener the key that the player presses when they finish a task
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
@@ -64,7 +64,7 @@ export default class Excel extends Task {
       } else {
         if (answer != -1) {
           this.mistakeN += 1;
-          this.buttons[answer-1].delete();
+          this.buttons[answer - 1].delete();
         }
       }
     }
@@ -75,9 +75,9 @@ export default class Excel extends Task {
   }
 
   /**
-   *
-   * @param mouseListener
-   * @returns
+   * to check if the player is clicking on the buttons
+   * @param mouseListener which button is the player clicking on
+   * @returns -1 if it is not colliding with anything or the number of the button
    */
   public isCollidingWithRectangle(mouseListener: MouseListener): number {
     // 1.363636 bc there is a problem with canvas height and width
@@ -100,8 +100,8 @@ export default class Excel extends Task {
   }
 
   /**
-   *
-   * @param canvas
+   * renders the Excel tasks on the canvas
+   * @param canvas HTML canvas element
    */
   public override render(canvas: HTMLCanvasElement): void {
     if (this.status < this.images.length) {

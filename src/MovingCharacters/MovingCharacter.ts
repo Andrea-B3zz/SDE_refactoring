@@ -1,4 +1,3 @@
-import KeyListener from '../Utility/KeyListener.js';
 import Wall from './Wall.js';
 
 export default abstract class MovingCharacter {

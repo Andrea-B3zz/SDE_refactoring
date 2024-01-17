@@ -1,5 +1,5 @@
-import KeyListener from './Utility/KeyListener.js';
-import MouseListener from './Utility/MouseListener.js';
+import KeyListener from '../Utility/KeyListener.js';
+import MouseListener from '../Utility/MouseListener.js';
 
 export default abstract class Level {
   protected image: HTMLImageElement;

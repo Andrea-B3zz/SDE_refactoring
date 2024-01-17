@@ -1,7 +1,7 @@
 import Level from './Level.js';
-import CanvasRenderer from './Utility/CanvasRenderer.js';
-import KeyListener from './Utility/KeyListener.js';
-import MouseListener from './Utility/MouseListener.js';
+import CanvasRenderer from '../Utility/CanvasRenderer.js';
+import KeyListener from '../Utility/KeyListener.js';
+import MouseListener from '../Utility/MouseListener.js';
 import GameLevel from './GameLevel.js';
 
 export default class Backstory extends Level {

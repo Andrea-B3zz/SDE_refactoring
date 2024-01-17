@@ -51,10 +51,13 @@ export default class Button {
     return this.borderWidth;
   }
 
-  public delete(): void{
-    this.topY=-10;
-    this.bottomY=-10;
-    this.rightX=-10;
-    this.leftX=-10;
+  /**
+   * removes the button when the player make a mistake
+   */
+  public delete(): void {
+    this.topY = -10;
+    this.bottomY = -10;
+    this.rightX = -10;
+    this.leftX = -10;
   }
 }

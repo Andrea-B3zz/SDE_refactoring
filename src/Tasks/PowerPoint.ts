@@ -68,7 +68,7 @@ export default class PowerPoint extends Task {
       } else {
         if (answer != -1) {
           this.mistakeN += 1;
-          this.buttons[answer-1].delete();
+          this.buttons[answer - 1].delete();
         }
       }
     }

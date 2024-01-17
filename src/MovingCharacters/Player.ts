@@ -3,7 +3,6 @@ import KeyListener from '../Utility/KeyListener.js';
 import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 import Monster from './Monster.js';
-import Angel from './Angel.js';
 
 export default class Player extends MovingCharacter {
   private walls: Wall[];
@@ -138,10 +137,10 @@ export default class Player extends MovingCharacter {
   }
 
   /**
-    * Checks if the player collides with monsters
-    * @param monsters array of monsters
-    * @returns true if there is collision with monsters, and false - if not
-    */
+   * Checks if the player collides with monsters
+   * @param monsters array of monsters
+   * @returns true if there is collision with monsters, and false - if not
+   */
   public isCollidingWithMonster(monsters: Monster[]): number {
     for (let i: number = 0; i < monsters.length; i++) {
       const monster: Monster = monsters[i];
@@ -157,6 +156,11 @@ export default class Player extends MovingCharacter {
     return -1;
   }
 
+  /**
+   * checks if the player is colliding with an angel
+   * @param angel passing parameter
+   * @returns true or false
+   */
   public isCollidingWithAngel(angel: Monster): boolean {
     if (angel != null) {
       if (

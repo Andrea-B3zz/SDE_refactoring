@@ -1,13 +1,12 @@
 import Level from './Level.js';
-import CanvasRenderer from './Utility/CanvasRenderer.js';
-import KeyListener from './Utility/KeyListener.js';
-import MouseListener from './Utility/MouseListener.js';
+import CanvasRenderer from '../Utility/CanvasRenderer.js';
+import KeyListener from '../Utility/KeyListener.js';
 
 export default class EndingScreen extends Level {
   public constructor(canvas: HTMLCanvasElement, type: string, language: number) {
     super();
     this.canvas = canvas;
-    this.language=language;
+    this.language = language;
     if (type === 'win') {
       if (this.language == 0) {
         this.image = CanvasRenderer.loadNewImage('./assets/Ending_scene/gameWinEN.png');

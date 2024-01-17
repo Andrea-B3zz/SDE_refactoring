@@ -1,8 +1,7 @@
 import Level from './Level.js';
-import CanvasRenderer from './Utility/CanvasRenderer.js';
-import KeyListener from './Utility/KeyListener.js';
-import MouseListener from './Utility/MouseListener.js';
-import GameLevel from './GameLevel.js';
+import CanvasRenderer from '../Utility/CanvasRenderer.js';
+import KeyListener from '../Utility/KeyListener.js';
+import MouseListener from '../Utility/MouseListener.js';
 import Backstory from './Backstory.js';
 
 export default class LanguageSelection extends Level {
@@ -89,14 +88,18 @@ export default class LanguageSelection extends Level {
     }
   }
 
-  public getLanguage(): number{
+  public getLanguage(): number {
     return this.language;
   }
 
+  /**
+   * Check if we are selecting Dutch
+   * @param mouseListener to see if the player chose Dutch or English
+   * @returns true or false
+   */
   public isDutch(mouseListener: MouseListener): boolean {
     const mouseX: number = mouseListener.getMousePosition().x;
     const mouseY: number = mouseListener.getMousePosition().y;
-
 
     if (
       mouseX <= 840
@@ -110,6 +113,11 @@ export default class LanguageSelection extends Level {
     }
   }
 
+  /**
+   * Check if we are selecting English
+   * @param mouseListener to see if the player chose Dutch or English
+   * @returns true or false
+   */
   public isEnglish(mouseListener: MouseListener): boolean {
     const mouseX: number = mouseListener.getMousePosition().x;
     const mouseY: number = mouseListener.getMousePosition().y;
@@ -132,10 +140,10 @@ export default class LanguageSelection extends Level {
    */
   public render(canvas: HTMLCanvasElement): void {
     if (this.language == 0) {
-      this.image=CanvasRenderer.loadNewImage('./assets/Backstory/English/Backstory00EN.jpg');
+      this.image = CanvasRenderer.loadNewImage('./assets/Backstory/English/Backstory00EN.jpg');
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
     } else {
-      this.image=CanvasRenderer.loadNewImage('./assets/Backstory/Dutch/Backstory00NL.jpg');
+      this.image = CanvasRenderer.loadNewImage('./assets/Backstory/Dutch/Backstory00NL.jpg');
       CanvasRenderer.drawImage(canvas, this.image, 0, 0);
     }
     CanvasRenderer.drawImage(canvas, this.englishFlag, this.posXEN, this.posYEN);

@@ -1,7 +1,7 @@
-import Game from './Utility/Game.js';
-import CanvasRenderer from './Utility/CanvasRenderer.js';
-import KeyListener from './Utility/KeyListener.js';
-import MouseListener from './Utility/MouseListener.js';
+import Game from '../Utility/Game.js';
+import CanvasRenderer from '../Utility/CanvasRenderer.js';
+import KeyListener from '../Utility/KeyListener.js';
+import MouseListener from '../Utility/MouseListener.js';
 import Level from './Level.js';
 import LanguageSelection from './LanguageSelection.js';
 
@@ -29,7 +29,7 @@ export default class Controller extends Game {
     this.canvas.height = window.innerHeight;
     this.canvas.width = window.innerWidth;
     this.keyListener = new KeyListener();
-    this.mouseListener= new MouseListener(canvas);
+    this.mouseListener = new MouseListener(canvas);
     this.currentLevel = new LanguageSelection(canvas);
     this.levelCount = 0;
   }
@@ -51,8 +51,8 @@ export default class Controller extends Game {
 
     const newLevel: Level = this.currentLevel.nextLevel(this.canvas);
     if (newLevel != null) {
-      if(this.levelCount==0){
-        this.language=(this.currentLevel as LanguageSelection).getLanguage();
+      if (this.levelCount == 0) {
+        this.language = (this.currentLevel as LanguageSelection).getLanguage();
       }
       this.levelCount += 1;
       this.currentLevel = newLevel;

@@ -3,8 +3,8 @@ import Monster from './Monster.js';
 import Wall from './Wall.js';
 
 export default class Angel extends Monster {
-  public constructor(walls: Wall[]){
+  public constructor(walls: Wall[]) {
     super(1200, 680, walls);
-    this.image=CanvasRenderer.loadNewImage('assets/angel.png');
+    this.image = CanvasRenderer.loadNewImage('assets/angel.png');
   }
 }
