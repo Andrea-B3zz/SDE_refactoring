@@ -309,6 +309,7 @@ export default class GameLevel extends Level {
     } else {
       this.player.move(this.keyListener);
     }
+    // start here
 
     for (let i: number = 0; i < this.monsters.length; i++) {
       this.monsters[i].move(elapsed);
@@ -319,11 +320,6 @@ export default class GameLevel extends Level {
         this.monsters[i].setSpeed(-(this.monsters[i].getSpeed()));
       }
     }
-
-    //if (this.mouseListener.isButtonDown(MouseListener.BUTTON_LEFT)) {
-    //console.log(this.mouseListener.getMousePosition().x);
-    //console.log(this.mouseListener.getMousePosition().y);
-    //}
 
     if (this.player.isCollidingWithMonster(this.monsters) > 0) {
       if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {

@@ -1,7 +1,6 @@
 import Level from './Level.js';
 import CanvasRenderer from '../Utility/CanvasRenderer.js';
 import KeyListener from '../Utility/KeyListener.js';
-import MouseListener from '../Utility/MouseListener.js';
 import GameLevel from './GameLevel.js';
 
 export default class Backstory extends Level {
@@ -9,13 +8,8 @@ export default class Backstory extends Level {
 
   private currentImage: number;
 
-  private mouseListener: MouseListener;
-
-  private keyListener: KeyListener;
-
   public constructor(canvas: HTMLCanvasElement, language: number) {
     super();
-    this.keyListener = new KeyListener();
     this.canvas = canvas;
     this.language = language;
 
@@ -25,6 +19,7 @@ export default class Backstory extends Level {
       this.arrayOfImages = ['./assets/Backstory/Dutch/Backstory01NL.jpg', './assets/Backstory/Dutch/Backstory02NL.jpg', './assets/Backstory/Dutch/Backstory03NL.jpg', './assets/Backstory/Dutch/Backstory04NL.jpg', './assets/Backstory/Dutch/Backstory05NL.jpg', './assets/Backstory/Dutch/Backstory06NL.jpg', './assets/Backstory/Dutch/Backstory07NL.jpg', './assets/Backstory/Dutch/Backstory08NL.jpg'];
     }
     this.currentImage = 0;
+
     this.music = document.querySelector('#audio');
     this.music.src = 'assets/Audio/backstoryMusic.ogg';
 
@@ -42,14 +37,6 @@ export default class Backstory extends Level {
       const image: HTMLImageElement = new Image();
       image.src = imagePath;
     });
-  }
-
-  /**
-   * updates the images
-   */
-  public override update(): void {
-    this.music.play();
-    this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
   }
 
   /**
@@ -72,6 +59,7 @@ export default class Backstory extends Level {
   public override processInput(keyListener: KeyListener): void {
     if (keyListener.keyPressed(KeyListener.KEY_SPACE)) {
       this.currentImage = this.currentImage + 1;
+      this.image = CanvasRenderer.loadNewImage(this.arrayOfImages[this.currentImage]);
     }
   }
 

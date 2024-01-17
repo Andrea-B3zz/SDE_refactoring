@@ -44,14 +44,6 @@ export default class EndingScreen extends Level {
 
   /**
    *
-   * @param elapsed time in ms
-   */
-  public override update(): void {
-    // doesn't have any implementation
-  }
-
-  /**
-   *
    * @param canvas passed as a parameter
    */
   public override render(): void {

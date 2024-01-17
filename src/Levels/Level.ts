@@ -11,7 +11,13 @@ export default abstract class Level {
   // 0 is english, 1 is dutch
   protected language: number;
 
-  public abstract update(elapsed: number): void;
+  /**
+   * to update the current level
+   * @param elapsed the time elapsed
+   */
+  public update(elapsed: number): void{
+    this.music.play();
+  }
 
   public abstract nextLevel(canvas: HTMLCanvasElement): Level | null;
 
