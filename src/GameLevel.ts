@@ -175,9 +175,9 @@ export default class GameLevel extends Level {
 
   private populateCoordinates(): void {
     for (let i: number = 0; i < 9; i++) {
-      this.coordinates.push([90, 90]);
+      this.coordinates.push([80, 80]);
       this.coordinates.push([200, 340]);
-      this.coordinates.push([60, 250]);
+      this.coordinates.push([60, 260]);
       this.coordinates.push([400, 90]);
       this.coordinates.push([800, 340]);
       this.coordinates.push([600, 250]);
@@ -217,10 +217,10 @@ export default class GameLevel extends Level {
     if (this.currentLevel === 1) {
       let ghost: Ghost;
       for (let i: number = 0; i <= 2; i++) {
-        let randomCoordinates: number = Math.floor(Math.random() * 8);
+        let randomCoordinates: number = Math.floor(Math.random() * 9);
         ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         while (this.isAlreadyThere(ghost)) {
-          randomCoordinates = Math.floor(Math.random() * 8);
+          randomCoordinates = Math.floor(Math.random() * 9);
           ghost = new Ghost(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         }
         this.monsters.push(ghost);
@@ -228,10 +228,10 @@ export default class GameLevel extends Level {
     } else if (this.currentLevel === 2) {
       let redMonster: RedMonster;
       for (let i: number = 0; i <= 2; i++) {
-        let randomCoordinates: number = Math.floor(Math.random() * 8);
+        let randomCoordinates: number = Math.floor(Math.random() * 9);
         redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         while (this.isAlreadyThere(redMonster)) {
-          randomCoordinates = Math.floor(Math.random() * 8);
+          randomCoordinates = Math.floor(Math.random() * 9);
           redMonster = new RedMonster(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         }
         this.monsters.push(redMonster);
@@ -239,10 +239,10 @@ export default class GameLevel extends Level {
     } else {
       let zombie: Zombie;
       for (let i: number = 0; i <= 2; i++) {
-        let randomCoordinates: number = Math.floor(Math.random() * 8);
+        let randomCoordinates: number = Math.floor(Math.random() * 9);
         zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         while (this.isAlreadyThere(zombie)) {
-          randomCoordinates = Math.floor(Math.random() * 8);
+          randomCoordinates = Math.floor(Math.random() * 9);
           zombie = new Zombie(this.coordinates[randomCoordinates][0], this.coordinates[randomCoordinates][1], this.walls);
         }
         this.monsters.push(zombie);
