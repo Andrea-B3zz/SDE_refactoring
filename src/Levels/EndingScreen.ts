@@ -20,7 +20,8 @@ export default class EndingScreen extends Level {
         this.image = CanvasRenderer.loadNewImage('./assets/Ending_scene/gameOverNL.png');
       }
     }
-    this.render();
+    this.music = document.querySelector('#audio');
+    this.music.src = '';
   }
 
   /**
@@ -36,7 +37,6 @@ export default class EndingScreen extends Level {
   /**
    *
    * @param keyListener passed
-   * @param mouseListener passed
    */
   public override processInput(keyListener: KeyListener): void {
     // doesn't have any implementation
@@ -44,9 +44,9 @@ export default class EndingScreen extends Level {
 
   /**
    *
-   * @param canvas passed as a parameter
+   * @param canvas HTML canvas element
    */
-  public override render(): void {
-    CanvasRenderer.drawImage(this.canvas, this.image, 0, 0);
+  public override render(canvas: HTMLCanvasElement): void {
+    CanvasRenderer.drawImage(canvas, this.image, 0, 0);
   }
 }

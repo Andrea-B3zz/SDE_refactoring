@@ -8,12 +8,12 @@ export default abstract class Monster extends MovingCharacter {
 
   private selectedPos: number[];
 
-  public constructor(MapWidth: number, MapHeight: number, walls: Wall[]) {
+  public constructor() {
     super();
     const pos: number[][] =
-      [[60, 85], [1135, 165], [1085, 515],
-        [50, 495], [700, 548], [630, 80],
-        [430, 570], [420, 240], [870, 60]];
+      [[80, 80], [200, 340], [60, 260],
+        [400, 90], [800, 340], [600, 250],
+        [200, 550], [200, 340], [800, 240]];
 
     this.selectedPos = pos[Math.floor(Math.random() * pos.length)];
     this.posX = this.selectedPos[0];
@@ -26,8 +26,8 @@ export default abstract class Monster extends MovingCharacter {
    * @param elapsed time elapsed
    * @param walls the array of walls
    */
-  public override update(elapsed: number, walls: Wall[]): void {
-
+  public override update(elapsed: number): void {
+    this.move(elapsed);
   }
 
   /**
@@ -50,13 +50,6 @@ export default abstract class Monster extends MovingCharacter {
     for (let i: number = 0; i < walls.length; i++) {
       const item: Wall = walls[i];
       if (
-
-        /*
-        this.posX < monster.getPosX() + monster.getWidth() &&
-        this.posX + this.getWidth() > monster.getPosX() &&
-        this.posY < monster.getPosY() + monster.getHeight() &&
-        this.posY + this.getHeight() > monster.getPosY()
-         */
         newPosX <= item.getRightX()
         && newPosX + this.getWidth() >= item.getLeftX()
         && newPosY + this.getHeight() >= item.getTopY()
@@ -72,7 +65,7 @@ export default abstract class Monster extends MovingCharacter {
    * moving our monster around
    * @param elapsed time elapsed
    */
-  public move(elapsed: number): void {
+  private move(elapsed: number): void {
     this.posX += this.speed * elapsed;
   }
 }

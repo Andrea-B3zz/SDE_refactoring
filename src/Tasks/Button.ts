@@ -1,3 +1,5 @@
+import CanvasRenderer from '../Utility/CanvasRenderer.js';
+import MouseListener from '../Utility/MouseListener.js';
 export default class Button {
   protected leftX: number;
 
@@ -59,5 +61,40 @@ export default class Button {
     this.bottomY = -10;
     this.rightX = -10;
     this.leftX = -10;
+  }
+
+  /**
+   * to render the buttons
+   * @param canvas the canvas
+   */
+  public render(canvas: HTMLCanvasElement): void {
+    const width: number = this.rightX - this.leftX;
+    const height: number = this.bottomY - this.topY;
+    CanvasRenderer.drawRectangle(
+      canvas,
+      this.leftX,
+      this.topY,
+      width,
+      height,
+      this.borderColor,
+      this.borderWidth);
+  }
+
+  /**
+   * to check if the player is clicking on the buttons
+   * @param mouseListener which button is the player clicking on
+   * @returns -1 if it is not colliding with anything or the number of the button
+   */
+  public isColliding(mouseListener: MouseListener): boolean {
+    // 1.363636 bc there is a problem with canvas height and width
+    if (
+      mouseListener.getMousePosition().x * 1.363636 < this.rightX
+      && mouseListener.getMousePosition().x * 1.363636 > this.leftX
+      && mouseListener.getMousePosition().y * 1.363636 > this.topY
+      && mouseListener.getMousePosition().y * 1.363636 < this.bottomY
+    ) {
+      return true;
+    }
+    return false;
   }
 }

@@ -6,23 +6,13 @@ import KeyListener from '../Utility/KeyListener.js';
 
 export default class PowerPoint extends Task {
   public constructor(rightAnswer: number, language: number) {
-    super();
-    this.status = 0;
-    this.buttons = [];
-    this.isCompleted = false;
-    this.rightAnswer = rightAnswer;
-    this.images = [];
-
-    this.images = [];
+    super(rightAnswer);
+    this.addButtons();
     if (language == 0) {
       this.loadImages('English', 'EN');
     } else {
       this.loadImages('Dutch', 'NL');
     }
-
-    this.addButtons();
-    this.mistakeN = 0;
-    this.mistakeGiven = false;
   }
 
   /**
@@ -55,20 +45,21 @@ export default class PowerPoint extends Task {
   }
 
   /**
-   *
-   * @param mouseListener passed parameter
-   * @param keyListener passed parameter
+   * process the input of the player
+   * @param mouseListener the button that the player has pressed
+   * @param keyListener the key that the player presses when they finish a task
    */
   public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
     if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
-      const answer: number = this.isCollidingWithRectangle(mouseListener);
-      if (answer == this.rightAnswer) {
-        this.status += 1;
-        this.buttons = this.buttonRefactor();
-      } else {
-        if (answer != -1) {
-          this.mistakeN += 1;
-          this.buttons[answer - 1].delete();
+      for (let i: number = 0; i < this.buttons.length; i++) {
+        if (this.buttons[i].isColliding(mouseListener) && i + 1 == this.rightAnswer) {
+          this.status += 1;
+          this.buttonRefactor();
+        } else {
+          if (this.buttons[i].isColliding(mouseListener) && i + 1 != this.rightAnswer) {
+            this.mistakeN += 1;
+            this.buttons[i].delete();
+          }
         }
       }
     }
@@ -76,31 +67,6 @@ export default class PowerPoint extends Task {
     if (keyListener.keyPressed(KeyListener.KEY_SPACE) && this.status >= this.images.length - 1) {
       this.isCompleted = true;
     }
-  }
-
-  /**
-   *
-   * @param mouseListener passed parameter
-   * @returns the rectangle it collides with
-   */
-  public isCollidingWithRectangle(mouseListener: MouseListener): number {
-    // 1.363636 bc there is a problem with canvas height and width
-    for (let i: number = 0; i < this.buttons.length; i++) {
-      const item: Button = this.buttons[i];
-      if (
-        mouseListener.getMousePosition().x * 1.363636 < item.getRightX()
-        && mouseListener.getMousePosition().x * 1.363636 > item.getLeftX()
-        && mouseListener.getMousePosition().y * 1.363636 > item.getTopY()
-        && mouseListener.getMousePosition().y * 1.363636 < item.getBottomY()
-      ) {
-        return i + 1;
-      }
-    }
-    return -1;
-  }
-
-  public getIsCompleted(): boolean {
-    return this.isCompleted;
   }
 
   /**
@@ -143,17 +109,7 @@ export default class PowerPoint extends Task {
 
     if (!(this.status >= this.images.length - 1)) {
       for (let i: number = 0; i < this.buttons.length; i++) {
-        const width: number = this.buttons[i].getRightX() - this.buttons[i].getLeftX();
-        const height: number = this.buttons[i].getBottomY() - this.buttons[i].getTopY();
-        CanvasRenderer.drawRectangle(
-          canvas,
-          this.buttons[i].getLeftX(),
-          this.buttons[i].getTopY(),
-          width,
-          height,
-          this.buttons[i].getColor(),
-          this.buttons[i].getBorderWidth()
-        );
+        this.buttons[i].render(canvas);
       }
     }
   }

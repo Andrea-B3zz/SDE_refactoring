@@ -1,28 +1,16 @@
 import CanvasRenderer from '../Utility/CanvasRenderer.js';
-import MouseListener from '../Utility/MouseListener.js';
 import Task from './Task.js';
 import Button from './Button.js';
-import KeyListener from '../Utility/KeyListener.js';
 
 export default class Word extends Task {
   public constructor(rightAnswer: number, language: number) {
-    super();
-    this.status = 0;
-    this.buttons = [];
-    this.isCompleted = false;
-    this.rightAnswer = rightAnswer;
-    this.language = language;
-
-    this.images = [];
+    super(rightAnswer);
+    this.addButtons();
     if (language == 0) {
       this.loadImages('English', 'EN');
     } else {
       this.loadImages('Dutch', 'NL');
     }
-
-    this.addButtons();
-    this.mistakeGiven = false;
-    this.mistakeN = 0;
   }
 
   /**
@@ -52,76 +40,17 @@ export default class Word extends Task {
   }
 
   /**
-   *
-   * @param mouseListener passed parameter
-   * @param keyListener passed parameter
-   */
-  public override processInput(mouseListener: MouseListener, keyListener: KeyListener): void {
-    if (mouseListener.buttonPressed(MouseListener.BUTTON_LEFT)) {
-      const answer: number = this.isCollidingWithRectangle(mouseListener);
-      if (answer == this.rightAnswer) {
-        this.status += 1;
-      } else {
-        if (answer != -1) {
-          this.mistakeN += 1;
-          this.buttons[answer - 1].delete();;
-        }
-      }
-    }
-
-    if (keyListener.keyPressed(KeyListener.KEY_SPACE) && this.status >= this.images.length - 1) {
-      this.isCompleted = true;
-    }
-  }
-
-  /**
-   *
-   * @param mouseListener passed parameter
-   * @returns the rectangle it collides with
-   */
-  public isCollidingWithRectangle(mouseListener: MouseListener): number {
-    // 1.363636 bc there is a problem with canvas height and width
-    for (let i: number = 0; i < this.buttons.length; i++) {
-      const item: Button = this.buttons[i];
-      if (
-        mouseListener.getMousePosition().x * 1.363636 < item.getRightX()
-        && mouseListener.getMousePosition().x * 1.363636 > item.getLeftX()
-        && mouseListener.getMousePosition().y * 1.363636 > item.getTopY()
-        && mouseListener.getMousePosition().y * 1.363636 < item.getBottomY()
-      ) {
-        return i + 1;
-      }
-    }
-    return -1;
-  }
-
-  public getIsCompleted(): boolean {
-    return this.isCompleted;
-  }
-
-  /**
    * renders the images for the word tasks
    * @param canvas HTML canvas element
    */
   public override render(canvas: HTMLCanvasElement): void {
     if (this.status < this.images.length) {
       CanvasRenderer.drawImage(canvas, this.images[this.status], -80, 0);
-    } else {
-      CanvasRenderer.drawImage(canvas, this.images[this.images.length - 1], 0, 0);
     }
 
     if (!(this.status >= this.images.length - 1)) {
       for (let i: number = 0; i < this.buttons.length; i++) {
-        const width: number = this.buttons[i].getRightX() - this.buttons[i].getLeftX();
-        const height: number = this.buttons[i].getBottomY() - this.buttons[i].getTopY();
-        CanvasRenderer.drawRectangle(
-          canvas,
-          this.buttons[i].getLeftX(),
-          this.buttons[i].getTopY(),
-          width,
-          height,
-          this.buttons[i].getColor(),
-          this.buttons[i].getBorderWidth());
+        this.buttons[i].render(canvas);
       }
     }
   }

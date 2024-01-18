@@ -37,7 +37,7 @@ export default abstract class MovingCharacter {
    * to update the item position
    * @param elapsed the time elapsed
    */
-  public abstract update(elapsed: number, walls: Wall[]): void;
+  public abstract update(elapsed: number): void;
 
   /**
    * to render
