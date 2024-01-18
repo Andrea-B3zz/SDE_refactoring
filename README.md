@@ -57,3 +57,6 @@ Photos:
 * [Keyboard photos](https://www.cleanpng.com/png-computer-keyboard-arrow-keys-button-1612644/download-png.html)
 * [Beginning magical world](https://www.freepik.com/free-vector/fantasy-forest-pond-cartoon-landscape-background-magic-garden-night-with-beautiful-enchanted-lake-water-tree-branches-firefly-glow-nighttime-adventure-place-fairytale-legend_79004297.htm#query=Fantasy%20forest%20pond%20cartoon%20landscape%20background%20magic%20garden%20at%20night%20with%20beautiful%20enchanted%20lake%20water%20and%20tree&position=7&from_view=search&track=ais&uuid=4d6cb463-3384-4c19-9183-d8d7c013408c)
 * [Cage](https://pngimg.com/image/41387)
+* [Backstory, dungeon music](https://bit-by-bit-sound.itch.io/16-bit-starter-pack?download)
+* [Battle music](https://eclipzodiac.itch.io/rpg-battle-music-rpg-maker-mix-v1)
+* [Monster catching animation](https://bdragon1727.itch.io/pixel-holy-spell-effect-32x32-pack-3)
