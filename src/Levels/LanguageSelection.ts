@@ -5,10 +5,6 @@ import MouseListener from '../Utility/MouseListener.js';
 import Backstory from './Backstory.js';
 
 export default class LanguageSelection extends Level {
-  private keyListener: KeyListener;
-
-  private mouseListener: MouseListener;
-
   private languageChosen: boolean;
 
   private dutchFlag: HTMLImageElement;
@@ -25,8 +21,6 @@ export default class LanguageSelection extends Level {
 
   public constructor(canvas: HTMLCanvasElement) {
     super();
-    this.keyListener = new KeyListener();
-    this.mouseListener = new MouseListener(canvas);
     this.canvas = canvas;
 
     this.language = 0;
@@ -47,14 +41,9 @@ export default class LanguageSelection extends Level {
     this.posYEN = 100;
     this.posXNL = 1000;
     this.posYNL = 100;
-  }
 
-  /**
-   * updates the images
-   * @param elapsed that does nothing here, but it's used in the abstract class Level
-   */
-  public override update(elapsed: number): void {
-
+    this.music = document.querySelector('#audio');
+    this.music.src = '';
   }
 
   /**

@@ -1,9 +1,9 @@
-import Game from '../Utility/Game.js';
-import CanvasRenderer from '../Utility/CanvasRenderer.js';
-import KeyListener from '../Utility/KeyListener.js';
-import MouseListener from '../Utility/MouseListener.js';
-import Level from './Level.js';
-import LanguageSelection from './LanguageSelection.js';
+import Game from './Utility/Game.js';
+import CanvasRenderer from './Utility/CanvasRenderer.js';
+import KeyListener from './Utility/KeyListener.js';
+import MouseListener from './Utility/MouseListener.js';
+import Level from './Levels/Level.js';
+import LanguageSelection from './Levels/LanguageSelection.js';
 
 export default class Controller extends Game {
   private canvas: HTMLCanvasElement;

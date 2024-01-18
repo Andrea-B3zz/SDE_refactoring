@@ -1,4 +1,4 @@
-import Controller from './Levels/Controller.js';
+import Controller from './Controller.js';
 
 const game: Controller = new Controller(document.getElementById('canvas') as HTMLCanvasElement);
 

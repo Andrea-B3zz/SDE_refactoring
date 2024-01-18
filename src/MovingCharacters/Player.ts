@@ -30,7 +30,7 @@ export default class Player extends MovingCharacter {
     this.posX = 200;
     this.posY = 200;
 
-    this.speed = 0.4;
+    this.speed = 0.7;
     this.movementFlag = false;
     this.frameChangeTime = 400;
     this.frameChangeCounter = 0;
@@ -138,49 +138,20 @@ export default class Player extends MovingCharacter {
 
   /**
    * Checks if the player collides with monsters
-   * @param monsters array of monsters
+   * @param monster array of monsters
    * @returns true if there is collision with monsters, and false - if not
    */
-  public isCollidingWithMonster(monsters: Monster[]): number {
-    for (let i: number = 0; i < monsters.length; i++) {
-      const monster: Monster = monsters[i];
-      if (
-        this.posX < monster.getPosX() + monster.getWidth() &&
-        this.posX + this.getWidth() > monster.getPosX() &&
-        this.posY < monster.getPosY() + monster.getHeight() &&
-        this.posY + this.getHeight() > monster.getPosY()
-      ) {
-        return i + 1;
-      }
+  public isCollidingWithMonster(monster: Monster): boolean {
+    if (
+      this.posX < monster.getPosX() + monster.getWidth() &&
+      this.posX + this.getWidth() > monster.getPosX() &&
+      this.posY < monster.getPosY() + monster.getHeight() &&
+      this.posY + this.getHeight() > monster.getPosY()
+    ) {
+      return true;
     }
-    return -1;
-  }
 
-  /**
-   * checks if the player is colliding with an angel
-   * @param angel passing parameter
-   * @returns true or false
-   */
-  public isCollidingWithAngel(angel: Monster): boolean {
-    if (angel != null) {
-      if (
-        this.posX < angel.getPosX() + angel.getWidth() &&
-        this.posX + this.getWidth() > angel.getPosX() &&
-        this.posY < angel.getPosY() + angel.getHeight() &&
-        this.posY + this.getHeight() > angel.getPosY()
-      ) {
-        return true;
-      }
-    }
     return false;
-  }
-
-  /**
-   * if this method is called, the player doesn't change its position
-   */
-  public doNotMove(): void {
-    this.posX = this.posX;
-    this.posY = this.posY;
   }
 
   /**
