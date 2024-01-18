@@ -407,7 +407,11 @@ export default class GameLevel extends Level {
         CanvasRenderer.drawImage(canvas, this.lifeImg, window.innerWidth - i * 75, 10);
       }
       CanvasRenderer.writeText(this.canvas, `Level: ${this.currentLevel}`, 20, 50, 'left', 'Bungee Spice', 40, 'white');
-      CanvasRenderer.writeText(this.canvas, `Monsters left: ${this.monsterCounter}`, 20, 110, 'left', 'Bungee Spice', 40, 'white');
+      if (this.language == 0) {
+        CanvasRenderer.writeText(this.canvas, `Monsters left: ${this.monsterCounter}`, 20, 110, 'left', 'Bungee Spice', 40, 'white');
+      } else {
+        CanvasRenderer.writeText(this.canvas, `Monsters overgebleven: ${this.monsterCounter}`, 20, 110, 'left', 'Bungee Spice', 40, 'white');
+      }
       if (this.triggerEffect) {
         CanvasRenderer.drawImage(canvas, this.currentImage,
           this.monsters[this.monsterColliding].getPosX(),
