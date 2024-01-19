@@ -5,10 +5,6 @@ import Wall from './Wall.js';
 import Monster from './Monster.js';
 
 export default class Player extends MovingCharacter {
-  private walls: Wall[];
-
-  private monsters: Monster[];
-
   private fovImage: HTMLImageElement;
 
   private movementFlag: boolean;
@@ -19,10 +15,8 @@ export default class Player extends MovingCharacter {
 
   private keyListener: KeyListener;
 
-  public constructor(walls: Wall[], monsters: Monster[]) {
+  public constructor() {
     super();
-    this.walls = walls;
-    this.monsters = monsters;
 
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
@@ -61,16 +55,18 @@ export default class Player extends MovingCharacter {
 
   /**
    * @param keyListener user input
+   * @param walls the wall array
    */
-  public processInput(keyListener: KeyListener): void {
-    this.move(keyListener);
+  public processInput(keyListener: KeyListener, walls: Wall[]): void {
+    this.move(keyListener, walls);
   }
 
   /**
    * moving our character around the map
    * @param keyListener user input
+   * @param walls the wall array
    */
-  public move(keyListener: KeyListener): void {
+  public move(keyListener: KeyListener, walls: Wall[]): void {
     this.keyListener = keyListener;
     let newPosX: number = this.posX;
     let newPosY: number = this.posY;
@@ -109,7 +105,7 @@ export default class Player extends MovingCharacter {
       }
     }
 
-    if (!this.isCollidingWithWalls(newPosX, newPosY)) {
+    if (!this.isCollidingWithWalls(newPosX, newPosY, walls)) {
       this.posX = newPosX;
       this.posY = newPosY;
     }
@@ -119,11 +115,12 @@ export default class Player extends MovingCharacter {
    *
    * @param newPosX receives the possible next posX
    * @param newPosY receives the possible next posY
+   * @param walls the wall array
    * @returns true if there is collision, and false - if not
    */
-  public isCollidingWithWalls(newPosX: number, newPosY: number): boolean {
-    for (let i: number = 0; i < this.walls.length; i++) {
-      const item: Wall = this.walls[i];
+  public isCollidingWithWalls(newPosX: number, newPosY: number, walls: Wall[]): boolean {
+    for (let i: number = 0; i < walls.length; i++) {
+      const item: Wall = walls[i];
       if (
         newPosX < item.getRightX()
         && newPosX + this.getWidth() > item.getLeftX()

@@ -131,7 +131,7 @@ export default class GameLevel extends Level {
         break;
       }
     }
-    this.player = new Player(this.walls, this.monsters);
+    this.player = new Player();
     this.lives = lives;
     if (language == 0) {
       this.bfImage = CanvasRenderer.loadNewImage('./assets/bestFriendEN.png');
@@ -338,7 +338,7 @@ export default class GameLevel extends Level {
    * @param mouseListener using the keyboard
    */
   public override processInput(keyListener: KeyListener, mouseListener: MouseListener): void {
-    this.player.processInput(keyListener);
+    this.player.processInput(keyListener, this.walls);
     this.tasks[this.questionNumber].processInput(mouseListener, keyListener);
   }
 
