@@ -69,6 +69,7 @@ export default class GameLevel extends Level {
     super();
 
     this.walls = [];
+    // need a keylistener for checking while the player is colliding
     this.keyListener = new KeyListener();
     this.inATask = false;
 
@@ -113,6 +114,8 @@ export default class GameLevel extends Level {
     this.createMonsters();
     this.angel = new Angel();
 
+    // array of tasks, the order is still the same,
+    // there is not a single task paired with a single monster
     this.tasks = [];
     switch (this.currentLevel) {
       case 1: {
@@ -236,6 +239,7 @@ export default class GameLevel extends Level {
    * @param elapsed still no function
    */
   public override update(elapsed: number): void {
+    // for starting the "animation" before the level
     if (this.levelStartAnimationDuration > 0) {
       this.levelStartAnimationDuration -= elapsed;
       this.levelStartFlag = true;
@@ -245,6 +249,8 @@ export default class GameLevel extends Level {
 
     this.player.update(elapsed);
 
+    // to update the monster,
+    // if it's colliding with a wall set the speed to the opposite (+ / -)
     for (let i: number = 0; i < this.monsters.length; i++) {
       this.monsters[i].update(elapsed);
       if (this.monsters[i].isColliding(this.walls,
@@ -254,6 +260,7 @@ export default class GameLevel extends Level {
       }
     }
 
+    // to start the animation
     for (let i: number = 0; i < this.monsters.length; i++) {
       if (this.player.isCollidingWithMonster(this.monsters[i])) {
         if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
@@ -262,6 +269,7 @@ export default class GameLevel extends Level {
         }
       }
 
+      // to handle the angel to get one life back
       if (this.angel != null) {
         if (this.player.isCollidingWithMonster(this.angel)) {
           if (this.keyListener.keyPressed(KeyListener.KEY_SPACE)) {
@@ -286,6 +294,7 @@ export default class GameLevel extends Level {
       }
     }
 
+    // to update the life system
     for (let i: number = 0; i < this.tasks.length; i++) {
       if (this.tasks[i].checkMistake()) {
         this.lives -= 1;

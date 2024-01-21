@@ -13,8 +13,6 @@ export default class Player extends MovingCharacter {
 
   private frameChangeCounter: number;
 
-  private keyListener: KeyListener;
-
   public constructor() {
     super();
 
@@ -67,7 +65,6 @@ export default class Player extends MovingCharacter {
    * @param walls the wall array
    */
   public move(keyListener: KeyListener, walls: Wall[]): void {
-    this.keyListener = keyListener;
     let newPosX: number = this.posX;
     let newPosY: number = this.posY;
 
