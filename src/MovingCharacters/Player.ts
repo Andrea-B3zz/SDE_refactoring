@@ -19,10 +19,9 @@ export default class Player extends MovingCharacter {
     this.fovImage = CanvasRenderer.loadNewImage('./assets/FOV.png');
 
     this.image = CanvasRenderer.loadNewImage('./assets/boyCharacter/boy_front01.png');
-    this.posX = 200;
-    this.posY = 200;
+    this.posX = 700;
+    this.posY = 300;
 
-    this.speed = 0.7;
     this.movementFlag = false;
     this.frameChangeTime = 400;
     this.frameChangeCounter = 0;
@@ -34,8 +33,9 @@ export default class Player extends MovingCharacter {
    * @param elapsed the time elapsed
    */
   public override update(elapsed: number): void {
-    const fovX: number = this.posX - this.fovImage.width / 2;
-    const fovY: number = this.posY - this.fovImage.height / 2;
+    this.speed=0.045*elapsed;
+    const fovX: number = this.posX - (this.fovImage.width / 2);
+    const fovY: number = this.posY - (this.fovImage.height / 2);
     this.fovImage.style.left = fovX + 'px';
     this.fovImage.style.top = fovY + 'px';
 

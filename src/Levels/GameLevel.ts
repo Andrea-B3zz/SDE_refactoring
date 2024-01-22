@@ -286,6 +286,7 @@ export default class GameLevel extends Level {
       }
     }
 
+    // to update the monster counter and render
     if (this.tasks[this.questionNumber].getIsCompleted()) {
       this.monsterCounter -= 1;
       this.inATask = false;
