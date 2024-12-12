@@ -4,16 +4,12 @@ import Monster from '../MovingCharacters/Monster.js';
 import Wall from '../MovingCharacters/Wall.js';
 import KeyListener from '../Utility/KeyListener.js';
 import CanvasRenderer from '../Utility/CanvasRenderer.js';
-import Ghost from '../MovingCharacters/Ghost.js';
 import MouseListener from '../Utility/MouseListener.js';
 import Task from '../Tasks/Task.js';
 import PowerPoint from '../Tasks/PowerPoint.js';
 import Word from '../Tasks/Word.js';
 import Excel from '../Tasks/Excel.js';
-import RedMonster from '../MovingCharacters/RedMonster.js';
-import Zombie from '../MovingCharacters/Zombie.js';
 import EndingScreen from './EndingScreen.js';
-import Angel from '../MovingCharacters/Angel.js';
 
 export default class GameLevel extends Level {
   private keyListener: KeyListener;
@@ -24,7 +20,7 @@ export default class GameLevel extends Level {
 
   private walls: Wall[];
 
-  private angel: Angel;
+  private angel: Monster;
 
   private battleMusic: HTMLAudioElement;
 
@@ -112,7 +108,7 @@ export default class GameLevel extends Level {
     this.monsters = [];
 
     this.createMonsters();
-    this.angel = new Angel();
+    this.angel = new Monster(4);
 
     // array of tasks, the order is still the same,
     // there is not a single task paired with a single monster
@@ -190,29 +186,29 @@ export default class GameLevel extends Level {
    */
   public createMonsters(): void {
     if (this.currentLevel === 1) {
-      let ghost: Ghost;
+      let ghost: Monster;
       for (let i: number = 0; i <= 2; i++) {
-        ghost = new Ghost();
+        ghost = new Monster(1);
         while (this.isAlreadyThere(ghost)) {
-          ghost = new Ghost();
+          ghost = new Monster(1);
         }
         this.monsters.push(ghost);
       }
     } else if (this.currentLevel === 2) {
-      let redMonster: RedMonster;
+      let redMonster: Monster;
       for (let i: number = 0; i <= 2; i++) {
-        redMonster = new RedMonster();
+        redMonster = new Monster(2);
         while (this.isAlreadyThere(redMonster)) {
-          redMonster = new RedMonster();
+          redMonster = new Monster(2);
         }
         this.monsters.push(redMonster);
       }
     } else {
-      let zombie: Zombie;
+      let zombie: Monster;
       for (let i: number = 0; i <= 2; i++) {
-        zombie = new Zombie();
+        zombie = new Monster(3);
         while (this.isAlreadyThere(zombie)) {
-          zombie = new Zombie();
+          zombie = new Monster(3);
         }
         this.monsters.push(zombie);
       }

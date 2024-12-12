@@ -3,12 +3,12 @@ import MovingCharacter from './MovingCharacter.js';
 import Wall from './Wall.js';
 
 
-export default abstract class Monster extends MovingCharacter {
+export default class Monster extends MovingCharacter {
   private level: number = 1;
 
   private selectedPos: number[];
 
-  public constructor() {
+  public constructor(type: number) {
     super();
     const pos: number[][] =
       [[80, 80], [200, 340], [60, 260],
@@ -19,6 +19,20 @@ export default abstract class Monster extends MovingCharacter {
     this.posX = this.selectedPos[0];
     this.posY = this.selectedPos[1];
     this.speed = 0.05;
+
+    if(type == 1){
+      // Ghost
+      this.image = CanvasRenderer.loadNewImage('./assets/blue_monster.png');
+    } else if(type == 2){
+      // Red monster
+      this.image = CanvasRenderer.loadNewImage('./assets/red_monster.png');
+    } else if(type == 3){
+      // Zombie
+      this.image = CanvasRenderer.loadNewImage('./assets/green_monster.png');
+    } else if(type == 4){
+      // Angel
+      this.image = CanvasRenderer.loadNewImage('assets/angel.png');
+    }
   }
 
   /**
